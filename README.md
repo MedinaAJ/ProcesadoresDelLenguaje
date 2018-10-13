@@ -29,5 +29,9 @@ Un video más explicativo: https://www.youtube.com/watch?v=3XlZWpLwvvo
 Un tutorial de git: http://rogerdudler.github.io/git-guide/index.es.html
 
 
+# ¿Cómo ejecutar?
 
+Entra en una terminal y haz $ make
+
+Después entra en la carpeta class/ con  $ cd class/ y ejecuta $ java parser Prueba.txt
 
