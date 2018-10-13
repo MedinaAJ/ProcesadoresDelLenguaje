@@ -3,6 +3,7 @@
 Trabajo realizado:
 -Creación de un Makefile para una ejecución mas sencilla
 -Estructura de archivos /cup /flex /java /src
+
 /cup contiene el archivo .cup
 /flex contiene el archivo .lex
 /java tiene los archivos .class
@@ -24,6 +25,7 @@ $ git push
 $ git pull
 
 Un video más explicativo: https://www.youtube.com/watch?v=3XlZWpLwvvo
+
 Un tutorial de git: http://rogerdudler.github.io/git-guide/index.es.html
 
 
