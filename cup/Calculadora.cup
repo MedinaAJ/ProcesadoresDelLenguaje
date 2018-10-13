@@ -1,0 +1,51 @@
+import java_cup.runtime.*;
+import java.io.*;
+
+parser code {:
+    
+	public static void main(String args[]) throws Exception {
+		try{
+			FileInputStream fichero = new FileInputStream(args[0]);
+                        DataInputStream entrada = new DataInputStream(fichero);
+			Calculadora miCalc = new Calculadora(new InputStreamReader(entrada));
+                        parser p = new parser(miCalc);
+                        p.parse();
+		}
+		catch ( Exception e) {
+			System.out.println("ERROR :");
+			e.printStackTrace();
+			System.out.println(" Análisis INCORRECTO !!");
+			System.exit(1);
+		}
+		System.out.println("Análisis Correcto ");
+ 	}
+:}
+
+terminal PUNTOYCOMA, MAS,MENOS,DIV, POR, PAREN_I, PAREN_D;
+terminal Integer NUMERO;
+
+non terminal expr_list, expr_part;
+non terminal Integer expr;
+
+precedence right MAS,MENOS;
+precedence right POR,DIV;
+
+expr_list ::= expr_list expr_part | expr_part;
+expr_part ::= expr:e {: System.out.println(" = "+e+";"); :} PUNTOYCOMA;
+expr      ::= NUMERO:n
+	      {: RESULT=n; :}
+            | expr:l MAS expr:r
+	      {: RESULT=new Integer(l.intValue() + r.intValue()); :}
+
+	    | expr:l MENOS expr:r
+	      {: RESULT=new Integer(l.intValue() - r.intValue()); :}
+
+	    | expr:l DIV expr:r
+	      {: RESULT=new Integer(l.intValue() / r.intValue()); :}
+
+
+	    | expr:l POR expr:r
+	      {: RESULT=new Integer(l.intValue() * r.intValue()); :}
+	    | PAREN_I expr:e PAREN_D
+	      {: RESULT=e; :}
+	    ;
