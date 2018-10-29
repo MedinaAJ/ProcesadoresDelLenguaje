@@ -1,0 +1,40 @@
+
+
+import java.util.*;
+import java.io.*;
+%%
+
+%class EssentialOils
+%standalone
+%16bit
+
+%{
+  public int n_automatas;
+
+%}
+
+%init{
+	n_automatas = 0;
+%init}
+
+%eof{
+	System.out.println("Cabezera EOF");
+
+	System.out.println("--> FIN DE FICHERO <--");
+%eof}
+
+
+%%
+
+[new mooreAut]+[A-Za-z_]+[{]
+{
+	System.out.println("Reconoce Automata" + yytext());
+	n_automatas++;
+}
+
+[A-Za-z0-9 {}(),]+/; 
+{
+	System.out.println("Cadena reconocida: " + yytext());			
+}
+
+.   {}
