@@ -1,0 +1,10 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}\IeC {\textquestiondown }Qu\IeC {\'e} es un aut\IeC {\'o}mata de Moore?}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Definici\IeC {\'o}n formal}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Ejemplo concreto}{4}{subsection.1.2}
+\contentsline {section}{\numberline {2}Presentaci\IeC {\'o}n del problema}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Lenguaje definido}{5}{subsection.2.1}
+\contentsline {section}{\numberline {3}Diagramas de Conway}{5}{section.3}
+\contentsline {section}{\numberline {4}EBNF}{5}{section.4}
+\contentsline {section}{\numberline {5}Tablas de Tokens}{5}{section.5}
+\contentsline {section}{\numberline {6}\IeC {\textquestiondown }C\IeC {\'o}mo se va a construir el procesador del lenguaje dise\IeC {\~n}ado?}{6}{section.6}

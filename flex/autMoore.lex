@@ -1,15 +1,12 @@
-package Analizador;
-
 import java.util.*;
 import java.io.*;
 import java_cup.runtime.Symbol;
-import Analizador.sym;
+
 
 %%
 %cup
 %unicode
 %class AutMoore
-%standalone
 %16bit
 
 %{
@@ -53,7 +50,7 @@ import Analizador.sym;
 }
 
 <ESTADOS> {
-	"estados = {" {yybegin(LISTAESTADOS); return new Symbol(sym.ESTADOS, new String(yytext()));}
+	"estados =" {yybegin(LISTAESTADOS); return new Symbol(sym.ESTADOS, new String(yytext()));}
 }
 
 <LISTAESTADOS> {
@@ -70,15 +67,15 @@ import Analizador.sym;
 }
 
 <ALFABETOINICIAL> {
-	"alf_in = {" {yybegin(ALFABETOINICIAL); return new Symbol(sym.ALFABETOINICIAL, new String(yytext()));}
+	"alf_in = [" {yybegin(ALFABETOINICIAL); return new Symbol(sym.ALFABETOINICIAL, new String(yytext()));}
 	"e"[1-9][0-9]*"," {yybegin(ALFABETOINICIAL); return new Symbol(sym.EVENTOI, new String(yytext()));}
-	"e"[1-9][0-9]*"};" {yybegin(ALFABETOFINAL); return new Symbol(sym.EVENTOF, new String(yytext()));}
+	"e"[1-9][0-9]*"];" {yybegin(ALFABETOFINAL); return new Symbol(sym.EVENTOF, new String(yytext()));}
 }
 
 <ALFABETOFINAL> {
-	"alf_out = {" {yybegin(ALFABETOFINAL); return new Symbol(sym.ALFABETOFINAL, new String(yytext()));}
+	"alf_out = [" {yybegin(ALFABETOFINAL); return new Symbol(sym.ALFABETOFINAL, new String(yytext()));}
 	"c"[1-9][0-9]*"," {yybegin(ALFABETOFINAL); return new Symbol(sym.COMPORTAMIENTOI, new String(yytext()));}
-	"c"[1-9][0-9]*"};" {yybegin(TRANSICIONES); return new Symbol(sym.COMPORTAMIENTOF, new String(yytext()));}
+	"c"[1-9][0-9]*"];" {yybegin(TRANSICIONES); return new Symbol(sym.COMPORTAMIENTOF, new String(yytext()));}
 }
 
 <TRANSICIONES> {
