@@ -1,13 +1,21 @@
-# ProcesadoresDelLenguaje
+# Procesadores de Lenguajes
 
-Trabajo realizado:
--Creación de un Makefile para una ejecución mas sencilla
--Estructura de archivos /cup /flex /java /src
+Estructura del proyecto
+* docs
+  * latex_docs
+  * EBNF_moore.docx
+  * automata_de_prueba.txt
+* lexical analysis
+  * moore.lex
+  * moore.cup
+* optional
+  * /cup 
+  * /flex
+  * /java
+  * /src
+  * Makefile
+* README.md
 
-/cup contiene el archivo .cup
-/flex contiene el archivo .lex
-/java tiene los archivos .class
-/src tiene los ejecutables .java
 
 # Para poder instalar git en Ubuntu:
 $ sudo apt-get install git
@@ -20,7 +28,7 @@ $ git add .
 3) Hacer un commit
 $ git commit -m "mensaje"
 4) hacer un push
-$ git push
+$ git push origin master
 5) Cuando haya que hacer un pull
 $ git pull
 
