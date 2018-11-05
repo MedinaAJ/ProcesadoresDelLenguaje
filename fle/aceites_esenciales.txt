@@ -1,5 +1,0 @@
-new mooreAut Automata_Ejemplo{
-	estado = {hola} ;
-	salchica = 1 ;
-	vivaelrey = { (q0,e1,q2),(q0,e1,q2),(q0,e1,q2) } ;
-}

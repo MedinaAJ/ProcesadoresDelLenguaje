@@ -1,0 +1,71 @@
+
+
+import java.util.*;
+import java.io.*;
+%%
+
+%class AutomataClass
+%standalone
+%16bit
+
+%{
+  public int parent_op;
+  public int parent_cl;
+  public int n_automatas;
+  public String estado_inicial;
+  public ArrayList<String> estados;
+  public ArrayList<String> atributos_automatas;
+  public ArrayList<String> nombre_automata;
+  String id_atributo;
+%}
+
+%init{
+	parent_op = 0;
+	parent_cl = 0;
+	n_automatas = 0;
+	nombre_automata = new ArrayList<String>();
+	atributos_automatas = new ArrayList<String>();
+	estados = new ArrayList<String>();
+	String estado_inicial = "";
+	id_atributo = "";
+%init}
+
+%eof{
+	System.out.println("Cabezera EOF");
+
+	System.out.println("--> FIN DE FICHERO <--");
+%eof}
+
+
+%%
+
+[new moore_aut]+[A-Za-z_]+/[{]
+{
+	System.out.println("Reconoce Automata --> " + yytext().split(" ")[2]);
+	nombre_automata.add(yytext().split(" ")[2]);
+	n_automatas++;
+}
+
+"/"+"*"+(["\n""\t""."(){}=","A-Za-z"\""0-9";" ])+"*"+"/"
+{
+	System.out.println("ADIOS" + yytext());
+}
+
+"/"+"*"]+["\n"A-Za-z0-9"\t"{}=(),.;"\"" ]+"*"+"/"
+{
+	System.out.println("HOLALA" + yytext());
+}
+"/"+"*" + . + "*"+"/"
+{
+	System.out.println("HOLAADIOS" + yytext());
+}
+
+[A-Za-z0-9 {}(),]+/; 
+{
+	System.out.println("Cadena reconocida: " + yytext());
+	id_atributo = n_automatas + "." + yytext();
+	atributos_automatas.add(id_atributo);
+				
+}
+
+.   {}

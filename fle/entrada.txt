@@ -1,0 +1,16 @@
+/*
+c1={System.out.println("Activado Sensor 1");}
+c2={System.out.println("Activado Sensor 2");}
+c3={System.out.println("Activado Sensor 3");}
+*/
+
+/*hola t)od"o c(or{}r,ect;o".=*/
+
+new moore_aut Automata_de_Ejemplo{
+	{q0,q1,q2};
+	q0;
+	{e1,e2,e3};
+	{c1,c2,c3};
+	{(q0,e1,q1),(q1,e2,q1),(q1,e3,q2)};
+	{(q0,c1),(q1,c2),(q1,c3)};
+}
