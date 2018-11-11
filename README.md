@@ -4,6 +4,11 @@
 
 La práctica consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente.
 
+
+<p align="center">
+  <img width="300" height="300" src="https://github.com/MedinaAJ/ProcesadoresDelLenguaje/blob/master/docs/latex_docs/img/Modelo-moore.jpg">
+</p>
+
 ## Estructura del proyecto
 
 * docs
