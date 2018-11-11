@@ -23,8 +23,6 @@ class analizadorAutomata {
   public static final int AUTOMATA = 2;
   public static final int CODIGO = 4;
   public static final int COMENTARIOS = 6;
-  public static final int CUERPO_AUTOMATA = 8;
-  public static final int PROP_AUTOMATA = 10;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -33,19 +31,17 @@ class analizadorAutomata {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5, 5
+     0,  0,  1,  1,  2,  2,  3, 3
   };
 
   /** 
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\1\3\1\1\1\32\1\32\1\2\22\0\1\3\2\0\1\35"+
-    "\6\0\1\30\4\0\1\27\1\6\11\5\1\0\1\34\5\0\32\7"+
-    "\4\0\1\16\1\0\1\13\1\7\1\4\1\14\1\10\1\22\2\7"+
-    "\1\17\2\7\1\21\1\25\1\20\1\15\1\26\1\7\1\24\1\11"+
-    "\1\12\1\23\5\7\1\31\1\0\1\33\7\0\1\32\u1fa2\0\1\32"+
-    "\1\32\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
+    "\11\0\1\3\1\1\1\12\1\12\1\2\22\0\1\3\2\0\1\7"+
+    "\6\0\1\11\4\0\1\10\1\6\11\5\47\0\1\16\1\0\1\4"+
+    "\1\17\1\13\11\0\1\20\3\0\1\14\1\15\20\0\1\12\u1fa2\0"+
+    "\1\12\1\12\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
    * Translates characters to character classes
@@ -58,13 +54,12 @@ class analizadorAutomata {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\6\0\3\1\3\2\1\3\1\4\1\5\3\6\1\7"+
-    "\4\1\1\10\1\1\1\0\1\11\1\0\1\12\1\0"+
-    "\1\13\1\14\1\15\5\0\1\16\12\0\1\17\11\0"+
-    "\1\20\12\0";
+    "\4\0\3\1\1\2\1\3\1\4\1\5\2\6\1\5"+
+    "\1\7\1\5\1\10\2\0\1\11\1\12\1\13\4\0"+
+    "\1\14";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[70];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -89,18 +84,13 @@ class analizadorAutomata {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\36\0\74\0\132\0\170\0\226\0\264\0\322"+
-    "\0\360\0\264\0\u010e\0\u012c\0\264\0\u014a\0\u014a\0\264"+
-    "\0\u0168\0\u0186\0\264\0\u01a4\0\u01c2\0\u01e0\0\u01fe\0\264"+
-    "\0\u021c\0\u023a\0\264\0\u012c\0\264\0\u014a\0\u014a\0\u0258"+
-    "\0\264\0\u0276\0\u0294\0\u02b2\0\u02d0\0\u021c\0\u021c\0\u02ee"+
-    "\0\u030c\0\u032a\0\u0348\0\u0366\0\u0384\0\u03a2\0\u03c0\0\u03de"+
-    "\0\u03fc\0\264\0\u041a\0\u0438\0\u0456\0\u0474\0\u0492\0\u04b0"+
-    "\0\u04ce\0\u04ec\0\u050a\0\264\0\u0528\0\u0546\0\u0564\0\u0582"+
-    "\0\u05a0\0\u05be\0\u05dc\0\u05fa\0\u0618\0\u0636";
+    "\0\0\0\21\0\42\0\63\0\104\0\125\0\146\0\104"+
+    "\0\167\0\167\0\104\0\104\0\210\0\231\0\104\0\252"+
+    "\0\104\0\273\0\167\0\167\0\314\0\104\0\335\0\356"+
+    "\0\377\0\u0110\0\104";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[70];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -123,30 +113,17 @@ class analizadorAutomata {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\25\7\1\10\1\7\1\11\6\7\2\12\1\13\1\12"+
-    "\1\14\2\12\7\14\1\12\10\14\2\12\1\15\1\7"+
-    "\3\12\1\16\2\7\27\16\1\7\2\16\1\17\1\20"+
-    "\1\12\1\13\1\12\1\21\23\20\1\22\1\20\1\7"+
-    "\2\20\1\23\1\7\1\12\1\13\1\12\1\24\3\7"+
-    "\1\25\1\7\1\26\1\27\17\7\1\30\2\7\1\31"+
-    "\2\7\27\31\1\7\3\31\53\0\1\32\50\0\1\33"+
-    "\6\0\1\12\40\0\23\34\2\0\1\35\4\0\1\36"+
-    "\2\0\27\36\1\0\2\36\1\37\5\0\1\40\57\0"+
-    "\1\41\23\0\1\42\31\0\1\43\50\0\1\44\32\0"+
-    "\1\45\14\0\1\46\2\0\27\46\1\0\1\46\1\47"+
-    "\1\46\15\0\1\50\25\0\2\40\54\0\1\51\22\0"+
-    "\1\52\36\0\1\53\44\0\1\54\37\0\1\55\37\0"+
-    "\1\56\22\0\1\57\42\0\1\60\33\0\1\61\27\0"+
-    "\1\62\42\0\1\63\34\0\1\64\32\0\1\65\41\0"+
-    "\1\66\1\0\1\67\42\0\1\70\26\0\1\71\37\0"+
-    "\1\72\41\0\1\73\32\0\1\74\27\0\1\75\34\0"+
-    "\1\74\4\0\1\76\23\0\1\77\43\0\1\74\36\0"+
-    "\1\100\41\0\1\67\35\0\1\101\43\0\1\102\25\0"+
-    "\1\67\37\0\1\103\26\0\1\104\45\0\1\105\27\0"+
-    "\1\106\40\0\1\74\20\0";
+    "\10\5\1\6\2\5\1\7\5\5\1\10\2\5\7\10"+
+    "\1\5\6\10\1\11\2\5\4\11\1\12\2\11\1\5"+
+    "\6\11\1\13\1\14\1\15\1\14\1\16\2\13\1\17"+
+    "\1\13\1\20\1\5\6\13\32\0\1\21\23\0\1\22"+
+    "\4\0\1\23\2\0\4\23\1\24\2\23\1\0\6\23"+
+    "\1\0\1\14\24\0\1\25\23\0\1\26\25\0\1\27"+
+    "\10\0\2\25\30\0\1\30\21\0\1\31\21\0\1\32"+
+    "\14\0\1\33\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1620];
+    int [] result = new int[289];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -184,13 +161,11 @@ class analizadorAutomata {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\6\0\1\11\2\1\1\11\2\1\1\11\2\1\1\11"+
-    "\2\1\1\11\4\1\1\11\1\1\1\0\1\11\1\0"+
-    "\1\11\1\0\2\1\1\11\5\0\1\1\12\0\1\11"+
-    "\11\0\1\11\12\0";
+    "\4\0\1\11\2\1\1\11\2\1\2\11\2\1\1\11"+
+    "\1\1\1\11\2\0\2\1\1\11\4\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[70];
+    int [] result = new int[27];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -312,7 +287,7 @@ class analizadorAutomata {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 136) {
+    while (i < 98) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -681,73 +656,54 @@ class analizadorAutomata {
           case 1: 
             { System.out.print(yytext());
             }
-          case 17: break;
+          case 13: break;
           case 2: 
+            { yybegin(COMENTARIOS);
+            }
+          case 14: break;
+          case 3: 
+            { System.out.println("Error");
+            }
+          case 15: break;
+          case 4: 
+            { yybegin(COMENTARIOS);llaves_almohadillas--;System.out.println("ALMOADILLA CIERRE " + yytext());
+            }
+          case 16: break;
+          case 5: 
+            { /* Se omiten comentarios */
+            }
+          case 17: break;
+          case 6: 
             { 
             }
           case 18: break;
-          case 3: 
-            { yybegin(CUERPO_AUTOMATA);
-            }
-          case 19: break;
-          case 4: 
-            { System.out.println("Error");
-            }
-          case 20: break;
-          case 5: 
-            { yybegin(COMENTARIOS);llaves_almohadillas--;System.out.println("ALMOADILLA CIERRE " + yytext());
-            }
-          case 21: break;
-          case 6: 
-            { /* Se omiten comentarios */
-            }
-          case 22: break;
           case 7: 
             { yybegin(CODIGO); llaves_almohadillas++; System.out.println("ALMOADILLA " + yytext());
             }
-          case 23: break;
+          case 19: break;
           case 8: 
-            { yybegin(YYINITIAL);
-            }
-          case 24: break;
-          case 9: 
             { yybegin(COMENTARIOS); llaves_comentarios++; System.out.println("Se abre declaracion de comportamientos --> " + yytext());
             }
-          case 25: break;
-          case 10: 
-            // lookahead expression with fixed lookahead length
-            zzMarkedPos = Character.offsetByCodePoints
-                (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -1);
-            { System.out.println("Se reconoce token identificador <" + yytext() + ">");
-            }
-          case 26: break;
-          case 11: 
+          case 20: break;
+          case 9: 
             // lookahead expression with fixed lookahead length
             zzMarkedPos = Character.offsetByCodePoints
                 (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -1);
             { System.out.println("Se cierra almohadilla, se reconoce: "+ yytext());
             }
-          case 27: break;
-          case 12: 
+          case 21: break;
+          case 10: 
             { System.out.println("token comportamiento <"+yytext()+">  ");
             }
-          case 28: break;
-          case 13: 
-            { yybegin(YYINITIAL); llaves_comentarios--; System.out.println("Se cierra declaracion de comportamientos --> " + yytext());
+          case 22: break;
+          case 11: 
+            { yybegin(YYINITIAL); System.out.println("Se cierra declaracion de comportamientos --> " + yytext());
             }
-          case 29: break;
-          case 14: 
-            { yybegin(CUERPO_AUTOMATA); System.out.println("token propiedad automata <"+yytext()+">  ");
+          case 23: break;
+          case 12: 
+            { System.out.println("Se ha reconocido el token <"+yytext()+">");
             }
-          case 30: break;
-          case 15: 
-            { yybegin(AUTOMATA); System.out.println("Automata Reconocido");
-            }
-          case 31: break;
-          case 16: 
-            { yybegin(PROP_AUTOMATA); System.out.println("Se ha reconocido el token <"+yytext()+">");
-            }
-          case 32: break;
+          case 24: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

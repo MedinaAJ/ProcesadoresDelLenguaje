@@ -1,4 +1,4 @@
-PWD /home/lajotadeladerrota/Escritorio/Universidad/4Curso/PL/Lab/ProcesadoresDelLenguaje/docs
+PWD /home/lajotadeladerrota/Escritorio/Universidad/4Curso/PL/Lab/ProcesadoresDelLenguaje/docs/latex_docs
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
@@ -371,9 +371,9 @@ INPUT ./img/4.png
 INPUT img/3.png
 INPUT ./img/3.png
 INPUT ./img/3.png
-INPUT img/automata2.png
-INPUT ./img/automata2.png
-INPUT ./img/automata2.png
+INPUT img/aut.png
+INPUT ./img/aut.png
+INPUT ./img/aut.png
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newpx/zpl-Regular-tlf-t1.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newpx/zpl-Regular-tlf-t1.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newpx/zpl-Bold-tlf-t1.tfm

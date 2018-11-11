@@ -7,6 +7,7 @@ package moor;
 
 /**
  *
+ * @author alf
  */
 public class Moor{
 

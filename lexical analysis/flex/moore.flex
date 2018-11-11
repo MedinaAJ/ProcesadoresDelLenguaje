@@ -8,7 +8,7 @@ import java.io.*;
 
 /*--OPCIONES --*/
 /* Nombre de la clase generada para el analizadorlexico*/
-%class analizadorAutomata
+%class AnalizadorAutomata
 /* Indicar funcionamiento autonomo*/
 %standalone 
 /* Posibilitar acceso a la columna y fila actual de analisis*/
@@ -92,10 +92,13 @@ ID = [A-Za-z][A-Za-z0-9_]*
 	"#" {yybegin(CODIGO); llaves_almohadillas++; System.out.println("ALMOADILLA " + yytext());}
 	"*/"	{yybegin(YYINITIAL); llaves_comentarios--; System.out.println("Se cierra declaracion de comportamientos --> " + yytext());}
 	. 	{/* Se omiten comentarios */}
+
 }
-<CODIGO>
-{
+
+
+<CODIGO>{
 	. + /"#" {System.out.println("Se cierra almohadilla, se reconoce: "+ yytext());}	
 	"#" {yybegin(COMENTARIOS);llaves_almohadillas--;System.out.println("ALMOADILLA CIERRE " + yytext());}
 	. {System.out.println("Error");}
+
 }	

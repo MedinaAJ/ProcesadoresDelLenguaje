@@ -243,14 +243,23 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 
 	\newpage
 	\section{Presentación del problema}
+	La práctica consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente, en nuestro caso Java.
+	\newline
+	\newline
+	Los conocimientos en la materia serán útiles en las distintas etapas del proceso, en primer lugar, se necesitará definir el léxico del lenguaje de entrada, para los cuál emplearemos los diagramas T que hemos aprendido durante los primeros temas.
+	\newline
+	\newline
+	También utilizaremos los conocimientos de la asignatura en la elaboración de la tabla de tokens, lexemas y patrones del lenguaje, y el EBNF de este.
+	
 	\subsection{Lenguaje definido}
 	\begin{center}
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=0.7\linewidth]{img/automata2}
-			\caption{}
-			\label{fig:automata2}
-		\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{img/aut}
+	\caption{}
+	\label{fig:aut}
+\end{figure}
+
 	\end{center}
 	
 	
@@ -258,50 +267,50 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 	\newpage
 	\section{EBNF}
 			\begin{center}
-			\begin{tabular}{|c|c|c|}
+			\begin{tabular}{|c|c|}
 				\hline 
-		\textbf{Producción izquierda} & ::= & \textbf{Producción derecha} \\ 
+		\textbf{Producción izquierda} & \textbf{Producción derecha} \\ 
 				\hline 
-				PROGRAMA & ::= & COMP (COMP | AUTOMATA) { AUTOMATA} \\ 
+				PROGRAMA & COMP AUTOMATA $\{$AUTOMATA$\}$ \\ 
 				\hline 
-				COMP  &  ::= & $'\ast/'$ DEC$\_$COMP $'\ast/'$ \\ 
+				COMP  & $'\ast/'$ DEC$\_$COMP $'\ast/'$ \\ 
 				\hline 
-				DEC$\_$COMP & ::= & CMP $'\{'$ CODIGO $'\}'$ | $\{$ CMP $'\{'$ CODIGO $'\}'$ $\}$ \\ 
+				DEC$\_$COMP & CMP  CODIGO | $\{$ CMP CODIGO $\}$ \\ 
 				\hline 
-				CODIGO 	& ::=  & '$\#$' ASCII '$\#$' \\ 
+				CODIGO 	&'$\#$' ASCII '$\#$' \\ 
 				\hline 
-				AUTOMATA & ::= & \textbf{moore} ID CUERPO$\_$AUTOMATA \\
+				AUTOMATA &  \textbf{moore} ID CUERPO$\_$AUTOMATA \\
 				\hline 
 			
-				CUERPO$\_$AUTOMATA	& ::= & $'\{'$ ESTADOS ESTADO$\_$INI ALF$\_$IN  \\ 
+				CUERPO$\_$AUTOMATA	&  $'\{'$ ESTADOS ESTADO$\_$INI ALF$\_$IN  \\ 
 				\hline 
-					&  & ALF$\_$OUT TRANSICION COMPORTAMIENTOS $'\}'$ \\ 
+					&   ALF$\_$OUT TRANSICION COMPORTAMIENTOS $'\}'$ \\ 
 				\hline 
-				ESTADOS	&  ::= &  \textbf{estados} $\{$ ID ',' $\}$ ID ';'\\ 
+				ESTADOS	&    \textbf{estados} $\{$ ID ',' $\}$ ID ';'\\ 
 				\hline 
-				 ESTADO$\_$INI &  ::= & \textbf{estado$\_$in} ID ';'\\ 
+				 ESTADO$\_$INI & \textbf{estado$\_$in} ID ';'\\ 
 				\hline 
-				ALF$\_$IN &  ::= & \textbf{alf$\_$in}  $\{$ EVENTOS ',' $\}$ EVENTOS ';' \\ 
+				ALF$\_$IN & \textbf{alf$\_$in}  $\{$ EVENTOS ',' $\}$ EVENTOS ';' \\ 
 				\hline
-				ALF$\_$OUT &  ::= & \textbf{alf$\_$out}  $\{$ CMP ',' $\}$ CMP ';'  \\ 
+				ALF$\_$OUT & \textbf{alf$\_$out}  $\{$ CMP ',' $\}$ CMP ';'  \\ 
 				\hline 
-				TRANSICION 	 &  ::= & \textbf{transicion} $'\{'$ TRANSICION$\_$DEF $\{$ TRANSICION$\_$DEF $\}$ $'\}'$ \\ 
+				TRANSICION 	 &  \textbf{transicion} $'\{'$ TRANSICION$\_$DEF $\{$ TRANSICION$\_$DEF $\}$ $'\}'$ \\ 
 				\hline 
-				TRANSICION$\_$DEF	 &  ::= & '(' ID ',' EVENTS ',' VAL$\_$TRANS \\ 
+				TRANSICION$\_$DEF &  '(' ID ',' EVENTS ',' VAL$\_$TRANS \\ 
 				\hline 
-				VAL$\_$TRANS &  ::= &  ID ')' ',' | ID ')' ';'\\ 
+				VAL$\_$TRANS &   ID ')' ',' | ID ')' ';'\\ 
 				\hline 
-				COMPORTAMIENTOS	 &  ::= &  \textbf{comportamientos} $'\{'$ COMP$\_$DEF $\{$ COMP$\_$DEF $\}$ $'\}'$\\ 
+				COMPORTAMIENTOS	 &   \textbf{comportamientos} $'\{'$ COMP$\_$DEF $\{$ COMP$\_$DEF $\}$ $'\}'$\\ 
 				\hline 
-				COMP$\_$DEF &  ::= & '(' ID ',' VAL$\_$COMP \\ 
+				COMP$\_$DEF &   '(' ID ',' VAL$\_$COMP \\ 
 				\hline 
-				VAL$\_$COMP &  ::= &  CMP ')' ';' | CMP ')' ';' \\ 
+				VAL$\_$COMP &   CMP ')' ';' | CMP ')' ';' \\ 
 				\hline 
-				CMP  &  ::= & 'c'NUMEROS \\ 
+				CMP  &  'c'NUMEROS \\ 
 				\hline 
-				 EVENTOS &  ::= & 'e'NUMEROS \\ 
+				 EVENTOS & 'e'NUMEROS \\ 
 				 \hline 
-				 NUMEROS &  ::= & 0 | 1 | .. | 9 \\ 
+				 NUMEROS & 0 | 1 | .. | 9 \\ 
 				 \hline 
 				
 			\end{tabular} 	
@@ -357,10 +366,20 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 			\hline
 		    CODIGO	& $\#$codigo aquí $\#$  & $\#$$\cdot$ codigo aquí $\cdot$$\#$\\ 
 			\hline
+			ESTADO	& q0  & q[1-9][0-9]*\\ 
+			\hline
 		\end{tabular} 	
 	\end{center}
 	\newpage
 	\section{¿Cómo se va a construir el procesador del lenguaje diseñado?}
+	En el siguiente diagrama tipo T se explica el funcionamiento del procesador que se pretende implementar, tomamos \textbf{ Mor } como lenguaje fuente, y Java como lenguaje objeto, y además el lenguaje que implementa es Java, es decir, nuestro compilador compila a Java, y esta escrito a Java. 
+	\newline
+	\newline
+	Para utilizar ese compilador, utilizamos un compilador auxiliar, que está escrito en código máquina para dar lugar a bytecode, el típico archivo \textbf{.class} que generamos al compilar un \textbf{.java}.
+	\newline
+	
+	Por último tenemos que compilar el bytecode, con un compilador que acepta bytecode escrito en código máquina.
+	
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.7
