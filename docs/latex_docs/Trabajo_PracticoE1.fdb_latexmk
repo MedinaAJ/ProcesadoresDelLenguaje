@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1541864455 "Trabajo_PracticoE1.tex" "Trabajo_PracticoE1.pdf" "Trabajo_PracticoE1" 1541864456
+["pdflatex"] 1542800356 "Trabajo_PracticoE1.tex" "Trabajo_PracticoE1.pdf" "Trabajo_PracticoE1" 1542800357
   "/etc/texmf/web2c/texmf.cnf" 1518879637 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/newpx/tgpdiff.enc" 1480098668 2578 b708622871ecc9a6e7e3801756bb26ff ""
@@ -196,10 +196,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1534498289 2593799 ff81ae01f07a72a7e1f0f8400a6db8ab ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1539339576 873600 dcc12569a67806df806ef46383372975 ""
-  "Trabajo_PracticoE1.aux" 1541864456 3027 d6c3cd5a8c9fc87f1898c82ba8f10951 ""
-  "Trabajo_PracticoE1.out" 1541864456 596 a11a586fa3f8767d8c396f1a3e93581c ""
-  "Trabajo_PracticoE1.tex" 1541864454 15354 d7d66b91dfae417e1900512d9d3280b1 ""
-  "Trabajo_PracticoE1.toc" 1541864456 861 37ab2caada15512e398238fefd897a27 ""
+  "Trabajo_PracticoE1.aux" 1542800356 2928 d02a726f19e29148ff46b805a88e1cdc ""
+  "Trabajo_PracticoE1.out" 1542800356 531 22bda6d6f0be6d983648c8a73702ddf4 ""
+  "Trabajo_PracticoE1.tex" 1542800356 8953 ce09491071188b7bdd85011cf10b3d89 ""
+  "Trabajo_PracticoE1.toc" 1542800356 780 1abbcb71c98b03ac2654708314b61bd4 ""
   "img/3.png" 1540814630 48595 fe5bdf77afa010d613bb27e187e39a25 ""
   "img/4.png" 1540814931 45455 5668af982a04608751af0876e6c0e575 ""
   "img/Modelo-moore.jpg" 1540809951 9536 c38721747d81f859082ba617013b52b6 ""
@@ -207,8 +207,8 @@
   "img/image004.png" 1540651510 4983 d90fc5ce3aa9362d701257b9e987cca3 ""
   "img/photo5978652419892031524.jpg" 1541355496 18084 cebdaa5d72804791551cd144442c8aa8 ""
   (generated)
-  "Trabajo_PracticoE1.pdf"
-  "Trabajo_PracticoE1.log"
-  "Trabajo_PracticoE1.aux"
-  "Trabajo_PracticoE1.toc"
   "Trabajo_PracticoE1.out"
+  "Trabajo_PracticoE1.aux"
+  "Trabajo_PracticoE1.log"
+  "Trabajo_PracticoE1.pdf"
+  "Trabajo_PracticoE1.toc"

@@ -1,12 +1,15 @@
 
 
-/*
+
 
 
 c1 # System.out.println("Activado sensor 1"); #
 c2 # System.out.println("Activado sensor 2"); #
 c3 # System.out.println("Activado sensor 3"); #
 
+
+/*
+ Comentario de prueba
 */
 
 moore Automata_de_Ejemplo{

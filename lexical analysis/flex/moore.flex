@@ -2,16 +2,25 @@
 import java.util.*;
 import java.io.*;
 
+
+// Aquí es donde concurrirán los imports que se utilizarán o bien como clase de erroes por ejemplo
+// import Errors;
+// o bien los imports de 
 %%
 
 /* -----------------Seccion de opciones y declaraciones -----------------*/
 
 /*--OPCIONES --*/
 /* Nombre de la clase generada para el analizadorlexico*/
+
 %class AnalizadorAutomata
+
 /* Indicar funcionamiento autonomo*/
+
 %standalone 
+
 /* Posibilitar acceso a la columna y fila actual de analisis*/
+
 %line
 %column
 
@@ -49,15 +58,26 @@ import java.io.*;
 NL  = \n | \r | \r\n | \t
 BLANCO = " "
 TAB =  \t
-CMP = c[1-9][0-9]*
-EST = q[1-9][0-9]*
-PROPIEDAD = "estados" | "estado_in" | "alf_in" | "alf_out" | "transicion" | "comportamiento"
+CMP = c[0-9][1-9]*
+ESTADOS = "estados"
+INICIAL = "estado_int"
+ALF_OUT = "alf_out"
+ALF_IN = "alf_in"
+TRANS = "transicion"
+COMPORT = "comportamiento"
 ID = [A-Za-z][A-Za-z0-9_]*
+
 %state AUTOMATA
 %state CODIGO
 %state COMENTARIOS
 %state CUERPO_AUTOMATA
-%state PROP_AUTOMATA
+%state ESTADO
+%state INICIAL
+%state ALF_ENTRADA
+%state ALF_SALIDA
+%state TRANSICION
+%state COMPORTAMIENTO
+
 %%
 /* ------------------------Seccion de reglas y acciones ----------------------*/
 <YYINITIAL> {
@@ -75,26 +95,56 @@ ID = [A-Za-z][A-Za-z0-9_]*
 }
 
 <CUERPO_AUTOMATA>{
-	{NL}	{}
-	{BLANCO} {}
-	{PROPIEDAD} {yybegin(PROP_AUTOMATA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{ESTADOS} {yybegin(PROP_AUTOMATA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{INICIAL} {yybegin(INICIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); }
+	{ALF_IN}  {yybegin(ALF_ENTRADA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{ALF_OUT} {yybegin(ALF_SALIDA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{TRANS}   {yybegin(TRANSICION); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{COMPORT} {yybegin(COMPORTAMIENTO); System.out.println("Se ha reconocido el token <"+yytext()+">");}
 	"}" {yybegin(YYINITIAL);}
 }
 
-<PROP_AUTOMATA>{
-	. + ";" {yybegin(CUERPO_AUTOMATA); System.out.println("token propiedad automata <"+yytext()+">  ");}
+
+<ESTADO> {
+	. {}
+
 }
 
+<INICIAL> {
+
+	{EST} +";" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+
+}
+
+
+<ALF_ENTRADA> {
+	. 	{/* Se omiten comentarios */}
+
+}
+
+<ALF_SALIDA> {
+	. 	{/* Se omiten comentarios */}
+
+}
+
+<TRANSICION> {
+	. 	{/* Se omiten comentarios */}
+}
+
+<COMPORTAMIENTO> {
+	. 	{/* Se omiten comentarios */}
+
+}
+
+
 <COMENTARIOS>{
-	{NL}	{}
-	{BLANCO} {}
+
 	{CMP}	{System.out.println("token comportamiento <"+yytext()+">  ");}
 	"#" {yybegin(CODIGO); llaves_almohadillas++; System.out.println("ALMOADILLA " + yytext());}
 	"*/"	{yybegin(YYINITIAL); llaves_comentarios--; System.out.println("Se cierra declaracion de comportamientos --> " + yytext());}
 	. 	{/* Se omiten comentarios */}
 
 }
-
 
 <CODIGO>{
 	. + /"#" {System.out.println("Se cierra almohadilla, se reconoce: "+ yytext());}	
