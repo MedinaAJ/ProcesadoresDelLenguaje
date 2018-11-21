@@ -371,9 +371,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/pxfonts/pxmi.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/public/pxfonts/pxmi.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/pxfonts/rpxmi.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/pxfonts/rpxpplri.tfm
-INPUT img/aut.png
-INPUT ./img/aut.png
-INPUT ./img/aut.png
+INPUT img/ejemplo.png
+INPUT ./img/ejemplo.png
+INPUT ./img/ejemplo.png
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newpx/zpl-Regular-tlf-t1.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newpx/zpl-Regular-tlf-t1.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/newpx/zpl-Bold-tlf-t1.tfm

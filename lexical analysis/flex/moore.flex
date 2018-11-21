@@ -60,12 +60,13 @@ BLANCO = " "
 TAB =  \t
 CMP = c[0-9][1-9]*
 ESTADOS = "estados"
-INICIAL = "estado_int"
+EINICIAL = "estado_in"
 ALF_OUT = "alf_out"
 ALF_IN = "alf_in"
 TRANS = "transicion"
 COMPORT = "comportamiento"
 ID = [A-Za-z][A-Za-z0-9_]*
+MOORE = "moore"
 
 %state AUTOMATA
 %state CODIGO
@@ -77,78 +78,103 @@ ID = [A-Za-z][A-Za-z0-9_]*
 %state ALF_SALIDA
 %state TRANSICION
 %state COMPORTAMIENTO
-
+%state DECCOMP
 %%
 /* ------------------------Seccion de reglas y acciones ----------------------*/
 <YYINITIAL> {
-	"/*" {yybegin(COMENTARIOS); llaves_comentarios++; System.out.println("Se abre declaracion de comportamientos --> " + yytext());}
-	"moore" {yybegin(AUTOMATA); System.out.println("Automata Reconocido");}
+	"/*" {yybegin(COMENTARIOS); llaves_comentarios++; System.out.println("Se abre comentario " + yytext());}
+	{MOORE} {yybegin(AUTOMATA); System.out.println("Automata Reconocido");}
+	{CMP}	{yybegin(DECCOMP); System.out.println("token comportamiento <"+yytext()+">  ");}
 
 }/* fin YYinitial */
 
 <AUTOMATA>{
+
 	{NL}	{}
 	{BLANCO} {}
+	{TAB} {}
 	{ID} + /"{" {System.out.println("Se reconoce token identificador <" + yytext() + ">");}
 	"{" {yybegin(CUERPO_AUTOMATA);}
 	. {}
 }
 
 <CUERPO_AUTOMATA>{
-	{ESTADOS} {yybegin(PROP_AUTOMATA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{INICIAL} {yybegin(INICIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); }
+	{ESTADOS} {yybegin(ESTADO); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{EINICIAL} {yybegin(INICIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); }
 	{ALF_IN}  {yybegin(ALF_ENTRADA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{ALF_OUT} {yybegin(ALF_SALIDA); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{ALF_OUT} {yybegin(ALF_SALIDA);System.out.println("Se ha reconocido el token <"+yytext()+">");}
 	{TRANS}   {yybegin(TRANSICION); System.out.println("Se ha reconocido el token <"+yytext()+">");}
 	{COMPORT} {yybegin(COMPORTAMIENTO); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	"}" {yybegin(YYINITIAL);}
+	"}" {yybegin(YYINITIAL); System.out.println("Finaliza automata");}
 }
 
 
 <ESTADO> {
-	. {}
-
+	
+	"," {}
+	{ID} {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	";" {yybegin(CUERPO_AUTOMATA);}
 }
 
 <INICIAL> {
-
-	{EST} +";" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
-
+	{NL}	{}
+	{BLANCO} {}
+	{ID} {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	";" {yybegin(CUERPO_AUTOMATA);}
+	.   {System.out.println("error");}
 }
 
 
 <ALF_ENTRADA> {
-	. 	{/* Se omiten comentarios */}
+	"," {}
+	{ID} {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	";" {yybegin(CUERPO_AUTOMATA);}
 
 }
 
 <ALF_SALIDA> {
-	. 	{/* Se omiten comentarios */}
+	"," {}
+	{ID} {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	";" {yybegin(CUERPO_AUTOMATA);}
 
 }
 
 <TRANSICION> {
-	. 	{/* Se omiten comentarios */}
+	"{" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	"(" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	")" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	"," {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{ID} {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	";" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	. + /"}" {/* Se omiten comentarios */}
+	"}" {yybegin(CUERPO_AUTOMATA);{System.out.println("Se ha reconocido el token <"+yytext()+">");}}
 }
 
 <COMPORTAMIENTO> {
-	. 	{/* Se omiten comentarios */}
+	"{" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	"(" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	")" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	"," {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	";" {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{ID} {System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	. + /"}" {/* Se omiten comentarios */ }
+	"}" {yybegin(CUERPO_AUTOMATA);}
+}
+
+<DECCOMP>{
+	"#" {yybegin(CODIGO); llaves_almohadillas++; System.out.println("ALMOADILLA " + yytext());}
+	. {/* Se omiten comentarios */}
 
 }
 
-
 <COMENTARIOS>{
-
-	{CMP}	{System.out.println("token comportamiento <"+yytext()+">  ");}
-	"#" {yybegin(CODIGO); llaves_almohadillas++; System.out.println("ALMOADILLA " + yytext());}
-	"*/"	{yybegin(YYINITIAL); llaves_comentarios--; System.out.println("Se cierra declaracion de comportamientos --> " + yytext());}
-	. 	{/* Se omiten comentarios */}
-
+	. + /"*/" { System.out.println("Se cierra comentario, texto comentario: " + yytext()); llaves_comentarios--; }
+	"*/" {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}}
 }
 
 <CODIGO>{
 	. + /"#" {System.out.println("Se cierra almohadilla, se reconoce: "+ yytext());}	
-	"#" {yybegin(COMENTARIOS);llaves_almohadillas--;System.out.println("ALMOADILLA CIERRE " + yytext());}
+	"#" {yybegin(YYINITIAL); llaves_almohadillas--;System.out.println("ALMOADILLA CIERRE " + yytext());}
 	. {System.out.println("Error");}
 
 }	
