@@ -1,0 +1,22 @@
+/* ----------------------Seccion de declaraciones package e imports--------------------*/
+
+import java_cup.runtime.*;
+
+/* ----------------------Seccion componentes de codigo de usuario --------------------*/
+
+
+/* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
+
+terminal c, d;
+non terminal S, C;
+
+
+/* -------------Declaracion de precedencias -----------*/
+
+
+
+/* --------------Declaracion de la gramatica -----------*/
+
+S      ::= C C;
+C      ::= c C |
+           d;

@@ -1,0 +1,104 @@
+import java_cup.runtime.*;
+import java.io.*;
+import java.util.ArrayList;
+
+
+
+parser code {:
+	
+	public static void main(String args[]) throws Exception {
+		try{
+			System.out.println(args[0]);
+			FileInputStream fichero = new FileInputStream(args[0]);
+			DataInputStream entrada = new DataInputStream(fichero);
+			new parser(new EssentialOils(entrada)).parse();
+		}
+		catch ( Exception e) {
+			System.out.println("ERROR :");
+			e.printStackTrace();
+			System.out.println(" Análisis INCORRECTO !!");
+			System.exit(1);
+		}
+		System.out.println("Análisis Correcto ");
+ 	}
+:}
+
+
+action code {: 
+	
+AceitesEsenciales ACEITE;
+ArrayList<AceitesEsenciales> aceites;
+
+:}
+
+
+non terminal descripcion, nombre, beneficios, final_fichero, fich;
+non terminal AceitesEsenciales Aceite;
+non terminal AceitesEsenciales[] Lista;
+non terminal String[] atributos;
+non terminal String[] carac;
+
+terminal String VALOR;
+
+terminal String AE;
+terminal String Nombrelatino; 
+terminal String Familia;
+terminal String Uso;
+terminal String Procedencia;
+terminal String Extraccion;
+terminal String Descripcionolfativa;
+terminal String Apariencia;
+terminal String NotadePerfume;
+terminal String Perfume;
+terminal String Solubleen;
+terminal String Insolubleen;
+terminal String Descripcion;
+terminal String Propiedades;
+terminal String Precauciones;
+terminal String Contraindicaciones;
+terminal String Sinergia;
+
+non terminal Laux, atributoInicial;
+non terminal String nombreAtributo;
+
+
+Laux ::= {: aceites = new ArrayList<AceitesEsenciales>(); :} Lista 
+{:   
+	System.out.println("FINALIZANDO ANALISIS... MOSTRANDO NOMBRES LATINOS DE ACEITES RECOPILADOS");
+	System.out.println("Tamaño lista aceites : " + aceites.size());
+	for(int i = 0; i<aceites.size(); i++) System.out.println(aceites.get(i).getNombre_latino());
+:};
+Lista ::= Lista Aceite
+	| Aceite ;
+
+Aceite ::= {: ACEITE = new AceitesEsenciales(); :} atributoInicial atributos;
+
+atributoInicial ::= AE VALOR:valor_ae {: System.out.println("Aceite esencial identificado: " + valor_ae); :};
+
+nombreAtributo::= Nombrelatino:n {: RESULT=n; :}  
+	| Familia:n {: RESULT=n; :}  
+	| Uso:n {: RESULT=n; :}   
+	| Procedencia:n {: RESULT=n; :}   
+	| Extraccion:n {: RESULT=n; :}   
+	| Descripcionolfativa:n {: RESULT=n; :}   
+	| Apariencia:n {: RESULT=n; :}   
+	| NotadePerfume:n {: RESULT=n; :}   
+	| Perfume:n {: RESULT=n; :}   
+	| Solubleen:n {: RESULT=n; :}   
+	| Insolubleen:n {: RESULT=n; :}   
+	| Descripcion:n {: RESULT=n; :}  
+	| Propiedades:n {: RESULT=n; :}   
+	| Precauciones:n {: RESULT=n; :}   
+	| Contraindicaciones:n {: RESULT=n; :}   
+	| Sinergia:n {: RESULT=n; :};
+
+atributos ::= atributos nombreAtributo:nA VALOR:v {: ACEITE.set(nA,v); :}
+	| nombreAtributo:nA VALOR:v {: ACEITE.set(nA,v); aceites.add(ACEITE); System.out.println("Aceite añadido a la lista : " + ACEITE.getNombre_latino()); :};
+
+
+
+
+
+
+
+

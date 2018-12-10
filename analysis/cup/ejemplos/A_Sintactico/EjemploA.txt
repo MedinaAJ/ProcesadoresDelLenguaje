@@ -1,0 +1,4 @@
+jflex -inputstreamctor aceites_esenciales.lex
+cup aceites_esenciales.cup
+javac EssentialOils.java sym.java parser.java 
+java parser aceites_esenciales.txt

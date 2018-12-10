@@ -1,0 +1,28 @@
+/*
+ * Mecanismo de Recuperación de error análisis sintáctico ascendente.
+ */
+
+grammar ejemplo_1
+{
+    analysis    LALR1;
+    nonterminal S, C, D;
+    terminal    a, b, c, d;
+
+    S := C D C;
+    C := c C | d;
+    D := a D b | a b;
+
+}
+
+grammar ejemplo_2
+{
+    analysis    LALR1;
+    nonterminal S, C, D;
+    terminal    a, b, c, d, error;
+
+    S := C D C;
+    C := c C | d;
+    D := a D b | a b | error;
+
+}
+
