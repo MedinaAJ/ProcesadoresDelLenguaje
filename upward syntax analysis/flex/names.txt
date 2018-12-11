@@ -1,0 +1,20 @@
+        "/*" BARAST_OP (NO NECESARIOS)
+	"*/" BARAST_CL (NO NECESARIOS)
+        {CMP}  CMP
+	{CODIGO} CODIGO
+	"moore" MOORE
+	{ID} ID
+	"{" LLPARENT_OP
+	"}" LLPARENT_CL
+	"estados" ESTADOS
+	"est_in" ESTADO_INI
+	"alf_in"  ALF_INI
+	"alf_out" ALF_OUT
+	"transicion" TRANS
+	"comportamiento"
+	"," COMA 
+	";" PUNTO_COMA
+	"(" LPARENT_OP
+	")" LLPARENT_CL
+
+
