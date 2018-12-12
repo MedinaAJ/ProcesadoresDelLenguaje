@@ -79,22 +79,22 @@ MOORE = "moore"
 /* ------------------------Seccion de reglas y acciones ----------------------*/
 <YYINITIAL> {
 
-	{CMP} {return symbol(sym.CMP); yybegin(YYINITIAL); System.out.println("token comportamiento <"+yytext()+">");}
-	"#" {yybegin(CODIGO); System.out.println("ALMOADILLA " + yytext());}
-	{MOORE} {return symbol(sym.MOORE); yybegin(YYINITIAL); System.out.println("Automata Reconocido");}
-	{ID} {return symbol(sym.ID); yybegin(YYINITIAL); System.out.println("Se reconoce token identificador <" + yytext() + ">");}
-	"{" {return symbol(sym.LLPARENT_OP); yybegin(YYINITIAL); System.out.println("Se reconoce token identificador <" + yytext() + ">");}
-	"}" {return symbol(sym.LLPARENT_CL); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{ESTADOS} {return symbol(sym.ESTADOS); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{EINICIAL} {return symbol(sym.ESTADO_INI); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{ALF_IN}  {return symbol(sym.ALF_INI); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{ALF_OUT} {return symbol(sym.ALF_OUT); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{TRANS}   {return symbol(sym.TRANS); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	{COMPORT} {return symbol(sym.COMPORTAMIENTO); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	"," {return symbol(sym.COMA); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	";" {return symbol(sym.PUNTO_COMA); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	"(" {return symbol(sym.LPARENT_OP); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
-	")" {return symbol(sym.LLPARENT_CL); yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");}
+	{CMP} {yybegin(YYINITIAL); System.out.println("token comportamiento <"+yytext()+">"); return symbol(sym.CMP);}
+	"#" {yybegin(CODIGO); System.out.println("ALMOADILLA " + yytext()); return symbol(sym.ALM_OP);}
+	{MOORE} {yybegin(YYINITIAL); System.out.println("Automata Reconocido"); return symbol(sym.MOORE);}
+	{ID} {yybegin(YYINITIAL); System.out.println("Se reconoce token identificador <" + yytext() + ">"); return symbol(sym.ID);}
+	"{" {yybegin(YYINITIAL); System.out.println("Se reconoce token identificador <" + yytext() + ">"); return symbol(sym.LLCORCH_OP);}
+	"}" {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLCORCH_CL);}
+	{ESTADOS} {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ESTADOS);}
+	{EINICIAL} {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ESTADO_INI);}
+	{ALF_IN}  {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ALF_IN);}
+	{ALF_OUT} {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ALF_OUT);}
+	{TRANS}   {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.TRANS);}
+	{COMPORT} {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.COMPORTAMIENTO);}
+	"," {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.COMA);}
+	";" {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.PUNTO_COMA);}
+	"(" {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLPARENT_OP);}
+	")" {yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLPARENT_CL);}
 	\"                             { string.setLength(0); yybegin(STRING); }
 	/* comments */
 	{Comment}                      { /* ignore */ }
@@ -110,8 +110,8 @@ MOORE = "moore"
 }
 
 <CODIGO>{
-	. + /"#" {return symbol(sym.CODIGO); System.out.println("Se cierra almohadilla, se reconoce: "+ yytext());}
-	"#" {yybegin(YYINITIAL);System.out.println("ALMOADILLA CIERRE " + yytext());}
+	. + /"#" {System.out.println("Se cierra almohadilla, se reconoce: "+ yytext()); return symbol(sym.CODIGO);}
+	"#" {yybegin(YYINITIAL);System.out.println("ALMOADILLA CIERRE " + yytext()); return symbol(sym.ALM_CL);}
 	. {System.out.println("Error");}
 }
 
