@@ -3,6 +3,7 @@
 //* --------------------------Seccion codigo-usuario ------------------------*/
 import java.util.*;
 import java.io.*;
+import java_cup.runtime.Symbol;
 
 
 /**
@@ -10,7 +11,7 @@ import java.io.*;
  * <a href="http://www.jflex.de/">JFlex</a> 1.6.1
  * from the specification file <tt>moore.flex</tt>
  */
-class analizadorAutomata {
+class AnalizadorAutomata implements java_cup.runtime.Scanner {
 
   /** This character denotes the end of file */
   public static final int YYEOF = -1;
@@ -20,9 +21,9 @@ class analizadorAutomata {
 
   /** lexical states */
   public static final int YYINITIAL = 0;
-  public static final int AUTOMATA = 2;
-  public static final int CODIGO = 4;
-  public static final int COMENTARIOS = 6;
+  public static final int CODIGO = 2;
+  public static final int COMENTARIOS = 4;
+  public static final int STRING = 6;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -38,10 +39,147 @@ class analizadorAutomata {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\1\3\1\1\1\12\1\12\1\2\22\0\1\3\2\0\1\7"+
-    "\6\0\1\11\4\0\1\10\1\6\11\5\47\0\1\16\1\0\1\4"+
-    "\1\17\1\13\11\0\1\20\3\0\1\14\1\15\20\0\1\12\u1fa2\0"+
-    "\1\12\1\12\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
+    "\11\0\1\3\1\2\1\41\1\42\1\1\16\0\4\0\1\3\1\0"+
+    "\1\40\1\31\1\0\3\0\1\36\1\37\1\5\1\0\1\34\2\0"+
+    "\1\4\1\6\11\7\1\0\1\35\5\0\32\30\4\0\1\17\1\0"+
+    "\1\14\1\30\1\10\1\15\1\11\1\23\2\30\1\20\2\30\1\22"+
+    "\1\26\1\21\1\16\1\27\1\30\1\25\1\12\1\13\1\24\5\30"+
+    "\1\32\1\0\1\33\1\0\6\0\1\41\32\0\2\0\4\0\4\0"+
+    "\1\0\2\0\1\0\7\0\1\0\4\0\1\0\5\0\27\0\1\0"+
+    "\37\0\1\0\u01ca\0\4\0\14\0\16\0\5\0\7\0\1\0\1\0"+
+    "\1\0\21\0\160\0\5\0\1\0\2\0\2\0\4\0\10\0\1\0"+
+    "\1\0\3\0\1\0\1\0\1\0\24\0\1\0\123\0\1\0\213\0"+
+    "\1\0\5\0\2\0\236\0\11\0\46\0\2\0\1\0\7\0\47\0"+
+    "\7\0\1\0\1\0\55\0\1\0\1\0\1\0\2\0\1\0\2\0"+
+    "\1\0\1\0\10\0\33\0\5\0\3\0\15\0\5\0\6\0\1\0"+
+    "\4\0\13\0\5\0\53\0\37\0\4\0\2\0\1\0\143\0\1\0"+
+    "\1\0\10\0\1\0\6\0\2\0\2\0\1\0\4\0\2\0\12\0"+
+    "\3\0\2\0\1\0\17\0\1\0\1\0\1\0\36\0\33\0\2\0"+
+    "\131\0\13\0\1\0\16\0\12\0\41\0\11\0\2\0\4\0\1\0"+
+    "\5\0\26\0\4\0\1\0\11\0\1\0\3\0\1\0\5\0\22\0"+
+    "\31\0\3\0\104\0\1\0\1\0\13\0\67\0\33\0\1\0\4\0"+
+    "\66\0\3\0\1\0\22\0\1\0\7\0\12\0\2\0\2\0\12\0"+
+    "\1\0\7\0\1\0\7\0\1\0\3\0\1\0\10\0\2\0\2\0"+
+    "\2\0\26\0\1\0\7\0\1\0\1\0\3\0\4\0\2\0\1\0"+
+    "\1\0\7\0\2\0\2\0\2\0\3\0\1\0\10\0\1\0\4\0"+
+    "\2\0\1\0\3\0\2\0\2\0\12\0\4\0\7\0\1\0\5\0"+
+    "\3\0\1\0\6\0\4\0\2\0\2\0\26\0\1\0\7\0\1\0"+
+    "\2\0\1\0\2\0\1\0\2\0\2\0\1\0\1\0\5\0\4\0"+
+    "\2\0\2\0\3\0\3\0\1\0\7\0\4\0\1\0\1\0\7\0"+
+    "\14\0\3\0\1\0\13\0\3\0\1\0\11\0\1\0\3\0\1\0"+
+    "\26\0\1\0\7\0\1\0\2\0\1\0\5\0\2\0\1\0\1\0"+
+    "\10\0\1\0\3\0\1\0\3\0\2\0\1\0\17\0\2\0\2\0"+
+    "\2\0\12\0\1\0\1\0\17\0\3\0\1\0\10\0\2\0\2\0"+
+    "\2\0\26\0\1\0\7\0\1\0\2\0\1\0\5\0\2\0\1\0"+
+    "\1\0\7\0\2\0\2\0\2\0\3\0\10\0\2\0\4\0\2\0"+
+    "\1\0\3\0\2\0\2\0\12\0\1\0\1\0\20\0\1\0\1\0"+
+    "\1\0\6\0\3\0\3\0\1\0\4\0\3\0\2\0\1\0\1\0"+
+    "\1\0\2\0\3\0\2\0\3\0\3\0\3\0\14\0\4\0\5\0"+
+    "\3\0\3\0\1\0\4\0\2\0\1\0\6\0\1\0\16\0\12\0"+
+    "\11\0\1\0\7\0\3\0\1\0\10\0\1\0\3\0\1\0\27\0"+
+    "\1\0\12\0\1\0\5\0\3\0\1\0\7\0\1\0\3\0\1\0"+
+    "\4\0\7\0\2\0\1\0\2\0\6\0\2\0\2\0\2\0\12\0"+
+    "\22\0\2\0\1\0\10\0\1\0\3\0\1\0\27\0\1\0\12\0"+
+    "\1\0\5\0\2\0\1\0\1\0\7\0\1\0\3\0\1\0\4\0"+
+    "\7\0\2\0\7\0\1\0\1\0\2\0\2\0\2\0\12\0\1\0"+
+    "\2\0\17\0\2\0\1\0\10\0\1\0\3\0\1\0\51\0\2\0"+
+    "\1\0\7\0\1\0\3\0\1\0\4\0\1\0\10\0\1\0\10\0"+
+    "\2\0\2\0\2\0\12\0\12\0\6\0\2\0\2\0\1\0\22\0"+
+    "\3\0\30\0\1\0\11\0\1\0\1\0\2\0\7\0\3\0\1\0"+
+    "\4\0\6\0\1\0\1\0\1\0\10\0\22\0\2\0\15\0\60\0"+
+    "\1\0\2\0\7\0\4\0\10\0\10\0\1\0\12\0\47\0\2\0"+
+    "\1\0\1\0\2\0\2\0\1\0\1\0\2\0\1\0\6\0\4\0"+
+    "\1\0\7\0\1\0\3\0\1\0\1\0\1\0\1\0\2\0\2\0"+
+    "\1\0\4\0\1\0\2\0\6\0\1\0\2\0\1\0\2\0\5\0"+
+    "\1\0\1\0\1\0\6\0\2\0\12\0\2\0\4\0\40\0\1\0"+
+    "\27\0\2\0\6\0\12\0\13\0\1\0\1\0\1\0\1\0\1\0"+
+    "\4\0\2\0\10\0\1\0\44\0\4\0\24\0\1\0\2\0\5\0"+
+    "\13\0\1\0\44\0\11\0\1\0\71\0\53\0\24\0\1\0\12\0"+
+    "\6\0\6\0\4\0\4\0\3\0\1\0\3\0\2\0\7\0\3\0"+
+    "\4\0\15\0\14\0\1\0\17\0\2\0\46\0\1\0\1\0\5\0"+
+    "\1\0\2\0\53\0\1\0\u014d\0\1\0\4\0\2\0\7\0\1\0"+
+    "\1\0\1\0\4\0\2\0\51\0\1\0\4\0\2\0\41\0\1\0"+
+    "\4\0\2\0\7\0\1\0\1\0\1\0\4\0\2\0\17\0\1\0"+
+    "\71\0\1\0\4\0\2\0\103\0\2\0\3\0\40\0\20\0\20\0"+
+    "\125\0\14\0\u026c\0\2\0\21\0\1\0\32\0\5\0\113\0\3\0"+
+    "\3\0\17\0\15\0\1\0\4\0\3\0\13\0\22\0\3\0\13\0"+
+    "\22\0\2\0\14\0\15\0\1\0\3\0\1\0\2\0\14\0\64\0"+
+    "\40\0\3\0\1\0\3\0\2\0\1\0\2\0\12\0\41\0\3\0"+
+    "\2\0\12\0\6\0\130\0\10\0\51\0\1\0\1\0\5\0\106\0"+
+    "\12\0\35\0\3\0\14\0\4\0\14\0\12\0\12\0\36\0\2\0"+
+    "\5\0\13\0\54\0\4\0\21\0\7\0\2\0\6\0\12\0\46\0"+
+    "\27\0\5\0\4\0\65\0\12\0\1\0\35\0\2\0\13\0\6\0"+
+    "\12\0\15\0\1\0\130\0\5\0\57\0\21\0\7\0\4\0\12\0"+
+    "\21\0\11\0\14\0\3\0\36\0\15\0\2\0\12\0\54\0\16\0"+
+    "\14\0\44\0\24\0\10\0\12\0\3\0\3\0\12\0\44\0\122\0"+
+    "\3\0\1\0\25\0\4\0\1\0\4\0\3\0\2\0\11\0\300\0"+
+    "\47\0\25\0\4\0\u0116\0\2\0\6\0\2\0\46\0\2\0\6\0"+
+    "\2\0\10\0\1\0\1\0\1\0\1\0\1\0\1\0\1\0\37\0"+
+    "\2\0\65\0\1\0\7\0\1\0\1\0\3\0\3\0\1\0\7\0"+
+    "\3\0\4\0\2\0\6\0\4\0\15\0\5\0\3\0\1\0\7\0"+
+    "\16\0\5\0\30\0\1\41\1\41\5\0\20\0\2\0\23\0\1\0"+
+    "\13\0\5\0\5\0\6\0\1\0\1\0\15\0\1\0\20\0\15\0"+
+    "\3\0\33\0\25\0\15\0\4\0\1\0\3\0\14\0\21\0\1\0"+
+    "\4\0\1\0\2\0\12\0\1\0\1\0\3\0\5\0\6\0\1\0"+
+    "\1\0\1\0\1\0\1\0\1\0\4\0\1\0\13\0\2\0\4\0"+
+    "\5\0\5\0\4\0\1\0\21\0\51\0\u0a77\0\57\0\1\0\57\0"+
+    "\1\0\205\0\6\0\4\0\3\0\2\0\14\0\46\0\1\0\1\0"+
+    "\5\0\1\0\2\0\70\0\7\0\1\0\17\0\1\0\27\0\11\0"+
+    "\7\0\1\0\7\0\1\0\7\0\1\0\7\0\1\0\7\0\1\0"+
+    "\7\0\1\0\7\0\1\0\7\0\1\0\40\0\57\0\1\0\u01d5\0"+
+    "\3\0\31\0\11\0\6\0\1\0\5\0\2\0\5\0\4\0\126\0"+
+    "\2\0\2\0\2\0\3\0\1\0\132\0\1\0\4\0\5\0\51\0"+
+    "\3\0\136\0\21\0\33\0\65\0\20\0\u0200\0\u19b6\0\112\0\u51cd\0"+
+    "\63\0\u048d\0\103\0\56\0\2\0\u010d\0\3\0\20\0\12\0\2\0"+
+    "\24\0\57\0\1\0\4\0\12\0\1\0\31\0\7\0\1\0\120\0"+
+    "\2\0\45\0\11\0\2\0\147\0\2\0\4\0\1\0\4\0\14\0"+
+    "\13\0\115\0\12\0\1\0\3\0\1\0\4\0\1\0\27\0\5\0"+
+    "\20\0\1\0\7\0\64\0\14\0\2\0\62\0\21\0\13\0\12\0"+
+    "\6\0\22\0\6\0\3\0\1\0\4\0\12\0\34\0\10\0\2\0"+
+    "\27\0\15\0\14\0\35\0\3\0\4\0\57\0\16\0\16\0\1\0"+
+    "\12\0\46\0\51\0\16\0\11\0\3\0\1\0\10\0\2\0\2\0"+
+    "\12\0\6\0\27\0\3\0\1\0\1\0\4\0\60\0\1\0\1\0"+
+    "\3\0\2\0\2\0\5\0\2\0\1\0\1\0\1\0\30\0\3\0"+
+    "\2\0\13\0\5\0\2\0\3\0\2\0\12\0\6\0\2\0\6\0"+
+    "\2\0\6\0\11\0\7\0\1\0\7\0\221\0\43\0\10\0\1\0"+
+    "\2\0\2\0\12\0\6\0\u2ba4\0\14\0\27\0\4\0\61\0\u2104\0"+
+    "\u016e\0\2\0\152\0\46\0\7\0\14\0\5\0\5\0\1\0\1\0"+
+    "\12\0\1\0\15\0\1\0\5\0\1\0\1\0\1\0\2\0\1\0"+
+    "\2\0\1\0\154\0\41\0\u016b\0\22\0\100\0\2\0\66\0\50\0"+
+    "\15\0\3\0\20\0\20\0\7\0\14\0\2\0\30\0\3\0\31\0"+
+    "\1\0\6\0\5\0\1\0\207\0\2\0\1\0\4\0\1\0\13\0"+
+    "\12\0\7\0\32\0\4\0\1\0\1\0\32\0\13\0\131\0\3\0"+
+    "\6\0\2\0\6\0\2\0\6\0\2\0\3\0\3\0\2\0\3\0"+
+    "\2\0\22\0\3\0\4\0\14\0\1\0\32\0\1\0\23\0\1\0"+
+    "\2\0\1\0\17\0\2\0\16\0\42\0\173\0\105\0\65\0\210\0"+
+    "\1\0\202\0\35\0\3\0\61\0\57\0\37\0\21\0\33\0\65\0"+
+    "\36\0\2\0\44\0\4\0\10\0\1\0\5\0\52\0\236\0\2\0"+
+    "\12\0\u0356\0\6\0\2\0\1\0\1\0\54\0\1\0\2\0\3\0"+
+    "\1\0\2\0\27\0\252\0\26\0\12\0\32\0\106\0\70\0\6\0"+
+    "\2\0\100\0\1\0\3\0\1\0\2\0\5\0\4\0\4\0\1\0"+
+    "\3\0\1\0\33\0\4\0\3\0\4\0\1\0\40\0\35\0\203\0"+
+    "\66\0\12\0\26\0\12\0\23\0\215\0\111\0\u03b7\0\3\0\65\0"+
+    "\17\0\37\0\12\0\20\0\3\0\55\0\13\0\2\0\1\0\22\0"+
+    "\31\0\7\0\12\0\6\0\3\0\44\0\16\0\1\0\12\0\100\0"+
+    "\3\0\60\0\16\0\4\0\13\0\12\0\u04a6\0\53\0\15\0\10\0"+
+    "\12\0\u0936\0\u036f\0\221\0\143\0\u0b9d\0\u042f\0\u33d1\0\u0239\0\u04c7\0"+
+    "\105\0\13\0\1\0\56\0\20\0\4\0\15\0\u4060\0\2\0\u2163\0"+
+    "\5\0\3\0\26\0\2\0\7\0\36\0\4\0\224\0\3\0\u01bb\0"+
+    "\125\0\1\0\107\0\1\0\2\0\2\0\1\0\2\0\2\0\2\0"+
+    "\4\0\1\0\14\0\1\0\1\0\1\0\7\0\1\0\101\0\1\0"+
+    "\4\0\2\0\10\0\1\0\7\0\1\0\34\0\1\0\4\0\1\0"+
+    "\5\0\1\0\1\0\3\0\7\0\1\0\u0154\0\2\0\31\0\1\0"+
+    "\31\0\1\0\37\0\1\0\31\0\1\0\37\0\1\0\31\0\1\0"+
+    "\37\0\1\0\31\0\1\0\37\0\1\0\31\0\1\0\10\0\2\0"+
+    "\62\0\u1600\0\4\0\1\0\33\0\1\0\2\0\1\0\1\0\2\0"+
+    "\1\0\1\0\12\0\1\0\4\0\1\0\1\0\1\0\1\0\6\0"+
+    "\1\0\4\0\1\0\1\0\1\0\1\0\1\0\1\0\3\0\1\0"+
+    "\2\0\1\0\1\0\2\0\1\0\1\0\1\0\1\0\1\0\1\0"+
+    "\1\0\1\0\1\0\1\0\2\0\1\0\1\0\2\0\4\0\1\0"+
+    "\7\0\1\0\4\0\1\0\4\0\1\0\1\0\1\0\12\0\1\0"+
+    "\21\0\5\0\3\0\1\0\5\0\1\0\21\0\u1144\0\ua6d7\0\51\0"+
+    "\u1035\0\13\0\336\0\u3fe2\0\u021e\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\u05ee\0"+
+    "\1\0\36\0\140\0\200\0\360\0\uffff\0\uffff\0\ufe12\0";
 
   /** 
    * Translates characters to character classes
@@ -54,12 +192,15 @@ class analizadorAutomata {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\4\0\3\1\1\2\1\3\1\4\1\5\2\6\1\5"+
-    "\1\7\1\5\1\10\2\0\1\11\1\12\1\13\4\0"+
-    "\1\14";
+    "\4\0\1\1\2\2\1\1\6\3\1\4\1\5\1\6"+
+    "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\2\0"+
+    "\1\2\1\0\1\16\5\3\1\0\1\17\1\0\1\20"+
+    "\2\0\5\3\1\21\1\0\12\3\1\22\4\3\1\23"+
+    "\1\3\1\24\2\3\1\25\4\3\1\26\2\3\1\27"+
+    "\3\3\1\30";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[27];
+    int [] result = new int[80];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -84,13 +225,19 @@ class analizadorAutomata {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\21\0\42\0\63\0\104\0\125\0\146\0\104"+
-    "\0\167\0\167\0\104\0\104\0\210\0\231\0\104\0\252"+
-    "\0\104\0\273\0\167\0\167\0\314\0\104\0\335\0\356"+
-    "\0\377\0\u0110\0\104";
+    "\0\0\0\43\0\106\0\151\0\151\0\214\0\151\0\257"+
+    "\0\322\0\365\0\u0118\0\u013b\0\u015e\0\u0181\0\151\0\151"+
+    "\0\151\0\151\0\151\0\151\0\151\0\151\0\u01a4\0\u01a4"+
+    "\0\u01c7\0\u01ea\0\u020d\0\u0230\0\u0253\0\u0276\0\u0299\0\u02bc"+
+    "\0\u02df\0\u0302\0\u01a4\0\u01a4\0\u0325\0\u01c7\0\u0348\0\u036b"+
+    "\0\u038e\0\u03b1\0\u03d4\0\u03f7\0\u041a\0\u01c7\0\u043d\0\u0460"+
+    "\0\u0483\0\u04a6\0\u04c9\0\u04ec\0\u050f\0\u0532\0\u0555\0\u0578"+
+    "\0\u059b\0\u0118\0\u05be\0\u05e1\0\u0604\0\u0627\0\u0118\0\u064a"+
+    "\0\u0118\0\u066d\0\u0690\0\u0118\0\u06b3\0\u06d6\0\u06f9\0\u071c"+
+    "\0\u0118\0\u073f\0\u0762\0\u0118\0\u0785\0\u07a8\0\u07cb\0\u0118";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[27];
+    int [] result = new int[80];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -113,17 +260,42 @@ class analizadorAutomata {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\10\5\1\6\2\5\1\7\5\5\1\10\2\5\7\10"+
-    "\1\5\6\10\1\11\2\5\4\11\1\12\2\11\1\5"+
-    "\6\11\1\13\1\14\1\15\1\14\1\16\2\13\1\17"+
-    "\1\13\1\20\1\5\6\13\32\0\1\21\23\0\1\22"+
-    "\4\0\1\23\2\0\4\23\1\24\2\23\1\0\6\23"+
-    "\1\0\1\14\24\0\1\25\23\0\1\26\25\0\1\27"+
-    "\10\0\2\25\30\0\1\30\21\0\1\31\21\0\1\32"+
-    "\14\0\1\33\4\0";
+    "\1\5\1\6\2\7\1\10\3\5\1\11\1\12\1\13"+
+    "\1\14\1\15\2\13\1\5\6\13\1\16\2\13\1\17"+
+    "\1\20\1\21\1\22\1\23\1\24\1\25\1\26\1\0"+
+    "\1\7\1\27\2\0\26\27\1\30\7\27\2\0\1\31"+
+    "\2\0\2\31\1\32\33\31\47\0\1\7\44\0\1\33"+
+    "\1\34\43\0\2\35\6\13\1\36\12\13\20\0\4\13"+
+    "\1\37\16\13\20\0\23\13\20\0\17\13\1\40\3\13"+
+    "\20\0\14\13\1\41\6\13\20\0\10\13\1\42\12\13"+
+    "\12\0\1\43\2\0\26\43\1\44\7\43\2\0\1\31"+
+    "\2\0\2\31\1\45\33\31\2\0\1\31\2\0\1\31"+
+    "\1\46\1\45\33\31\2\0\1\33\1\6\1\7\40\33"+
+    "\5\47\1\50\35\47\6\0\1\13\1\35\21\13\20\0"+
+    "\20\13\1\51\2\13\20\0\5\13\1\52\15\13\20\0"+
+    "\6\13\1\53\14\13\20\0\15\13\1\54\5\13\20\0"+
+    "\10\13\1\55\12\13\12\0\1\31\2\0\1\31\1\56"+
+    "\1\45\33\31\2\0\5\47\1\57\35\47\4\0\1\7"+
+    "\1\50\43\0\21\13\1\60\1\13\20\0\6\13\1\61"+
+    "\14\13\20\0\13\13\1\62\7\13\20\0\11\13\1\63"+
+    "\11\13\20\0\17\13\1\64\3\13\12\0\4\47\1\7"+
+    "\1\57\35\47\6\0\10\13\1\65\12\13\20\0\7\13"+
+    "\1\66\13\13\20\0\4\13\1\67\16\13\20\0\10\13"+
+    "\1\70\1\13\1\71\10\13\20\0\3\13\1\72\17\13"+
+    "\20\0\17\13\1\73\3\13\20\0\10\13\1\74\12\13"+
+    "\20\0\12\13\1\75\10\13\20\0\16\13\1\76\4\13"+
+    "\20\0\13\13\1\77\7\13\20\0\5\13\1\100\15\13"+
+    "\20\0\4\13\1\101\4\13\1\102\11\13\20\0\2\13"+
+    "\1\103\20\13\20\0\5\13\1\104\15\13\20\0\6\13"+
+    "\1\105\14\13\20\0\12\13\1\106\10\13\20\0\12\13"+
+    "\1\107\10\13\20\0\20\13\1\110\2\13\20\0\13\13"+
+    "\1\111\7\13\20\0\10\13\1\112\12\13\20\0\12\13"+
+    "\1\113\10\13\20\0\13\13\1\114\7\13\20\0\3\13"+
+    "\1\115\17\13\20\0\13\13\1\116\7\13\20\0\5\13"+
+    "\1\117\15\13\20\0\10\13\1\120\12\13\12\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[289];
+    int [] result = new int[2030];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -161,11 +333,12 @@ class analizadorAutomata {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\4\0\1\11\2\1\1\11\2\1\2\11\2\1\1\11"+
-    "\1\1\1\11\2\0\2\1\1\11\4\0\1\11";
+    "\3\0\1\10\1\11\1\1\1\11\7\1\10\11\2\1"+
+    "\2\0\1\1\1\0\6\1\1\0\1\1\1\0\1\1"+
+    "\2\0\6\1\1\0\41\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[27];
+    int [] result = new int[80];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -241,14 +414,15 @@ class analizadorAutomata {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
+	StringBuffer string = new StringBuffer();
 
-  static int numCount =0, identCount = 0, lineCount = 0;
-  static final String[] errores = {};
-  int llaves_comentarios;
-  int llaves_almohadillas;
-  int llaves_automatas;
-  int llaves_atr_automata;
+	private Symbol symbol(int type) {
+		return new Symbol(type, yyline, yycolumn);
+	}
 
+	private Symbol symbol(int type, Object value) {
+		return new Symbol(type, yyline, yycolumn, value);
+	}
 
 
   /**
@@ -257,12 +431,9 @@ class analizadorAutomata {
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  analizadorAutomata(java.io.Reader in) {
-  	System.out.println("Iniciando Analizador Sintactico...");
-	llaves_comentarios = 0;
-  	llaves_automatas = 0;
-  	llaves_atr_automata = 0;
-	llaves_almohadillas = 0;
+  AnalizadorAutomata(java.io.Reader in) {
+  	System.out.println("Iniciando Analizador Lexico ... ");
+
     this.zzReader = in;
   }
 
@@ -272,7 +443,7 @@ class analizadorAutomata {
    *
    * @param   in  the java.io.Inputstream to read input from.
    */
-  analizadorAutomata(java.io.InputStream in) {
+  AnalizadorAutomata(java.io.InputStream in) {
     this(new java.io.InputStreamReader
              (in, java.nio.charset.Charset.forName("UTF-8")));
   }
@@ -287,7 +458,7 @@ class analizadorAutomata {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 98) {
+    while (i < 2830) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -494,13 +665,13 @@ class analizadorAutomata {
    * Contains user EOF-code, which will be executed exactly once,
    * when the end of file is reached
    */
-  private void zzDoEOF() {
+  private void zzDoEOF() throws java.io.IOException {
     if (!zzEOFDone) {
       zzEOFDone = true;
     
-   System.out.println("Numeros: " + numCount + " Identificadores: " + identCount +" Lines: " +lineCount);
 
 
+  yyclose();
     }
   }
 
@@ -512,7 +683,7 @@ class analizadorAutomata {
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
    */
-  public int yylex() throws java.io.IOException {
+  public java_cup.runtime.Symbol next_token() throws java.io.IOException {
     int zzInput;
     int zzAction;
 
@@ -649,61 +820,112 @@ class analizadorAutomata {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-        return YYEOF;
+          { return new java_cup.runtime.Symbol(sym.EOF); }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1: 
-            { System.out.print(yytext());
-            }
-          case 13: break;
-          case 2: 
-            { yybegin(COMENTARIOS);
-            }
-          case 14: break;
-          case 3: 
-            { System.out.println("Error");
-            }
-          case 15: break;
-          case 4: 
-            { yybegin(COMENTARIOS);llaves_almohadillas--;System.out.println("ALMOADILLA CIERRE " + yytext());
-            }
-          case 16: break;
-          case 5: 
-            { /* Se omiten comentarios */
-            }
-          case 17: break;
-          case 6: 
             { 
             }
-          case 18: break;
+          case 25: break;
+          case 2: 
+            { /* ignore */
+            }
+          case 26: break;
+          case 3: 
+            { yybegin(YYINITIAL); System.out.println("Se reconoce token identificador <" + yytext() + ">"); return symbol(sym.ID);
+            }
+          case 27: break;
+          case 4: 
+            { yybegin(CODIGO); System.out.println("ALMOADILLA " + yytext()); return symbol(sym.ALM_OP);
+            }
+          case 28: break;
+          case 5: 
+            { yybegin(YYINITIAL); System.out.println("Se reconoce token identificador <" + yytext() + ">"); return symbol(sym.LLCORCH_OP);
+            }
+          case 29: break;
+          case 6: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLCORCH_CL);
+            }
+          case 30: break;
           case 7: 
-            { yybegin(CODIGO); llaves_almohadillas++; System.out.println("ALMOADILLA " + yytext());
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.COMA);
             }
-          case 19: break;
+          case 31: break;
           case 8: 
-            { yybegin(COMENTARIOS); llaves_comentarios++; System.out.println("Se abre declaracion de comportamientos --> " + yytext());
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.PUNTO_COMA);
             }
-          case 20: break;
+          case 32: break;
           case 9: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLPARENT_OP);
+            }
+          case 33: break;
+          case 10: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLPARENT_CL);
+            }
+          case 34: break;
+          case 11: 
+            { string.setLength(0); yybegin(STRING);
+            }
+          case 35: break;
+          case 12: 
+            { System.out.println("Error");
+            }
+          case 36: break;
+          case 13: 
+            { yybegin(YYINITIAL);System.out.println("ALMOADILLA CIERRE " + yytext()); return symbol(sym.ALM_CL);
+            }
+          case 37: break;
+          case 14: 
+            { yybegin(YYINITIAL); System.out.println("token comportamiento <"+yytext()+">"); return symbol(sym.CMP);
+            }
+          case 38: break;
+          case 15: 
             // lookahead expression with fixed lookahead length
             zzMarkedPos = Character.offsetByCodePoints
                 (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -1);
-            { System.out.println("Se cierra almohadilla, se reconoce: "+ yytext());
+            { System.out.println("Se cierra almohadilla, se reconoce: "+ yytext()); return symbol(sym.CODIGO);
             }
-          case 21: break;
-          case 10: 
-            { System.out.println("token comportamiento <"+yytext()+">  ");
+          case 39: break;
+          case 16: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">");
             }
-          case 22: break;
-          case 11: 
-            { yybegin(YYINITIAL); System.out.println("Se cierra declaracion de comportamientos --> " + yytext());
+          case 40: break;
+          case 17: 
+            // lookahead expression with fixed lookahead length
+            zzMarkedPos = Character.offsetByCodePoints
+                (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -2);
+            { System.out.println("Se cierra comentario, texto comentario: " + yytext());
             }
-          case 23: break;
-          case 12: 
-            { System.out.println("Se ha reconocido el token <"+yytext()+">");
+          case 41: break;
+          case 18: 
+            { yybegin(YYINITIAL); System.out.println("Automata Reconocido"); return symbol(sym.MOORE);
             }
-          case 24: break;
+          case 42: break;
+          case 19: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ALF_IN);
+            }
+          case 43: break;
+          case 20: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ESTADOS);
+            }
+          case 44: break;
+          case 21: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ALF_OUT);
+            }
+          case 45: break;
+          case 22: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ESTADO_INI);
+            }
+          case 46: break;
+          case 23: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.TRANS);
+            }
+          case 47: break;
+          case 24: 
+            { yybegin(YYINITIAL); System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.COMPORTAMIENTO);
+            }
+          case 48: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
@@ -712,17 +934,51 @@ class analizadorAutomata {
   }
 
   /**
+   * Converts an int token code into the name of the
+   * token by reflection on the cup symbol class/interface sym
+   *
+   * This code was contributed by Karl Meissner <meissnersd@yahoo.com>
+   */
+  private String getTokenName(int token) {
+    try {
+      java.lang.reflect.Field [] classFields = sym.class.getFields();
+      for (int i = 0; i < classFields.length; i++) {
+        if (classFields[i].getInt(null) == token) {
+          return classFields[i].getName();
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
+
+    return "UNKNOWN TOKEN";
+  }
+
+  /**
+   * Same as next_token but also prints the token to standard out
+   * for debugging.
+   *
+   * This code was contributed by Karl Meissner <meissnersd@yahoo.com>
+   */
+  public java_cup.runtime.Symbol debug_next_token() throws java.io.IOException {
+    java_cup.runtime.Symbol s = next_token();
+    System.out.println( "line:" + (yyline+1) + " col:" + (yycolumn+1) + " --"+ yytext() + "--" + getTokenName(s.sym) + "--");
+    return s;
+  }
+
+  /**
    * Runs the scanner on input files.
    *
-   * This is a standalone scanner, it will print any unmatched
-   * text to System.out unchanged.
+   * This main method is the debugging routine for the scanner.
+   * It prints debugging information about each returned token to
+   * System.out until the end of file is reached, or an error occured.
    *
    * @param argv   the command line, contains the filenames to run
    *               the scanner on.
    */
   public static void main(String argv[]) {
     if (argv.length == 0) {
-      System.out.println("Usage : java analizadorAutomata [ --encoding <name> ] <inputfile(s)>");
+      System.out.println("Usage : java AnalizadorAutomata [ --encoding <name> ] <inputfile(s)>");
     }
     else {
       int firstFilePos = 0;
@@ -738,12 +994,12 @@ class analizadorAutomata {
         }
       }
       for (int i = firstFilePos; i < argv.length; i++) {
-        analizadorAutomata scanner = null;
+        AnalizadorAutomata scanner = null;
         try {
           java.io.FileInputStream stream = new java.io.FileInputStream(argv[i]);
           java.io.Reader reader = new java.io.InputStreamReader(stream, encodingName);
-          scanner = new analizadorAutomata(reader);
-          while ( !scanner.zzAtEOF ) scanner.yylex();
+          scanner = new AnalizadorAutomata(reader);
+          while ( !scanner.zzAtEOF ) scanner.debug_next_token();
         }
         catch (java.io.FileNotFoundException e) {
           System.out.println("File not found : \""+argv[i]+"\"");

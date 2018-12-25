@@ -1,0 +1,66 @@
+/* ----------------------Seccion de declaraciones package e imports--------------------*/
+
+import java_cup.runtime.*;
+
+/* ----------------------Seccion componentes de codigo de usuario --------------------*/
+action code {: 
+	
+
+:}
+/* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
+non terminal aux, programa, dec_comp, codigo, automata, dec_automata, cuerpo_automata, estados, dec_estados, estado_ini, alf_in, dec_alf_in, alf_out, dec_alf_out, transicion, transicion_def, dec_transicion, comportamientos, dec_comportamientos, comp_def;
+
+terminal String CMP;
+terminal String CODIGO; 
+terminal String MOORE;
+terminal String ID;
+terminal String LLCORCH_OP;
+terminal String LLCORCH_CL;
+terminal String ESTADOS;
+terminal String ESTADO_INI;
+terminal String ALF_IN;
+terminal String ALF_OUT;
+terminal String TRANS;
+terminal String COMPORTAMIENTO;
+terminal String COMA;
+terminal String PUNTO_COMA;
+terminal String LLPARENT_OP;
+terminal String LLPARENT_CL;
+terminal String ALM_OP;
+terminal String ALM_CL;
+
+/* -------------Declaracion de precedencias -----------*/
+
+
+
+/* --------------Declaracion de la gramatica -----------*/
+
+aux ::= programa {: System.out.println("Analisis finalizado"); :} {: /*Esto lo hago porque luego hay que meter codigo antes y despues del analisis sintactico y semantico*/ :};
+programa ::= dec_comp dec_automata ;
+dec_comp ::= CMP codigo dec_comp
+		| CMP codigo ;
+dec_automata ::= automata dec_automata
+		| automata ;
+codigo ::= ALM_OP CODIGO ALM_CL ;
+automata ::= MOORE {: System.out.println("llega2"); :} ID cuerpo_automata ;
+cuerpo_automata ::= LLCORCH_OP {: System.out.println("llega3"); :} estados estado_ini alf_in alf_out transicion comportamientos LLCORCH_CL ;
+estados ::=  ESTADOS dec_estados PUNTO_COMA ;
+dec_estados ::= ID COMA dec_estados
+		| ID ;
+estado_ini ::= ESTADO_INI ID PUNTO_COMA ;
+alf_in ::= ALF_IN dec_alf_in PUNTO_COMA ;
+dec_alf_in ::= ID COMA dec_alf_in
+		| ID ;
+alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA ;
+dec_alf_out ::= CMP COMA dec_alf_out
+		| CMP ;
+transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL ;
+dec_transicion ::= transicion_def COMA dec_transicion 
+		| transicion_def ;
+transicion_def ::= LLPARENT_OP ID COMA ID COMA ID LLPARENT_CL ;
+comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA LLCORCH_CL ;
+dec_comportamientos ::= comp_def COMA dec_comportamientos 
+		| comp_def ;
+comp_def ::= LLPARENT_OP ID COMA CMP LLPARENT_CL ;
+	
+
