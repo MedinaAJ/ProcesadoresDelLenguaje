@@ -11,11 +11,11 @@ La práctica consiste en el diseño de un procesador de lenguajes cuya entrada e
 
 ## Problema y tecnología empleada
 
-El principal problema del proyecto es la construcción de dos procesadores de lenguaje:
-	* Procesador de lenguajes basado en un analizador sintáctico descendente usando Antlr.
-	* Procesador de lenguajes basado en un analizador sintáctico ascendente usando Jflex y cup.
+El principal problema del proyecto es la construcción de dos procesadores de lenguaje.
+  * Procesador de lenguajes basado en un analizador sintáctico descendente usando Antlr.
+  * Procesador de lenguajes basado en un analizador sintáctico ascendente usando Jflex y cup.
 
-Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico, el lenguaje Mor esta ciertamente basado en Java, es de tipo verboso, y al usuario no le resultará difícil su aprendizaje.
+Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico, el lenguaje *Mor esta ciertamente basado en Java, es de tipo verboso, y al usuario no le resultará difícil su aprendizaje.
 
 ## Estructura del proyecto
 
