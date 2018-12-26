@@ -9,24 +9,28 @@ La práctica consiste en el diseño de un procesador de lenguajes cuya entrada e
   <img width="300" height="300" src="https://github.com/MedinaAJ/ProcesadoresDelLenguaje/blob/master/docs/latex_docs/img/Modelo-moore.jpg">
 </p>
 
+## Problema y tecnología empleada
+
+El principal problema del proyecto es la construcción de dos procesadores de lenguaje:
+	* Procesador de lenguajes basado en un analizador sintáctico descendente usando Antlr.
+	* Procesador de lenguajes basado en un analizador sintáctico ascendente usando Jflex y cup.
+
+Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico, el lenguaje Mor esta ciertamente basado en Java, es de tipo verboso, y al usuario no le resultará difícil su aprendizaje.
+
 ## Estructura del proyecto
 
-* Análisis sintáctico ascendente
+* pl_cup
   * examples
   * /class
   * /flex
   * /src
   * Makefile
-* Análisis sintaćtico descendente
+* pl_antlr
    * ANTLRDescendente
 * docs
   * latex_docs
     * Trabajo_PracticoE1.pdf
 
-## Tecnologías utilizadas
-
-Actualmente para el análisis léxico estamos utilizando la herramienta Jflex, también utilizamos el lenguaje de programación Java.
-No obstante, para el futuro del desarrollo del proyecto, se utilizara ANTRL y CUP.
 
 ## Manejo en el control de versiones
 
