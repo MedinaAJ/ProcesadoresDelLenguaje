@@ -25,13 +25,6 @@ import java_cup.runtime.Symbol;
 
 %{
 
-	private Symbol symbol(int type) {
-		return new Symbol(type, yyline, yycolumn);
-	}
-
-	private Symbol symbol(int type, Object value) {
-		return new Symbol(type, yyline, yycolumn, value);
-	}
 %}
 
 %init{
@@ -72,30 +65,30 @@ MOORE = "moore"
 
 <YYINITIAL> {
 
-	{CMP} { System.out.println("token comportamiento <"+yytext()+">"); return symbol(sym.CMP);}
-	"#" {yybegin(CODIGO); System.out.println("ALMOADILLA " + yytext()); return symbol(sym.ALM_OP);}
-	{MOORE} { System.out.println("Automata Reconocido"); return symbol(sym.MOORE);}
-	"{" { System.out.println("Se reconoce token identificador <" + yytext() + ">"); return symbol(sym.LLCORCH_OP);}
-	"}" { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLCORCH_CL);}
-	{ESTADOS} { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ESTADOS);}
-	{EINICIAL} { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ESTADO_INI);}
-	{ALF_IN}  { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ALF_IN);}
-	{ALF_OUT} { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.ALF_OUT);}
-	{TRANS}   { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.TRANS);}
-	{COMPORT} { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.COMPORTAMIENTO);}
-	"," { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.COMA);}
-	";" { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.PUNTO_COMA);}
-	"(" { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLPARENT_OP);}
-	")" { System.out.println("Se ha reconocido el token <"+yytext()+">"); return symbol(sym.LLPARENT_CL);}
-	{ID} { System.out.println("Se reconoce token identificador <" + yytext() + ">"); return symbol(sym.ID);}
+	{CMP} { return new Symbol(sym.CMP,new String(yytext())); }
+	"#" {yybegin(CODIGO); return new Symbol(sym.ALM_OP,new String(yytext())); }
+	{MOORE} { return new Symbol(sym.MOORE, new String(yytext()));}
+	"{" { return new Symbol(sym.LLCORCH_OP, new String(yytext()));}
+	"}" { return new Symbol(sym.LLCORCH_CL, new String(yytext()));}
+	{ESTADOS} { return new Symbol(sym.ESTADOS,new String(yytext()));}
+	{EINICIAL} { return new Symbol(sym.ESTADO_INI,new String(yytext()));}
+	{ALF_IN}  { return new Symbol(sym.ALF_IN,new String(yytext()));}
+	{ALF_OUT} { return new Symbol(sym.ALF_OUT,new String(yytext()));}
+	{TRANS}   {  return new Symbol(sym.TRANS,new String(yytext()));}
+	{COMPORT} { return new Symbol(sym.COMPORTAMIENTO,new String(yytext()));}
+	"," { return new Symbol(sym.COMA,new String(yytext()));}
+	";" { return new Symbol(sym.PUNTO_COMA,new String(yytext()));}
+	"(" { return new Symbol(sym.LLPARENT_OP,new String(yytext()));}
+	")" { return new Symbol(sym.LLPARENT_CL,new String(yytext()));}
+	{ID} {return new Symbol(sym.ID,new String(yytext()));}
 	{COMENTARIO}                      {/*Se ignoran los comentario */}
 	{ESPACIOBLANCO}                   {/*Se ignoran los espacios en blanco */}	
 }
 
 <CODIGO>{
-	. + /"#" {System.out.println("Se cierra almohadilla, se reconoce: "+ yytext()); return symbol(sym.CODIGO);}
-	"#" {yybegin(YYINITIAL);System.out.println("ALMOADILLA CIERRE " + yytext()); return symbol(sym.ALM_CL);}
-	. {System.out.println("Error");}
+	. + /"#" { return new Symbol(sym.CODIGO,new String(yytext()));}
+	"#" {yybegin(YYINITIAL); return new Symbol(sym.ALM_CL,new String(yytext()));}
+	. {System.out.println("Error en la declaración de código");}
 }
 
 [^]            { throw new Error("Carácter ilegal <"+yytext()+">"); }

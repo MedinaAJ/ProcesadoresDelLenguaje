@@ -2,7 +2,7 @@
 
 ## Descripción del proyecto
 
-La práctica de la asignatura *Procesadores de Lenguajes* consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente.
+La práctica consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente.
 
 
 <p align="center">
@@ -11,16 +11,16 @@ La práctica de la asignatura *Procesadores de Lenguajes* consiste en el diseño
 
 ## Problema y tecnología empleada
 
-El principal problema del proyecto es la construcción de dos procesadores de lenguajes:
-  * Procesador de lenguajes basado en un analizador sintáctico descendente usando Antlr.
-  * Procesador de lenguajes basado en un analizador sintáctico ascendente usando Jflex y cup.
+El principal problema del proyecto es la construcción de dos procesadores de lenguaje:
+	* Procesador de lenguajes basado en un analizador sintáctico descendente usando Antlr.
+	* Procesador de lenguajes basado en un analizador sintáctico ascendente usando Jflex y cup.
 
-Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico, el lenguaje *Mor* esta ciertamente basado en Java, es de tipo verboso, y al usuario no le resultará difícil su aprendizaje.
+Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico, el lenguaje Mor esta ciertamente basado en Java, es de tipo verboso, y al usuario no le resultará difícil su aprendizaje.
 
 ## Estructura del proyecto
 
 * pl_cup
-  * /examples
+  * examples
   * /class
   * /flex
   * /src
@@ -33,6 +33,7 @@ Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico
 
 
 ## Manejo en el control de versiones
+
 1) Clonar un repositorio
 ```
 $ git clone https://github.com/MedinaAJ/ProcesadoresDelLenguaje
@@ -58,6 +59,7 @@ $ git pull
 git checkout <nombre_rama>
 git branch
 ```
+Un tutorial de git: http://rogerdudler.github.io/git-guide/index.es.html
   
 ## Participantes del proyecto
 Equipo Yukihiro Matsumoto
