@@ -12,6 +12,7 @@ La práctica consiste en el diseño de un procesador de lenguajes cuya entrada e
 ## Problema y tecnología empleada
 
 El principal problema del proyecto es la construcción de dos procesadores de lenguaje:
+
 	* Procesador de lenguajes basado en un analizador sintáctico descendente usando Antlr.
 	* Procesador de lenguajes basado en un analizador sintáctico ascendente usando Jflex y cup.
 
@@ -20,16 +21,16 @@ Utilizaremos un conjunto de ejemplos para el lenguaje con un dominio específico
 ## Estructura del proyecto
 
 * pl_cup
-  * examples
   * /class
   * /flex
   * /src
+  * /cup
   * Makefile
 * pl_antlr
    * ANTLRDescendente
 * docs
   * latex_docs
-    * Trabajo_PracticoE1.pdf
+    * Trabajo_Practico.pdf
 
 
 ## Manejo en el control de versiones
@@ -54,7 +55,7 @@ $ git add .
 ```
 $ git pull
 ```
-6) Para cambiar de rama y comprobar tu rama actual
+6) Cambiar de rama y comprobar tu rama actual
 ```
 git checkout <nombre_rama>
 git branch
