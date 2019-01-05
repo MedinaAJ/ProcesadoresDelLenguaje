@@ -1,13 +1,10 @@
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-/**
- *
- * @author Alejandro Medina Jimenez
- */
 public class MaquinaMoore {
 
     protected String name;
