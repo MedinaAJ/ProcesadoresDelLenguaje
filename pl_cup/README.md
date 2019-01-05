@@ -19,6 +19,6 @@ Después entra en la carpeta class/ y ejecuta el archivo Main.
 
 ```
 cd class/
-java Main automata_de_prueba.txt
+java Main test/automata_de_prueba.txt
 ```
 
