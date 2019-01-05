@@ -272,11 +272,11 @@ public class ejemploParser extends Parser {
 		public Alf_outContext alf_out() {
 			return getRuleContext(Alf_outContext.class,0);
 		}
-		public TransicionContext transicion() {
-			return getRuleContext(TransicionContext.class,0);
-		}
 		public ComportamientosContext comportamientos() {
 			return getRuleContext(ComportamientosContext.class,0);
+		}
+		public TransicionContext transicion() {
+			return getRuleContext(TransicionContext.class,0);
 		}
 		public TerminalNode Llaves_ce() { return getToken(ejemploParser.Llaves_ce, 0); }
 		public Cuerpo_automataContext(ParserRuleContext parent, int invokingState) {
@@ -310,9 +310,9 @@ public class ejemploParser extends Parser {
 			setState(53);
 			alf_out();
 			setState(54);
-			transicion();
-			setState(55);
 			comportamientos();
+			setState(55);
+			transicion();
 			setState(56);
 			match(Llaves_ce);
 			}
@@ -920,7 +920,7 @@ public class ejemploParser extends Parser {
 		"\7\16\2\2\',\7\21\2\2()\7\16\2\2)+\7\21\2\2*(\3\2\2\2+.\3\2\2\2,*\3\2"+
 		"\2\2,-\3\2\2\2-\5\3\2\2\2.,\3\2\2\2/\60\7\3\2\2\60\61\7\20\2\2\61\62\5"+
 		"\b\5\2\62\7\3\2\2\2\63\64\7\27\2\2\64\65\5\n\6\2\65\66\5\f\7\2\66\67\5"+
-		"\16\b\2\678\5\20\t\289\5\22\n\29:\5\30\r\2:;\7\30\2\2;\t\3\2\2\2<A\7\4"+
+		"\16\b\2\678\5\20\t\289\5\30\r\29:\5\22\n\2:;\7\30\2\2;\t\3\2\2\2<A\7\4"+
 		"\2\2=>\7\20\2\2>@\7\5\2\2?=\3\2\2\2@C\3\2\2\2A?\3\2\2\2AB\3\2\2\2BD\3"+
 		"\2\2\2CA\3\2\2\2DE\7\20\2\2EF\7\6\2\2F\13\3\2\2\2GH\7\7\2\2HI\7\20\2\2"+
 		"IJ\7\6\2\2J\r\3\2\2\2KP\7\b\2\2LM\7\17\2\2MO\7\5\2\2NL\3\2\2\2OR\3\2\2"+

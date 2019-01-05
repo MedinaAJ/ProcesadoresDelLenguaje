@@ -21,7 +21,7 @@ automata
 ;
 
 cuerpo_automata
-: Llaves_ab estados estado_ini alf_in alf_out transicion comportamientos Llaves_ce
+: Llaves_ab estados estado_ini alf_in alf_out comportamientos transicion  Llaves_ce
 ;
 estados
 : 'estados' (ID ',')* ID ';'

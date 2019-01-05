@@ -25,7 +25,7 @@ public class Main{
   }
 
     public static void main(String[] args) throws IOException{
-        String content = readFile("automata.txt", StandardCharsets.UTF_8);
+        String content = readFile("automata_de_prueba.txt", StandardCharsets.UTF_8);
         String content3="/* sdfsdfsdf*/ "
                 + "a2";
         System.out.println(""+content);
@@ -37,9 +37,9 @@ public class Main{
 
         ParseTree tree = parser.programa();
 
-       // ParseTreeWalker walker = new ParseTreeWalker();
-        //MyListener listener = new MyListener();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        MyListener listener = new MyListener();
 
-       // walker.walk((ParseTreeListener) listener, tree);
+        walker.walk((ParseTreeListener) listener, tree);
     }
 }
