@@ -21,7 +21,7 @@ default:
 dirs:
 	mkdir -p $(DIRJAVA) $(DIRSRC) $(DIRFLEX) $(DIRCUP)
 cflex:
-	$(JF) $(DIRFLEX)*$(F) -inputstreamctor -d $(DIRSRC)
+	$(JF) $(DIRFLEX)*$(F) -d $(DIRSRC)
 
 jcup:
 	$(CUP) -destdir $(DIRSRC) $(DIRCUP)*$(CP)

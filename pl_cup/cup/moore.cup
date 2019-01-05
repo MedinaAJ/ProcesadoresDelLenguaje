@@ -47,25 +47,31 @@ aux ::= {:
 	estados = new ArrayList<String>();
 	eventos = new ArrayList<String>();
 	comps = new ArrayList<String>();
+	transiciones = new ArrayList<String>();
+	comps_estado = new ArrayList<String>();
 	comp_codigo = new Hashtable<String, String>();
 	eventos_por_automata = new ArrayList<ArrayList<String>>();
 	estados_por_automata =  new ArrayList<ArrayList<String>>();
 	estados_iniciales = new ArrayList<String>();
 	comps_por_automata =  new ArrayList<ArrayList<String>>();
+	trans_por_automata = new ArrayList<ArrayList<String>>();
 
         :} programa {: 
 
 	System.out.println("Analisis finalizado " + contador_maquinas); 
-	System.out.println("Numero de comps por codigo" +comp_codigo.size());
+	System.out.println("Numero de automatas declarados: " +maquinas.size());
 
 	//Aqui se ejecutan las maquinas
-	
+	String e = "";
 	for(int i = 0; i < maquinas.size(); i++){
 		actual = maquinas.get(i);
-	
+		System.out.println("Máquina de Moore: "+ actual.getName());
 		for(int k = 0; k < eventos_por_automata.get(i).size() ; k++){
 			actual.addEvent(eventos_por_automata.get(i).get(k));
+			e += eventos_por_automata.get(i).get(k)+" ";
 		}
+		System.out.println("Eventos de entrada: " + e);
+		e = "";
 		actual.ejecutar();
 	}
 	:} ;
@@ -111,7 +117,7 @@ dec_estados ::= ID dec_estados {:error+="Separe los estados con ','\n";
 /********************************/
 
 estado_ini ::= ESTADO_INI ID:id {: System.out.println("Se obtiene estado inicial: "+id); estado_inicial=id; 
-					estados_iniciales.add(estado_inicial); estado_inicial= ""; :} PUNTO_COMA ;
+					estados_iniciales.add(estado_inicial); :} PUNTO_COMA ;
 				
 //Produccion de error estado_ini
 estado_ini ::= ESTADO_INI ID {: System.out.println("Falta ';' al final de la sentencia"); :} ;
@@ -145,36 +151,70 @@ dec_alf_out ::= CMP:id {: System.out.println("Se obtiene comportamiento: "+id); 
 dec_alf_out ::= CMP dec_alf_out {: System.out.println("Separe los elementos del alfabeto con ','"); :} ;
 /************************************/
 
-comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA LLCORCH_CL ;
+comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA {: machine.addEstadosToMachine(); :} LLCORCH_CL ;
 
-dec_comportamientos ::= comp_def:tupla {: System.out.println("Se obtiene tupla declaracion comportamientos: "+tupla); :} COMA dec_comportamientos 
-		| comp_def:tupla {: System.out.println("Se obtiene tupla declaracion comportamientos: "+tupla); :} ;
+dec_comportamientos ::= comp_def:tupla 
+	{: 
+		if(!comps_estado.contains(tupla)){
+			System.out.println("Se obtiene tupla declaracion comportamientos: "+tupla);
+			comps_estado.add(tupla);
+		}else{
+			fallo = true;
+			error += "ERROR: Comportamiento "+ tupla + " ya está declarado\n";			
+		}
+		 
+	:} 				COMA dec_comportamientos 
+		| comp_def:tupla 
+	{: 
+		if(!comps_estado.contains(tupla)){
+			System.out.println("Se obtiene tupla declaracion comportamientos: "+tupla);
+			comps_estado.add(tupla);
+			comps_por_automata.add(comps_estado);
+			comps_estado = new ArrayList<String>();
+		}else{
+			fallo = true;
+			error += "ERROR: Comportamiento "+ tupla + " ya está declarado\n";			
+		}
+	:} ;
 
 comp_def ::= LLPARENT_OP ID:id COMA CMP:comp LLPARENT_CL 
-	{: 
+	{:
 			RESULT=id+"-"+comp+"-"+comp_codigo.get(comp);
-			/*comp_codigo.get(comp) Devuelve null si no hay codigo asociado*/ 
-			Runnable entr_state = () -> {
-				System.out.println("Entro al estado "+id);
-			};
-			Runnable sal_state = () -> {
-				try {
-					js.eval(comp_codigo.get(comp));
-				} catch (ScriptException ex) {
-					System.out.println("Hubo un error:"+ex);
+			//comp_codigo.get(comp) Devuelve null si no hay codigo asociado
+			if(!comp_codigo.get(comp).equals(null)){
+				
+				Runnable entr_state = () -> {
+					System.out.println("Entro al estado "+id);
+				};
+				Runnable sal_state = () -> {
+					try {
+						js.eval(comp_codigo.get(comp));
+					} catch (ScriptException ex) {
+						System.out.println("Hubo un error:"+ex);
+					}
+					System.out.println("Salgo del estado "+id);
+				};
+				Runnable final_state = () -> {
+					System.out.println("El ultimo estado "+id);
+					try {
+						js.eval(comp_codigo.get(comp));
+					} catch (ScriptException ex) {
+						System.out.println("Hubo un error:"+ex);
+					}
+				};
+								
+				if(id.equals(estado_inicial)){
+					machine.addState(id,entr_state,sal_state,final_state);
+				}else{
+					machine.cargarEstados(entr_state,sal_state,final_state, id);
 				}
-				System.out.println("Salgo del estado "+id);
-			};
-			Runnable final_state = () -> {
-				System.out.println("El ultimo estado "+id);
-				try {
-					js.eval(comp_codigo.get(comp));
-				} catch (ScriptException ex) {
-					System.out.println("Hubo un error:"+ex);
-				}
-			};
-			machine.addState(id,entr_state,sal_state,final_state);
-	:};
+				
+				
+			}else{
+				System.out.println("No se ha asociado ningún código de comportamiento al autómata");
+			}
+
+	:} ;
 
 //Producciones de error de comp_def
 comp_def ::= LLPARENT_OP CMP LLPARENT_CL {: System.out.println("Necesita declarar un estado"); :} ;
@@ -185,8 +225,30 @@ comp_def ::= LLPARENT_OP ID CMP LLPARENT_CL {: System.out.println("Necesita sepa
 
 transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL ;
 
-dec_transicion ::= transicion_def:tupla {: System.out.println("Se obtiene tupla de transiciones: "+tupla); :} COMA dec_transicion 
-		| transicion_def:tupla {: System.out.println("Se obtiene tupla de transiciones: "+tupla); :} ;
+dec_transicion ::= transicion_def:tupla 
+	{: 
+		if(!transiciones.contains(tupla)){
+			System.out.println("Se obtiene tupla de transiciones: "+tupla);
+			transiciones.add(tupla);
+		}else{
+			fallo = true;
+			error += "ERROR: Transición "+ tupla + " ya está declarada\n";
+		}
+
+	:} 
+				   	COMA  dec_transicion 
+		| transicion_def:tupla 
+	{: 
+		if(!transiciones.contains(tupla)){
+			System.out.println("Se obtiene tupla de transiciones: "+tupla); 
+			transiciones.add(tupla); trans_por_automata.add(transiciones); 			
+			transiciones = new ArrayList<String>(); 
+		}else{
+			fallo = true;
+			error += "ERROR: Transición "+ tupla + " ya está declarada\n";
+		}		
+
+	:} ; 
 
 transicion_def ::= LLPARENT_OP ID:estado_in COMA ID:evento COMA ID:estado_out LLPARENT_CL {: 								RESULT=estado_in+"-"+evento+"-"+estado_out; 			   						machine.addTransition(evento,estado_in,estado_out);
 					System.out.println("Terminando de añadir transiciones"); :} ;
