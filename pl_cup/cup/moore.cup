@@ -17,14 +17,13 @@ action code {:
 	MaquinaMoore machine, actual;
 	int contador_maquinas;
         ArrayList<MaquinaMoore> maquinas;
-	ArrayList<String> estados, eventos, comps, transiciones, comps_estado;
+	ArrayList<String> estados, eventos, comps, transiciones, comps_estado, estados_iniciales;
 	ArrayList<ArrayList<String>> estados_por_automata, eventos_por_automata, comps_por_automata, trans_por_automata, comps_est_por_automata;
-	ArrayList<String> estados_iniciales;
 	Hashtable<String, String> comp_codigo;
 	String estado_inicial;
 	ScriptEngineManager script;
 	ScriptEngine js;
-	Scanner lectura;
+
 
 :}
 /* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
@@ -38,24 +37,25 @@ terminal String CMP, CODIGO, MOORE, ID, LLCORCH_OP, LLCORCH_CL, ESTADOS, ESTADO_
 /* --------------Declaracion de la gramatica -----------*/
 
 aux ::= {: 
+
 	fallo = false;
 	error = "";
 	script = new ScriptEngineManager(); 
-	lectura = new Scanner(System.in);
 	js = script.getEngineByName("JavaScript"); 
 	contador_maquinas = 0; 
 	estados = new ArrayList<String>();
-	eventos = new ArrayList<String>();
-	comps = new ArrayList<String>();
-	transiciones = new ArrayList<String>();
+        eventos = new ArrayList<String>();
+        comps = new ArrayList<String>(); 
+	transiciones= new ArrayList<String>();
 	comps_estado = new ArrayList<String>();
+        estados_iniciales = new ArrayList<String>();
+	estados_iniciales = new ArrayList<String>();	
 	comp_codigo = new Hashtable<String, String>();
 	eventos_por_automata = new ArrayList<ArrayList<String>>();
-	estados_por_automata =  new ArrayList<ArrayList<String>>();
-	estados_iniciales = new ArrayList<String>();
-	comps_por_automata =  new ArrayList<ArrayList<String>>();
+	estados_por_automata  = new ArrayList<ArrayList<String>>();
+	comps_por_automata  = new ArrayList<ArrayList<String>>();
 	trans_por_automata = new ArrayList<ArrayList<String>>();
-
+	
         :} programa {: 
 
 	System.out.println("Analisis finalizado " + contador_maquinas); 
@@ -78,11 +78,11 @@ aux ::= {:
 
 programa ::= dec_comp {: maquinas = new ArrayList<MaquinaMoore>();   :} dec_automata ;
 
-dec_comp ::= CMP:com codigo:code {: System.out.println("Se obtiene Comportamiendo con id: " + com + " y codigo: " + code); comp_codigo.put(com, code); :} dec_comp
-		| CMP:com codigo:code {: System.out.println("Se obtiene Comportamiendo con id: " + com + " y codigo: " + code); comp_codigo.put(com, code); :} ;
+dec_comp ::= CMP:com codigo:code {:  comp_codigo.put(com, code); :} dec_comp
+		| CMP:com codigo:code {:  comp_codigo.put(com, code); :} ;
 
-dec_automata ::= automata {: System.out.println("Maquina identificada! n_maquinas: " + ++contador_maquinas); :} dec_automata
-		| automata {: System.out.println("Maquina identificada! n_maquinas: " + ++contador_maquinas); :};
+dec_automata ::= automata {: ++contador_maquinas; :} dec_automata
+		| automata {: ++contador_maquinas; :};
 
 codigo ::= ALM_OP CODIGO:code ALM_CL {: RESULT=code; :};
 
@@ -91,7 +91,7 @@ codigo ::= ALM_OP CODIGO {: System.out.println("Necesita cerrar con una '#' la s
 codigo ::= CODIGO ALM_OP {: System.out.println("Necesita abrir con una '#' la sentencia "); :};
 /*******************************/
 
-automata ::= MOORE ID:id {: System.out.println("Nombre maquina: " + id);
+automata ::= MOORE ID:id {: 
   	     machine = new MaquinaMoore(id);
 	     :} cuerpo_automata ;
 
@@ -107,17 +107,18 @@ estados ::=  ESTADOS dec_estados PUNTO_COMA ;
 estados ::=  ESTADOS dec_estados {: System.out.println("Falta ';' al final de la sentencia"); :} ;
 /****************************/
 
-dec_estados ::= ID:id {: System.out.println("Se obtiene estado: "+id); estados.add(id); :} COMA dec_estados
-		| ID:id {: System.out.println("Se obtiene estado: "+id); estados.add(id); estados_por_automata.add(estados); 
-									estados = new ArrayList<String>(); :} ;
+dec_estados ::= ID:id {: estados.add(id); :} COMA dec_estados
+		| ID:id {:  estados.add(id); 
+			estados_por_automata.add(estados); 
+			estados = new ArrayList<String>(); :} ;
 
 //Producción de error dec_estados
 dec_estados ::= ID dec_estados {:error+="Separe los estados con ','\n";
 				 System.out.println("Separe los estados con ','"); :} ;
 /********************************/
 
-estado_ini ::= ESTADO_INI ID:id {: System.out.println("Se obtiene estado inicial: "+id); estado_inicial=id; 
-					estados_iniciales.add(estado_inicial); :} PUNTO_COMA ;
+estado_ini ::= ESTADO_INI ID:id {:  estado_inicial=id; 
+				estados_iniciales.add(estado_inicial); :} PUNTO_COMA ;
 				
 //Produccion de error estado_ini
 estado_ini ::= ESTADO_INI ID {: System.out.println("Falta ';' al final de la sentencia"); :} ;
@@ -129,9 +130,9 @@ alf_in ::= ALF_IN dec_alf_in PUNTO_COMA ;
 alf_out ::= ALF_IN dec_alf_in {: System.out.println("Falta ';' al final de la sentencia"); :} ;
 /************************************/
 
-dec_alf_in ::= ID:id {: System.out.println("Se obtiene la entrada: "+id);    eventos.add(id);  :} COMA dec_alf_in
-		| ID:id {: System.out.println("Se obtiene la entrada: "+id); eventos.add(id); eventos_por_automata.add(eventos);
-									     eventos = new ArrayList<String>();  :} ;
+dec_alf_in ::= ID:id {:     eventos.add(id);  :} COMA dec_alf_in
+		| ID:id {:  eventos.add(id); eventos_por_automata.add(eventos);
+			    eventos = new ArrayList<String>();  :} ;
 
 //Produccion de error de dec_alf_in
 dec_alf_in ::= ID dec_alf_in {: System.out.println("Separe los elementos del alfabeto con ','"); :} ;
@@ -143,9 +144,9 @@ alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA {: :} ;
 alf_out ::= ALF_OUT dec_alf_out {: System.out.println("Falta ';' al final de la sentencia"); :} ;
 /************************************/
 
-dec_alf_out ::= CMP:id {: System.out.println("Se obtiene comportamiento: "+id);   comps.add(id);  :} COMA dec_alf_out
-		| CMP:id {: System.out.println("Se obtiene comportamiento: "+id); comps.add(id); comps_por_automata.add(comps);
-										  comps = new ArrayList<>();  :} ;
+dec_alf_out ::= CMP:id {:    comps.add(id);  :} COMA dec_alf_out
+		| CMP:id {:  comps.add(id); comps_por_automata.add(comps);
+			     comps = new ArrayList<>();  :} ;
 
 //Produccion de error de dec_alf_out
 dec_alf_out ::= CMP dec_alf_out {: System.out.println("Separe los elementos del alfabeto con ','"); :} ;
@@ -156,7 +157,6 @@ comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA {: 
 dec_comportamientos ::= comp_def:tupla 
 	{: 
 		if(!comps_estado.contains(tupla)){
-			System.out.println("Se obtiene tupla declaracion comportamientos: "+tupla);
 			comps_estado.add(tupla);
 		}else{
 			fallo = true;
@@ -167,7 +167,6 @@ dec_comportamientos ::= comp_def:tupla
 		| comp_def:tupla 
 	{: 
 		if(!comps_estado.contains(tupla)){
-			System.out.println("Se obtiene tupla declaracion comportamientos: "+tupla);
 			comps_estado.add(tupla);
 			comps_por_automata.add(comps_estado);
 			comps_estado = new ArrayList<String>();
@@ -228,7 +227,6 @@ transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL ;
 dec_transicion ::= transicion_def:tupla 
 	{: 
 		if(!transiciones.contains(tupla)){
-			System.out.println("Se obtiene tupla de transiciones: "+tupla);
 			transiciones.add(tupla);
 		}else{
 			fallo = true;
@@ -240,7 +238,6 @@ dec_transicion ::= transicion_def:tupla
 		| transicion_def:tupla 
 	{: 
 		if(!transiciones.contains(tupla)){
-			System.out.println("Se obtiene tupla de transiciones: "+tupla); 
 			transiciones.add(tupla); trans_por_automata.add(transiciones); 			
 			transiciones = new ArrayList<String>(); 
 		}else{
@@ -250,8 +247,7 @@ dec_transicion ::= transicion_def:tupla
 
 	:} ; 
 
-transicion_def ::= LLPARENT_OP ID:estado_in COMA ID:evento COMA ID:estado_out LLPARENT_CL {: 								RESULT=estado_in+"-"+evento+"-"+estado_out; 			   						machine.addTransition(evento,estado_in,estado_out);
-					System.out.println("Terminando de añadir transiciones"); :} ;
+transicion_def ::= LLPARENT_OP ID:estado_in COMA ID:evento COMA ID:estado_out LLPARENT_CL {: 								RESULT=estado_in+"-"+evento+"-"+estado_out; 			   						machine.addTransition(evento,estado_in,estado_out); :} ;
 
 //Producciones de error de transicion_def
 transicion_def ::= LLPARENT_OP ID ID COMA ID LLPARENT_CL {: System.out.println("Ha olvidado una ','"); :} ;

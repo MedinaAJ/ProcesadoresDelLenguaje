@@ -42,7 +42,8 @@
 	\newpage
 	
 	\section{¿Qué es un autómata de Moore?}
-	En Teoría de la computación una \textbf{Máquina de Moore} es un autómata de estados finitos para el cual la salida en un momento dado sólo depende de su estado en ese momento, mientras la transición al siguiente estado depende del estado en que se encuentre y de la entrada introducida.
+	En Teoría de la computación una \textbf{Máquina de Moore} es un autómata de estados finitos para el cual la salida en un momento dado sólo depende de su estado en ese momento, mientras que la transición al siguiente estado dependerá del estado en el que se encuentre y de la entrada introducida.
+	\newline
 	El diagrama de estados para una máquina de Moore incluirá una señal de salida para cada estado. \cite{Moore1}
 	
 	\begin{figure}[h]
@@ -53,9 +54,6 @@
 		\label{fig:modelo-moore}
 	\end{figure}
 	
-	
-	
-	El nombre de \textbf{Máquina de Moore} viene de su promotor Edward F. Moore, un pionero de las máquinas de estados, quien escribió \textit{Gedanken-experiments on Sequential Machines,} pp 129-153, Estudios de Autómatas, Anuales de los Estudios Matemáticos, no. 34, Princenton Universityy Press, Princenton, N.J., 1956. \cite{Moore1}
 	
 	\subsection{Definición formal}
 	Una máquina de Moore se define como una 6-tupla:
@@ -74,7 +72,7 @@
 	
 	\newpage
 	\subsection{Ejemplo propuesto}
-	Definimos una Máquina de Moore para regular el tráfico en el siguiente cruce con los cuatro semáforos:
+	Se define una \textit{Máquina de Moore} para regular el tráfico en el siguiente cruce con los cuatro semáforos:
 		
 	\begin{figure}[h]
 		\centering
@@ -112,30 +110,78 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 		\label{fig:3}
 	\end{figure}
 
-	\newpage
-	\section{Presentación del problema}
-	La práctica consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente, en nuestro caso Java.
-	\newline
-	\newline
-	Los conocimientos en la materia serán útiles en las distintas etapas del proceso, en primer lugar, se necesitará definir el léxico del lenguaje de entrada, para los cuál emplearemos los diagramas T que hemos aprendido durante los primeros temas.
-	\newline
-	\newline
-	También utilizaremos los conocimientos de la asignatura en la elaboración de la tabla de tokens, lexemas y patrones del lenguaje, y el EBNF de este.
-	
-	\subsection{Lenguaje definido}
-	\begin{center}
+\newpage
+\section{Presentación del problema}
+La práctica consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente, en nuestro caso Java.
+\newline
+\newline
+Los conocimientos de la materia \textit{Procesadores de Lenguajes} serán útiles en las distintas etapas del proceso, en primer lugar, se necesitará definir el léxico del lenguaje de entrada, la construcción del procesador de lenguajes asociado empleando los diagramas \textbf{tipo T}, el análisis léxico, el análisis sintáctico y por último el análisis semántico.
+\newline
+\newline
+También se desarrollará una tabla de tokens, lexemas y patrones del lenguaje y el EBNF perteneciente al mismo.
+\subsection{Lenguaje definido}
+El lenguaje \textbf{Moor} que se ha definido consta de dos secciones principales:
+\begin{itemize}
+	\item Sección de declaración de código
+	\item Sección de declaración de autómatas
+\end{itemize}
+La \textit{zona de declaración de código} es la parte donde se asignará un comportamiento a un código ya predefinido o que se vaya a ejecutar. Por la forma en la que se ha definido el lenguaje, esta zona será como una zona de \textit{imports} típicamente conocida en lenguajes de alto nivel. \newline \newline
+La estructura de esta zona es: c$N$ $\#$ \textit{código} $\#$ donde c es el comportamiento, $N$ es el número de comportamiento y los \textbf{tokens} $\#$ son los delimitadores del código. \newline La característica principal de esta zona es que solo se podrán realizar este tipo de declaraciones, ya que en la otra zona solo podremos declarar autómatas.
+\begin{center}
+	Ejemplo : c1 $\#$ print('hola') $\#$
+\end{center}
+Respecto a la \textit{zona de declaración de autómatas} se tendrá una serie de palabras que se utilizarán para la definición del autómata. No obstante en esta zona solo se podrán declarar autómatas y las funciones asociadas a los mismos, también, como en cualquier lenguaje de alto nivel, se podrán incluir los clásicos comentarios '//' o '/$\ast$ Texto comentario '$\ast$/'.
+\newline \newline
+Será posible la declaración de múltiples autómatas en el fichero de prueba, además, se indicará en una tabla todos los campos que son imprescindibles para la realización del mismo.
+Cualquier otro carácter introducido en el fichero de prueba será considerado como error.
+
+\subsection{Tabla Token-Acción}
+\clearpage
+\begin{center}
+\begin{tabular}{|c|c|}
+	\hline 
+	\textbf{Token} & \textbf{Acción} \\ 
+	\hline 
+	moore & Función para declarar un autómata seguido de un nombre   \\
+	& que se escribirá entre llaves $\{\}$ moore Ejemplo $\{\}$\\
+	\hline 
+	estados & Indica la cantidad de estados totales que tendrá el autómata  \\
+	& puede ser un único estado o varios separados por ',' estados q0,q1;\\ 
+	\hline 
+	estado\_in & Se selecciona un único estado inicial  \\ 
+	& que tendrá que estar en los estados anteriores estado\_in q0; \\
+	\hline 
+	alf\_in & La entrada o eventos del autómata que hará posible las transiciones\\
+	& entre estados, único o entre comas ',' alf\_in a,b,c;\\
+	\hline 
+	alf\_out &  La salida o comportamientos del autómata  \\
+	& y tendrán que ser coincidentes con \\ 
+	& la zona de declaración de comportamientos, \\
+	&  escrito un identificador único o entre comas ',' \\
+	\hline
+	transicion & Será un tipo de función que se escribirá entre llaves $\{\}$, \\
+	& y permitirá que se transite mediante una entrada de un estado a otro: \\ 
+	& (<estado\_origen>, entrada, <estado\_destino>); \\
+	& se podrán indicar varias mediante el uso de comas ',' \\
+	\hline 
+	comportamiento & Será un tipo de función que se escribirá entre llaves $\{\}$,   \\ 
+	& y permite asignar a un estado un comportamiento: \\
+	& (<estados>,<comportamiento>); \\
+	& se podrán indicar varios mediante el uso de comas ','\\
+	\hline  
+\end{tabular} 
+\end{center}
+Notese que para cerrar una sentencia es necesario de indicar al final de dicha sentencia el carácter ';', esto no es necesario para las funciones \textit{moore}, \textit{transicion} y \textit{comportamiento}.
+\subsection{Ejemplo autómata completo}
+\begin{center}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\linewidth]{img/ejemplo}
+	\includegraphics[width=0.75\linewidth]{img/ejemplo}
 	\caption{}
 	\label{fig:aut}
 \end{figure}
 
 	\end{center}
-	
-	
-
-	\newpage
 	\section{EBNF}
 			\begin{center}
 			\begin{tabular}{lcl}
@@ -184,10 +230,6 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 		\end{center}
 	
 	
-	
-	
-
-	\newpage
 	\section{Tablas de Tokens}
 		
 	\begin{center}
@@ -238,12 +280,10 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 	\end{center}
 	\newpage
 	\section{¿Cómo se va a construir el procesador del lenguaje diseñado?}
-	En el siguiente diagrama tipo T se explica el funcionamiento del procesador que se pretende implementar, tomamos \textbf{ Mor } como lenguaje fuente, y Java como lenguaje objeto, y además el lenguaje que implementa es Java, es decir, nuestro compilador compila a Java, y esta escrito a Java. 
+	En el siguiente diagrama tipo T se explica el funcionamiento del procesador que se pretende implementar, tomamos \textbf{ Moor } como lenguaje fuente, y Java como lenguaje objeto, y además el lenguaje que implementa es Java, es decir, nuestro compilador compila a Java, y esta escrito a Java. 
 	\newline
+	Para utilizar ese compilador, utilizamos un compilador auxiliar, que está escrito en código máquina para dar lugar a bytecode, el típico archivo \textbf{.class} que generamos al compilar el archivo \textbf{.java}.
 	\newline
-	Para utilizar ese compilador, utilizamos un compilador auxiliar, que está escrito en código máquina para dar lugar a bytecode, el típico archivo \textbf{.class} que generamos al compilar un \textbf{.java}.
-	\newline
-	
 	Por último tenemos que compilar el bytecode, con un compilador que acepta bytecode escrito en código máquina.
 	
 	\begin{figure}[h]
@@ -254,7 +294,35 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 		\label{fig:photo5978652419892031524}
 	\end{figure}
 	
-	\newpage
+	\section{Estructura del procesador de lenguajes}
+	Siguiendo la estructura que se ha utilizado en clase, tenemos la siguiente organización:
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{img/estructura}
+		\caption{}
+		\label{fig:estructura}
+	\end{figure}
+	
+	El procesador de lenguajes que se va a construir seguirá una estructura similar salvo por el bloque de la fase de síntesis, ya que no se ha visto en la asignatura.
+
+	
+	\clearpage
+	Se procederá a la construcción de la fase de análisis que consta de las siguientes etapas:
+	\begin{itemize}
+		\item Análisis léxico
+		\item Análisis sintáctico
+		\item Análisis semántico
+	\end{itemize}
+	\section{Analizador léxico}
+	\subsection{Jflex}
+	\subsection{ANTLR}
+	\section{Analizador sintáctico}
+	\subsection{CUP}
+	\subsection{ANTLR}
+	
+	\section{Analizador semántico}
+	\clearpage
+	
 	\begin{thebibliography}{99}
 		\bibitem{Moore1} Autómatas de Moore \url{https://es.wikipedia.org/wiki/M%C3%A1quina_de_Moore}
 	
