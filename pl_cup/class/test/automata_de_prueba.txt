@@ -2,8 +2,9 @@
 		
 	c2 	# print("Activado sensor 2"); #
 		
-	c3 	# print("Activado sensor 3"); #
+	c3 	# print("Activado sensor 3");  #
 	
+
 	/*	
 	Comentario
 	*/
