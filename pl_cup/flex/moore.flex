@@ -88,7 +88,6 @@ MOORE = "moore"
 <CODIGO>{
 	. + /"#" { return new Symbol(sym.CODIGO, yyline, yycolumn, new String(yytext()));}
 	"#" { yybegin(YYINITIAL); return new Symbol(sym.ALM_CL, yyline, yycolumn, new String(yytext()));}
-	. { System.out.println("Error en la declaración de código");}
 }
 
 [^]            { String errLex = "Error léxico : '"+yytext()+"' en la línea: "+(yyline+1)+" y columna: "+(yycolumn+1);

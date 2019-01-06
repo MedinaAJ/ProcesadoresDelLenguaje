@@ -2,7 +2,7 @@
 		
 	c2 	# print("Activado sensor 2"); #
 		
-	c3 	# print("Activado sensor 3");  #
+	c3 	# print("Activado sensor 3"); #
 	
 
 	/*	
@@ -10,22 +10,20 @@
 	*/
 
 	moore Automata_de_Ejemplo{
-		estados q0,q1,q2;
+		estados q0,q1,q2 ;
 		estado_in q0 ;
-		alf_in a,b,c;
+		alf_in a, b,c ;
 		alf_out c1,c2,c3;
 
 		comportamiento {
 			(q0,c1),
 			(q1,c2),
 			(q2,c3);
-		 
-		}
-		
+		 }
 		transicion {
-			(q0,a,q1),
-			(q1,b,q1),
-			(q1,c,q2);
+			(q0,e1,q1),
+			(q1,e2,q1),
+			(q1,e3,q2);
 		}
 	}
 

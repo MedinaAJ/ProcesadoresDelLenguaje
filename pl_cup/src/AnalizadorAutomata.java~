@@ -193,10 +193,10 @@ class AnalizadorAutomata implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\2\0\1\1\2\2\1\1\6\3\1\4\1\5\1\6"+
-    "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\0"+
-    "\2\16\5\3\1\0\1\17\2\15\2\0\5\3\1\0"+
-    "\12\3\1\20\4\3\1\21\1\3\1\22\2\3\1\23"+
-    "\4\3\1\24\2\3\1\25\3\3\1\26";
+    "\1\7\1\10\1\11\1\12\1\1\1\13\1\14\1\0"+
+    "\2\15\5\3\1\0\1\16\2\14\2\0\5\3\1\0"+
+    "\12\3\1\17\4\3\1\20\1\3\1\21\2\3\1\22"+
+    "\4\3\1\23\2\3\1\24\3\3\1\25";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[75];
@@ -815,94 +815,90 @@ class AnalizadorAutomata implements java_cup.runtime.Scanner {
             { String errLex = "Error léxico : '"+yytext()+"' en la línea: "+(yyline+1)+" y columna: "+(yycolumn+1);
 		 System.out.println(errLex);
             }
-          case 23: break;
+          case 22: break;
           case 2: 
             { /*Se ignoran los espacios en blanco */
             }
-          case 24: break;
+          case 23: break;
           case 3: 
             { return new Symbol(sym.ID, yyline, yycolumn, new String(yytext()));
             }
-          case 25: break;
+          case 24: break;
           case 4: 
             { yybegin(CODIGO); return new Symbol(sym.ALM_OP, yyline, yycolumn, new String(yytext()));
             }
-          case 26: break;
+          case 25: break;
           case 5: 
             { return new Symbol(sym.LLCORCH_OP, yyline, yycolumn, new String(yytext()));
             }
-          case 27: break;
+          case 26: break;
           case 6: 
             { return new Symbol(sym.LLCORCH_CL, yyline, yycolumn, new String(yytext()));
             }
-          case 28: break;
+          case 27: break;
           case 7: 
             { return new Symbol(sym.COMA, yyline, yycolumn, new String(yytext()));
             }
-          case 29: break;
+          case 28: break;
           case 8: 
             { return new Symbol(sym.PUNTO_COMA, yyline, yycolumn, new String(yytext()));
             }
-          case 30: break;
+          case 29: break;
           case 9: 
             { return new Symbol(sym.LLPARENT_OP, yyline, yycolumn, new String(yytext()));
             }
-          case 31: break;
+          case 30: break;
           case 10: 
             { return new Symbol(sym.LLPARENT_CL, yyline, yycolumn, new String(yytext()));
             }
-          case 32: break;
+          case 31: break;
           case 11: 
-            { System.out.println("Error en la declaración de código");
-            }
-          case 33: break;
-          case 12: 
             { yybegin(YYINITIAL); return new Symbol(sym.ALM_CL, yyline, yycolumn, new String(yytext()));
             }
-          case 34: break;
-          case 13: 
+          case 32: break;
+          case 12: 
             { /*Se ignoran los comentarios */
             }
-          case 35: break;
-          case 14: 
+          case 33: break;
+          case 13: 
             { return new Symbol(sym.CMP, yyline, yycolumn, new String(yytext()));
             }
-          case 36: break;
-          case 15: 
+          case 34: break;
+          case 14: 
             // lookahead expression with fixed lookahead length
             zzMarkedPos = Character.offsetByCodePoints
                 (zzBufferL, zzStartRead, zzEndRead - zzStartRead, zzMarkedPos, -1);
             { return new Symbol(sym.CODIGO, yyline, yycolumn, new String(yytext()));
             }
-          case 37: break;
-          case 16: 
+          case 35: break;
+          case 15: 
             { return new Symbol(sym.MOORE, yyline, yycolumn, new String(yytext()));
             }
-          case 38: break;
-          case 17: 
+          case 36: break;
+          case 16: 
             { return new Symbol(sym.ALF_IN, yyline, yycolumn, new String(yytext()));
             }
-          case 39: break;
-          case 18: 
+          case 37: break;
+          case 17: 
             { return new Symbol(sym.ESTADOS, yyline, yycolumn, new String(yytext()));
             }
-          case 40: break;
-          case 19: 
+          case 38: break;
+          case 18: 
             { return new Symbol(sym.ALF_OUT, yyline, yycolumn, new String(yytext()));
             }
-          case 41: break;
-          case 20: 
+          case 39: break;
+          case 19: 
             { return new Symbol(sym.ESTADO_INI, yyline, yycolumn, new String(yytext()));
             }
-          case 42: break;
-          case 21: 
+          case 40: break;
+          case 20: 
             { return new Symbol(sym.TRANS, yyline, yycolumn, new String(yytext()));
             }
-          case 43: break;
-          case 22: 
+          case 41: break;
+          case 21: 
             { return new Symbol(sym.COMPORTAMIENTO, yyline, yycolumn, new String(yytext()));
             }
-          case 44: break;
+          case 42: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
