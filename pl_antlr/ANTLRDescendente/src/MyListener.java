@@ -27,10 +27,10 @@ Hashtable<String, String> comp_codigo = new Hashtable<String, String>();
 private List<String> listaEventos = new ArrayList<String>();
 private List<String> listaEstados = new ArrayList<String>();
 private String EstadoInicial;
-private Scanner sc=new Scanner(System.in);
 static int j;
-private boolean continuar=true;
+boolean z;
 private String respuesta;
+
     @Override
     public void enterPrograma(ejemploParser.ProgramaContext ctx) {
         System.out.println("Bienvenido al Analizador de Automatas");
@@ -64,18 +64,19 @@ private String respuesta;
 
     @Override
     public void exitAutomata(ejemploParser.AutomataContext ctx) {
-//        if(continuar==true){
-//            for(int i=0; i < listaEventos.size(); i++){
-//                a.addEvent(listaEventos.get(i));
-//
-//            }
-//
-//            a.ejecutar();
-//        }else{
-//            System.out.println("No se ha podido realizar el analisis para el automata: "+a.getName()+"\n"
-//                    + "Alguno de los parametros que ha introducido en el fichero son incorrectos"
-//                    + " o carecen de sentido para nuestro analisis.");
-//        }
+       
+        if(z){
+            for(int i=0; i < listaEventos.size(); i++){
+                a.addEvent(listaEventos.get(i));
+
+            }
+
+            a.ejecutar();
+        }else{
+            System.out.println("No se ha podido realizar el analisis para el automata: "+a.getName()+"\n"
+                    + "Alguno de los parametros que ha introducido en el fichero son incorrectos"
+                    + " o carecen de sentido para nuestro analisis.");
+        }
     }
 
     @Override
@@ -104,7 +105,7 @@ private String respuesta;
 //            continuar=false;
 //            
 //        }
-//        System.out.println("\n");
+        System.out.println("\n");
         
     }
 
@@ -162,20 +163,20 @@ private String respuesta;
 
     @Override
     public void exitTransicion_def(ejemploParser.Transicion_defContext ctx) {
-        if(continuar==true){
+        if(z){
                 try{
                     if(listaEstados.contains(ctx.ID().getText())||listaEstados.contains(ctx.val_trans().ID().getText())){
-                        continuar=true;
+                        z=true;
                     }else{
-                        continuar=false;
+                        z=false;
                     }
                     a.addTransition(ctx.Eventos().getText(), ctx.ID().getText(), ctx.val_trans().ID().getText());
                 }catch(Exception e){
                     System.out.println("No se pueden añadir transiciones con estados no definidos");
+                    z=false;
                 }
         }else{
-                 System.out.println("ERROR: Los estados que definen las transiciones son distintos de los que se han definido "
-                         + " inicialmente");
+                 z=false;
         }
                
     }
@@ -207,7 +208,7 @@ private String respuesta;
 
     @Override
     public void exitComp_def(ejemploParser.Comp_defContext ctx) {
-        if(continuar==true){
+        if(z){
             if(listaEstados.contains(ctx.ID().getText())){
                 try{
                     js=script.getEngineByName("JavaScript");
@@ -230,9 +231,10 @@ private String respuesta;
                     
                 }catch(Exception e){
                     System.out.println("ERROR: Hay estados que no se pueden añadir al automata, pues no existen ");
+                    z=false;
                 }
             }else{
-                System.out.println("ERROR: En la definicion de los comportamientos hay estados no definidos inicialmente");
+                z=false;
             }
 
         }

@@ -1,21 +1,14 @@
 # Analizador Léxico
 
-## Trabajo a realizar
-
-* Construcción del autómata de Moore en Java, definición del entorno
-* Construcción del analizador léxico con JFlex, tratamiento de errores
-
-
 ## ¿Cómo ejecutar?
 
-Abre una terminal dentro de la carpeta y ejecuta
+Abre un terminal dentro de la carpeta del proyecto y ejecuta
 
 ```
  $ make
 ```
 
-
-Después entra en la carpeta class/ y ejecuta el archivo Main.
+Después entra en la carpeta class/ y ejecuta el archivo Main, la colección de ejemplos estará disponible en /class/test/examples.txt
 
 ```
 cd class/
