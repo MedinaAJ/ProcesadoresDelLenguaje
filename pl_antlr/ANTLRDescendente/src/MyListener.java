@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import org.antlr.v4.runtime.RecognitionException;
 
 
 public class MyListener implements ejemploListener{
@@ -28,7 +29,7 @@ private List<String> listaEventos = new ArrayList<String>();
 private List<String> listaEstados = new ArrayList<String>();
 private String EstadoInicial;
 static int j;
-boolean z;
+boolean z=true;
 private String respuesta;
 
     @Override
@@ -60,11 +61,11 @@ private String respuesta;
         String cortar=ctx.ID().getText();
         a=new MaquinaMoore(cortar);
         System.out.println(a.getName());
+        z=true;
     }
 
     @Override
     public void exitAutomata(ejemploParser.AutomataContext ctx) {
-       
         if(z){
             for(int i=0; i < listaEventos.size(); i++){
                 a.addEvent(listaEventos.get(i));
@@ -81,7 +82,7 @@ private String respuesta;
 
     @Override
     public void enterCuerpo_automata(ejemploParser.Cuerpo_automataContext ctx) {
-        EstadoInicial=ctx.estado_ini().getText();
+
         
     }
 
@@ -116,7 +117,7 @@ private String respuesta;
 
     @Override
     public void enterEstado_ini(ejemploParser.Estado_iniContext ctx) {
-
+        EstadoInicial=ctx.ID().getText();
     }
 
     @Override
@@ -198,7 +199,7 @@ private String respuesta;
 
     @Override
     public void exitComportamientos(ejemploParser.ComportamientosContext ctx) {
-        
+        a.addEstadosToMachine();
     }
 
     @Override
@@ -212,22 +213,36 @@ private String respuesta;
             if(listaEstados.contains(ctx.ID().getText())){
                 try{
                     js=script.getEngineByName("JavaScript");
+                    Runnable s2 = () -> {
+                        System.out.println("Estoy en el estado: "+ctx.ID().getText());
+                        try {
+                            js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
+                        } catch (ScriptException ex) {
+                            Logger.getLogger(MyListener.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    };
+                    Runnable s3 = () -> {
+                        System.out.println("Estoy en el ultimo estado : "+ctx.ID().getText());
+                        try {
+                            js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
+                        } catch (ScriptException ex) {
+                            Logger.getLogger(MyListener.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    };
+                    if(ctx.ID().getText().equals(EstadoInicial)){
+                        System.out.println("");
+                    Runnable s1 = () -> {
+                        System.out.println("");
+
+                    };
+                        a.addState(ctx.ID().getText(),s1,s2,s3);
+                    }else{
                     Runnable s1 = () -> {
                         System.out.println("Entro al estado : "+ctx.ID().getText());
 
                     };
-                    Runnable s2 = () -> {
-                        System.out.println("Estoy en el estado: "+ctx.ID().getText());
-        //            try {
-        //                js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
-        //            } catch (ScriptException ex) {
-        //                Logger.getLogger(MyListener.class.getName()).log(Level.SEVERE, null, ex);
-        //            }
-                    };
-                    Runnable s3 = () -> {
-                        System.out.println("Estoy en el ultimo estado : "+ctx.ID().getText());
-                    };
-                    a.addState(ctx.ID().getText(), s1, s2, s3);
+                        a.cargarEstados(s1,s2,s3, ctx.ID().getText());
+                    }
                     
                 }catch(Exception e){
                     System.out.println("ERROR: Hay estados que no se pueden añadir al automata, pues no existen ");
@@ -236,7 +251,6 @@ private String respuesta;
             }else{
                 z=false;
             }
-
         }
         
     }
@@ -257,7 +271,8 @@ private String respuesta;
 
     @Override
     public void visitErrorNode(ErrorNode en) {
-
+        System.out.println("Falta: "+en.getText()+"En el texto de entrada");
+        z=false;
     }
 
     @Override
@@ -269,5 +284,5 @@ private String respuesta;
     public void exitEveryRule(ParserRuleContext prc) {
 
     }
-  
+ 
 }

@@ -12,15 +12,31 @@
 		alf_in e1,e2,e3;
 		alf_out c1,c2,c3;
 
+		comportamiento {
+			(q0,c1),
+			(q1,c2),
+			(q2,c3);
+		}
 		transicion {
 			(q0,e1,q1),
 			(q1,e2,q1),
 			(q1,e3,q2);
 		}
+		moore AutomataIvan{
+
+		estados q0,q1,q2;
+		estado_in q0 ;
+		alf_in e1,e2,e3;
+		alf_out c1,c2,c3;
+
 		comportamiento {
 			(q0,c1),
 			(q1,c2),
 			(q2,c3);
-		 
 		}
-}
+		transicion {
+			(q0,e1,q1),
+			(q1,e2,q1),
+			(q1,e3,q2);
+		}
+	}

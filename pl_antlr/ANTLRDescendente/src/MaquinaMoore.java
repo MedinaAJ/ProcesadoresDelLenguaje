@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,11 +7,12 @@ import java.util.NoSuchElementException;
 
 public class MaquinaMoore {
 
-
     protected String name;
     protected String currentState;
     protected Map<String, State> states;
     protected boolean debug;
+    protected ArrayList<State> estados;
+    protected ArrayList<String> nombres;
 
     /**
      * Create a blank MooreMachine with the given name (which is arbitrary).
@@ -25,10 +21,26 @@ public class MaquinaMoore {
         this.name = name;
         this.states = new HashMap<String, State>();
         this.currentState = null;
+	this.estados = new ArrayList<State>();
+	this.nombres = new ArrayList<String>();
     }
     
+    public void cargarEstados(Runnable entryCode, Runnable exitCode, Runnable endStateCode, String nombre){
+	
+	State s = new State(entryCode,exitCode,endStateCode);	
+	this.estados.add(s);
+	this.nombres.add(nombre);
+    }
+    
+    public void addEstadosToMachine(){
+        int i;
+	for(i=0; i<this.estados.size(); i++){		
+		this.addState(this.nombres.get(i),this.estados.get(i).getEntryCode(),this.estados.get(i).getOutCode(),
+				 this.estados.get(i).getEndCode());	
+	}
+    }
     public String getName(){
-        return name;
+	return this.name;
     }
     public void ejecutar(){
         this.states.get(this.getState()).runEndStateCode(); 
@@ -217,6 +229,15 @@ public class MaquinaMoore {
             this.endStateCode = endStateCode;
         }
 
+	public Runnable getEntryCode(){
+		return this.entryCode;
+	}
+	public Runnable getOutCode(){
+		return this.outputCode;
+	}
+	public Runnable getEndCode(){
+		return this.endStateCode;
+	}
         public void addTransition(Transition trans) {
             transitions.put(trans.evtName, trans);
         }
