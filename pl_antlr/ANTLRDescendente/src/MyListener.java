@@ -22,24 +22,21 @@ public class MyListener implements ejemploListener{
 MaquinaMoore a;
 ScriptEngineManager script = new ScriptEngineManager();
 ScriptEngine js;
-private String[][] Comportamientos;
 private String nombreAutomata;
 Hashtable<String, String> comp_codigo = new Hashtable<String, String>();
 private List<String> listaEventos = new ArrayList<String>();
 private List<String> listaEstados = new ArrayList<String>();
+private List<String> listaComportamientos = new ArrayList<String>();
 private String EstadoInicial;
-static int j;
 boolean z=true;
-private String respuesta;
-
     @Override
     public void enterPrograma(ejemploParser.ProgramaContext ctx) {
-        System.out.println("Bienvenido al Analizador de Automatas");
+        System.out.println("************************Bienvenido al Analizador de Automatas************************");
     }
 
     @Override
     public void exitPrograma(ejemploParser.ProgramaContext ctx) {
-        System.out.println("Gracias por el uso de nuestro programa");
+        System.out.println("************************Gracias por el uso de nuestro programa************************");
     }
 
     @Override
@@ -60,7 +57,8 @@ private String respuesta;
     public void enterAutomata(ejemploParser.AutomataContext ctx) {
         String cortar=ctx.ID().getText();
         a=new MaquinaMoore(cortar);
-        System.out.println(a.getName());
+        System.out.println("Para el automata "+a.getName()+":");
+        //System.out.println("\n");
         z=true;
     }
 
@@ -73,10 +71,12 @@ private String respuesta;
             }
 
             a.ejecutar();
+            System.out.println("\n");
         }else{
             System.out.println("No se ha podido realizar el analisis para el automata: "+a.getName()+"\n"
                     + "Alguno de los parametros que ha introducido en el fichero son incorrectos"
                     + " o carecen de sentido para nuestro analisis.");
+            System.out.println("\n");
         }
     }
 
@@ -117,6 +117,8 @@ private String respuesta;
 
     @Override
     public void enterEstado_ini(ejemploParser.Estado_iniContext ctx) {
+        System.out.print("Se ha definido como estado inicial "+ctx.ID());
+        System.out.println("\n");
         EstadoInicial=ctx.ID().getText();
     }
 
@@ -132,19 +134,32 @@ private String respuesta;
 
     @Override
     public void exitAlf_in(ejemploParser.Alf_inContext ctx) {
+        System.out.println("Se han definido los siguientes Eventos: ");
         for(int i=0;i<ctx.Eventos().size();i++){
-        listaEventos.add(ctx.Eventos(i).getText());
+            System.out.print(""+ctx.Eventos(i)+" ");
+            listaEventos.add(ctx.Eventos(i).getText());
         }
+        System.out.println("\n");
+        
     }
 
     @Override
     public void enterAlf_out(ejemploParser.Alf_outContext ctx) {
-
+        
     }
 
     @Override
     public void exitAlf_out(ejemploParser.Alf_outContext ctx) {
+        System.out.println("Se han definido los siguientes Comportamientos: ");
+        for(int i=0;i<ctx.Cmp().size();i++){
+            listaComportamientos.add(ctx.Cmp(i).getText());
+            System.out.print(""+ctx.Cmp(i)+" ");
+        if(comp_codigo.contains(listaComportamientos.get(i))){
+            System.out.println("Hay comportamientos que no se han definido correctamente, en este caso: "+ctx.Cmp(i));
+        }
+        }
 
+        System.out.println("\n");
     }
 
     @Override
@@ -166,14 +181,14 @@ private String respuesta;
     public void exitTransicion_def(ejemploParser.Transicion_defContext ctx) {
         if(z){
                 try{
-                    if(listaEstados.contains(ctx.ID().getText())||listaEstados.contains(ctx.val_trans().ID().getText())){
+                    if(listaEstados.contains(ctx.ID().getText())||listaEstados.contains(ctx.val_trans().ID().getText()) || listaEventos.contains(ctx.val_trans().ID().getText())){
                         z=true;
                     }else{
                         z=false;
                     }
                     a.addTransition(ctx.Eventos().getText(), ctx.ID().getText(), ctx.val_trans().ID().getText());
                 }catch(Exception e){
-                    System.out.println("No se pueden añadir transiciones con estados no definidos");
+                    System.out.println("No se pueden añadir transiciones con estados o eventos no definidos");
                     z=false;
                 }
         }else{
@@ -210,7 +225,7 @@ private String respuesta;
     @Override
     public void exitComp_def(ejemploParser.Comp_defContext ctx) {
         if(z){
-            if(listaEstados.contains(ctx.ID().getText())){
+            if(listaEstados.contains(ctx.ID().getText()) || listaComportamientos.contains(ctx.val_comp().Cmp().getText())){
                 try{
                     js=script.getEngineByName("JavaScript");
                     Runnable s2 = () -> {
@@ -218,7 +233,7 @@ private String respuesta;
                         try {
                             js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
                         } catch (ScriptException ex) {
-                            Logger.getLogger(MyListener.class.getName()).log(Level.SEVERE, null, ex);
+                            z=false;
                         }
                     };
                     Runnable s3 = () -> {
@@ -226,7 +241,9 @@ private String respuesta;
                         try {
                             js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
                         } catch (ScriptException ex) {
-                            Logger.getLogger(MyListener.class.getName()).log(Level.SEVERE, null, ex);
+                            z=false;
+                            System.out.println(""+ex);
+                            
                         }
                     };
                     if(ctx.ID().getText().equals(EstadoInicial)){
@@ -245,7 +262,7 @@ private String respuesta;
                     }
                     
                 }catch(Exception e){
-                    System.out.println("ERROR: Hay estados que no se pueden añadir al automata, pues no existen ");
+                    System.out.println("ERROR: Hay estados o comportamientos que no se pueden añadir al automata, pues no existen ");
                     z=false;
                 }
             }else{
