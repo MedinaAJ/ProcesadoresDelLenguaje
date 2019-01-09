@@ -1,14 +1,12 @@
-# Analizador Léxico
-
 ## ¿Cómo ejecutar?
 
-Abre un terminal dentro de la carpeta del proyecto y ejecuta
+Abre un terminal dentro de la carpeta del proyecto y ejecuta:
 
 ```
  $ make
 ```
 
-Después entra en la carpeta class/ y ejecuta el archivo Main, la colección de ejemplos estará disponible en /class/test/examples.txt
+Después entra en la carpeta class/ y ejecuta el archivo Main, la colección de ejemplos estará disponible en /class/test/
 
 ```
 cd class/
