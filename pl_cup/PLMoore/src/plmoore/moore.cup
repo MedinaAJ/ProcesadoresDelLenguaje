@@ -191,7 +191,7 @@ dec_estados ::= ID:id
                             estados.add(id);
                        }else{
                             fallo = true;
-                            error += "In line: "+((estleft)+1)+" El estado "+id+" ya esta declarado \n";
+                            error += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n";
                        }
                     :} COMA dec_estados
 		| ID:id {:  if(!estados.contains(id)){
@@ -200,7 +200,7 @@ dec_estados ::= ID:id
                                 estados = new ArrayList<String>();
                             }else{
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" El estado "+id+" ya esta declarado \n";
+                                error += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n";
                             }
 			:} ;
 
@@ -212,12 +212,12 @@ dec_estados ::= ID:id dec_estados {:
 /********************************/
 
 estado_ini ::= ESTADO_INI ID:id {:
-                                if(estados.contains(id)){
+                                if(!estados.contains(id)){
                                     estado_inicial=id; 
                                     estados_iniciales.add(estado_inicial); 
                                 }else{
                                     fallo = true;
-                                    error += "In line: "+((estleft)+1)+" El estado inicial "+id+" no esta declarado en la lista de estados\n";
+                                    error += "In line: "+((idleft)+1)+" El estado inicial "+id+" no esta declarado en la lista de estados\n";
                                 }
                                 :} PUNTO_COMA ;
 				
@@ -242,7 +242,7 @@ dec_alf_in ::= ID:id {:
                                 eventos.add(id); 
                             }else{
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" La transicion "+id+" ya esta declarada \n";
+                                error += "In line: "+((idleft)+1)+" La transicion "+id+" ya esta declarada \n";
                             }                      
                      :} COMA dec_alf_in
 		| ID:id {:
@@ -252,7 +252,7 @@ dec_alf_in ::= ID:id {:
                                 eventos = new ArrayList<String>();
                             }else{
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" La transicion "+id+" ya esta declarada \n";
+                                error += "In line: "+((idleft)+1)+" La transicion "+id+" ya esta declarada \n";
                             }
                       :} ;
 
@@ -275,18 +275,18 @@ alf_out ::= ALF_OUT:id dec_alf_out {:
 dec_alf_out ::= CMP:id {:
                             if(comp_codigo.get(id).equals(null)){
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" El comportamiento "+id+" no tiene codigo declarado \n";
+                                error += "In line: "+((idleft)+1)+" El comportamiento "+id+" no tiene codigo declarado \n";
                             }
                             if(!comps.contains(id)){
                                 comps.add(id); 
                             }else{
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" El comportamiento "+id+" ya esta declarado \n";
+                                error += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n";
                             }
                         :} COMA dec_alf_out
 		| CMP:id {: if(comp_codigo.get(id).equals(null)){
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" El comportamiento "+id+" no tiene codigo declarado \n";
+                                error += "In line: "+((idleft)+1)+" El comportamiento "+id+" no tiene codigo declarado \n";
                             }
                             if(!comps.contains(id)){
                                 comps.add(id); 
@@ -294,7 +294,7 @@ dec_alf_out ::= CMP:id {:
                                 comps = new ArrayList<String>();
                             }else{
                                 fallo = true;
-                                error += "In line: "+((estleft)+1)+" El comportamiento "+id+" ya esta declarado \n";
+                                error += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n";
                             }
                          :} ;
 
@@ -309,18 +309,18 @@ dec_alf_out ::= CMP:id dec_alf_out {:
 comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA {: machine.addEstadosToMachine(); :} LLCORCH_CL ;
 
 /****Error comportamientos****/
-comportamientos ::= COMPORTAMIENTO dec_comportamientos PUNTO_COMA {: fallo = true;
+comportamientos ::= COMPORTAMIENTO:tupla dec_comportamientos PUNTO_COMA {: fallo = true;
                                                                      error += "In line: "+((tuplaleft)+1)+"ERROR: Falta una llave de apertura\n";	 
                                                                   :} LLCORCH_CL ;
-comportamientos ::= COMPORTAMIENTO LLCORCH dec_comportamientos PUNTO_COMA {: fallo = true;
-                                                                             error += "In line: "+((tuplaleft)+1)+"ERROR: Falta una llave de cierre\n";	 
+comportamientos ::= COMPORTAMIENTO:tupla LLCORCH_OP dec_comportamientos PUNTO_COMA {: fallo = true;
+                                                                                error += "In line: "+((tuplaleft)+1)+"ERROR: Falta una llave de cierre\n";	 
                                                                           :} ;
 
-comportamientos ::= LLCORCH_OP dec_comportamientos PUNTO_COMA {: fallo = true;
+comportamientos ::= LLCORCH_OP:tupla dec_comportamientos PUNTO_COMA {: fallo = true;
                                                                  error += "In line: "+((tuplaleft)+1)+"ERROR: Falta la palabra reservada comportamiento\n";
                                                               :} LLCORCH_CL ; 
 
-comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos {: fallo = true;
+comportamientos ::= COMPORTAMIENTO LLCORCH_OP:tupla dec_comportamientos {: fallo = true;
                                                                      error += "In line: "+((tuplaleft)+1)+"ERROR: Falta un punto y coma\n";
                                                                   :} LLCORCH_CL ; 
 /****Fin Error comportamientos****/
@@ -350,9 +350,9 @@ dec_comportamientos ::= comp_def:tupla
 comp_def ::= LLPARENT_OP ID:id COMA CMP:comp LLPARENT_CL 
 	{:
 			RESULT=id+"-"+comp+"-"+comp_codigo.get(comp);
-                        if(!estados.contains(id)){
+                        if(estados.contains(id)){
                             fallo = true;
-			    error += "In line: "+((tuplaleft)+1)+" ERROR: El estado " + id + " no esta declarado \n";
+			    error += "In line: "+((idleft)+1)+" ERROR: El estado " + id + " no esta declarado \n";
                         }
 			if(!comp_codigo.get(comp).equals(null)){
 				
@@ -389,7 +389,7 @@ comp_def ::= LLPARENT_OP ID:id COMA CMP:comp LLPARENT_CL
 				
 			}else{
 				fallo = true;
-				error += "In line: "+((tuplaleft)+1)+"ERROR: No se ha asociado ningún código de comportamiento al autómata \n";
+				error += "In line: "+((idleft)+1)+"ERROR: No se ha asociado ningún código de comportamiento al autómata \n";
 			}
 
 	:} ;
