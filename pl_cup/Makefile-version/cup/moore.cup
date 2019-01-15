@@ -153,37 +153,34 @@ dec_comp ::= CMP:com codigo:code {:  comp_codigo.put(com, code); :} dec_comp
 dec_automata ::= automata {: ++contador_maquinas; :} dec_automata
 		| automata {: ++contador_maquinas; :};
 
-codigo ::= ALM_OP CODIGO:code ALM_CL {: RESULT=code; :};
-
-//Producciones de error de codigo
-codigo ::= ALM_OP CODIGO:code {:
+codigo ::= ALM_OP CODIGO:code ALM_CL {: RESULT=code; :}
+                 | error {:
 			         fallo = true;
-		                 error += "In line: "+((codeleft)+1)+"Necesita cerrar con una '#' la sentencia \n";
+		                 error += " Error declarando código de usuario \n";
+				 parser.report_error(error,null);
 :};
-codigo ::= CODIGO:code ALM_CL {: 
-				 fallo = true;
-		                 error += "In line: "+((codeleft)+1)+"Necesita abrir con una '#' la sentencia  \n"; 
+
+
+automata ::= MOORE ID:id {: machine = new MaquinaMoore(id); :} cuerpo_automata 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando Máquina de Moore \n";
+				 parser.report_error(error,null);
 :};
-/*******************************/
 
-automata ::= MOORE ID:id {: 
-  	     machine = new MaquinaMoore(id);
-	     :} cuerpo_automata ;
+cuerpo_automata ::= LLCORCH_OP estados estado_ini alf_in alf_out comportamientos transicion LLCORCH_CL {: maquinas.add(machine); :} 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando el cuerpo de la Máquina de Moore \n";
+				 parser.report_error(error,null);
+:};
 
-cuerpo_automata ::= LLCORCH_OP estados estado_ini alf_in alf_out comportamientos 
-
-transicion LLCORCH_CL {: maquinas.add(machine); 
-			
-			:} ;
-
-estados ::=  ESTADOS dec_estados PUNTO_COMA ;
-
-//Produccion de error estados
-estados ::=  ESTADOS:est dec_estados {:
-			            fallo = true;
-				    error += "In line: "+((estleft)+1)+"Falta ';' al final de la sentencia \n";
- :} ;
-/****************************/
+estados ::=  ESTADOS dec_estados PUNTO_COMA 
+                 | error {:
+			         fallo = true;
+		                 error += "Error en la declación de estados \n";
+				 parser.report_error(error,null);
+:};
 
 dec_estados ::= ID:id 
                     {: if(!estados.contains(id)){
@@ -201,14 +198,12 @@ dec_estados ::= ID:id
                                 fallo = true;
                                 error += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n";
                             }
-			:} ;
-
-//Producción de error dec_estados
-dec_estados ::= ID:id dec_estados {:
-				  fallo = true;
-				  error += "In line: "+((idleft)+1)+"Separe los estados con ',' \n";
-                                   :} ;
-/********************************/
+			:} 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando estados de la Máquina de Moore \n";
+				 parser.report_error(error,null);
+:};
 
 estado_ini ::= ESTADO_INI ID:id {:
                                 if(!estados.contains(id)){
@@ -218,23 +213,19 @@ estado_ini ::= ESTADO_INI ID:id {:
                                     fallo = true;
                                     error += "In line: "+((idleft)+1)+" El estado inicial "+id+" no esta declarado en la lista de estados\n";
                                 }
-                                :} PUNTO_COMA ;
-				
-//Produccion de error estado_ini
-estado_ini ::= ESTADO_INI ID:id {: 
-				fallo = true;
-				error += "In line: "+((idleft)+1)+"Falta ';' al final de la sentencia \n";
-:} ;
-/*********************/
+                                :} PUNTO_COMA 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando estado inicial \n";
+				 parser.report_error(error,null);
+:};
 
-alf_in ::= ALF_IN dec_alf_in PUNTO_COMA ;
-
-//Produccion error alf_in
-alf_in ::= ALF_IN:id dec_alf_in {: 
-				fallo = true;
-				error += "In line: "+((idleft)+1)+"Falta ';' al final de la sentencia \n";
- :} ;
-/************************************/
+alf_in ::= ALF_IN dec_alf_in PUNTO_COMA 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando alfabeto de entrada \n";
+				 parser.report_error(error,null);
+:};
 
 dec_alf_in ::= ID:id {:
                             if(!eventos.contains(id)){
@@ -253,23 +244,19 @@ dec_alf_in ::= ID:id {:
                                 fallo = true;
                                 error += "In line: "+((idleft)+1)+" La transicion "+id+" ya esta declarada \n";
                             }
-                      :} ;
+                      :} 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando alfabeto de entrada \n";
+				 parser.report_error(error,null);
+:};
 
-//Produccion de error de dec_alf_in
-dec_alf_in ::= ID:id dec_alf_in {:  
-				   fallo = true;
-				   error += "In line: "+((idleft)+1)+" separe los elementos del alfabeto con ',' \n";
-:} ;
-/************************************/
-
-alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA ;
-
-//Produccion error alf_out
-alf_out ::= ALF_OUT:id dec_alf_out {: 
-				   fallo = true;
-				   error += "In line: "+((idleft)+1)+" Falta ';' al final de la sentencia',' \n";
- :} ;
-/************************************/
+alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando alfabeto de salida \n";
+				 parser.report_error(error,null);
+:};
 
 dec_alf_out ::= CMP:id {:
                             if(comp_codigo.get(id).equals(null)){
@@ -295,34 +282,19 @@ dec_alf_out ::= CMP:id {:
                                 fallo = true;
                                 error += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n";
                             }
-                         :} ;
+                         :} 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando alfabeto de salida \n";
+				 parser.report_error(error,null);
+:};
 
-//Produccion de error de dec_alf_out
-dec_alf_out ::= CMP:id dec_alf_out {: 
-				   fallo = true;
-				   error += "In line: "+((idleft)+1)+"Separe los comportamientos del alfabeto con ',' \n";
-					
- :} ;
-/************************************/
-
-comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA {: machine.addEstadosToMachine(); :} LLCORCH_CL ;
-
-/****Error comportamientos****/
-comportamientos ::= COMPORTAMIENTO:tupla dec_comportamientos PUNTO_COMA {: fallo = true;
-                                                                     error += "In line: "+((tuplaleft)+1)+"ERROR: Falta una llave de apertura\n";	 
-                                                                  :} LLCORCH_CL ;
-comportamientos ::= COMPORTAMIENTO:tupla LLCORCH_OP dec_comportamientos PUNTO_COMA {: fallo = true;
-                                                                                error += "In line: "+((tuplaleft)+1)+"ERROR: Falta una llave de cierre\n";	 
-                                                                          :} ;
-
-comportamientos ::= LLCORCH_OP:tupla dec_comportamientos PUNTO_COMA {: fallo = true;
-                                                                 error += "In line: "+((tuplaleft)+1)+"ERROR: Falta la palabra reservada comportamiento\n";
-                                                              :} LLCORCH_CL ; 
-
-comportamientos ::= COMPORTAMIENTO LLCORCH_OP:tupla dec_comportamientos {: fallo = true;
-                                                                     error += "In line: "+((tuplaleft)+1)+"ERROR: Falta un punto y coma\n";
-                                                                  :} LLCORCH_CL ; 
-/****Fin Error comportamientos****/
+comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA {: machine.addEstadosToMachine(); :} LLCORCH_CL 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando comportamientos \n";
+				 parser.report_error(error,null);
+:};
 
 dec_comportamientos ::= comp_def:tupla 
 	{: 
@@ -391,27 +363,20 @@ comp_def ::= LLPARENT_OP ID:id COMA CMP:comp LLPARENT_CL
 				error += "In line: "+((idleft)+1)+"ERROR: No se ha asociado ningún código de comportamiento al autómata \n";
 			}
 
-	:} ;
-
-//Producciones de error de comp_def
-comp_def ::= LLPARENT_OP CMP:cmp LLPARENT_CL {: fallo = true;
-						error += "In line: "+((cmpleft)+1)+" Necesita declarar un estado \n";
- :} ;
-
-comp_def ::= LLPARENT_OP ID COMA:coma LLPARENT_CL {:  
-						     fallo = true;
-						     error += "In line: "+((comaleft)+1)+" Necesita declarar un comportamiento para el estado \n";
-
-:} ;
-		
-comp_def ::= LLPARENT_OP ID:id CMP LLPARENT_CL {: 
-						fallo = true;
-						error += "In line: "+((idleft)+1)+" Necesita separar estado y comportamiento con una ','\n";			
- :} ;
-//////////////////////////////////
+	:} 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando comportamientos \n";
+				 parser.report_error(error,null);
+:};
 
 
-transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL ;
+transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando transiciones \n";
+				 parser.report_error(error,null);
+:};
 
 dec_transicion ::= transicion_def:tupla 
 	{: 
@@ -436,16 +401,10 @@ dec_transicion ::= transicion_def:tupla
 
 	:} ; 
 
-transicion_def ::= LLPARENT_OP ID:estado_in COMA ID:evento COMA ID:estado_out LLPARENT_CL {: 								RESULT=estado_in+"-"+evento+"-"+estado_out; 			   						machine.addTransition(evento,estado_in,estado_out); :} ;
-
-//Producciones de error de transicion_def
-transicion_def ::= LLPARENT_OP ID:id ID COMA ID LLPARENT_CL {:
-							   fallo = true;
-							   error += "In line: "+((idleft)+1)+"Ha olvidado una ','\n";
-:} ;
-transicion_def ::= LLPARENT_OP ID COMA ID:id ID LLPARENT_CL {: 
-							   fallo = true;
-							   error += "In line: "+((idleft)+1)+"Ha olvidado una ','\n";
- :} ;
-/****************************************/
+transicion_def ::= LLPARENT_OP ID:estado_in COMA ID:evento COMA ID:estado_out LLPARENT_CL {: 								RESULT=estado_in+"-"+evento+"-"+estado_out; 			   						machine.addTransition(evento,estado_in,estado_out); :} 
+                 | error {:
+			         fallo = true;
+		                 error += "Error declarando transiciones \n";
+				 parser.report_error(error,null);
+:};
 
