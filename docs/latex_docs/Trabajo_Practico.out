@@ -1,18 +1,19 @@
-\BOOKMARK [1][-]{section.1}{\277Qu\351 es un aut\363mata de Moore?}{}% 1
+\BOOKMARK [1][-]{section.1}{Introducci\363n. \277Qu\351 es una m\341quina de Moore?}{}% 1
 \BOOKMARK [2][-]{subsection.1.1}{Definici\363n formal}{section.1}% 2
-\BOOKMARK [2][-]{subsection.1.2}{Ejemplo propuesto}{section.1}% 3
-\BOOKMARK [1][-]{section.2}{Presentaci\363n del problema}{}% 4
-\BOOKMARK [2][-]{subsection.2.1}{Lenguaje definido}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.2}{Tabla Token-Acci\363n}{section.2}% 6
-\BOOKMARK [2][-]{subsection.2.3}{Ejemplo aut\363mata completo}{section.2}% 7
-\BOOKMARK [1][-]{section.3}{EBNF}{}% 8
-\BOOKMARK [1][-]{section.4}{Tablas de Tokens}{}% 9
-\BOOKMARK [1][-]{section.5}{\277C\363mo se va a construir el procesador del lenguaje dise\361ado?}{}% 10
-\BOOKMARK [1][-]{section.6}{Estructura del procesador de lenguajes}{}% 11
-\BOOKMARK [1][-]{section.7}{Analizador l\351xico}{}% 12
-\BOOKMARK [2][-]{subsection.7.1}{Jflex}{section.7}% 13
-\BOOKMARK [2][-]{subsection.7.2}{ANTLR}{section.7}% 14
-\BOOKMARK [1][-]{section.8}{Analizador sint\341ctico}{}% 15
-\BOOKMARK [2][-]{subsection.8.1}{CUP}{section.8}% 16
-\BOOKMARK [2][-]{subsection.8.2}{ANTLR}{section.8}% 17
-\BOOKMARK [1][-]{section.9}{Analizador sem\341ntico}{}% 18
+\BOOKMARK [1][-]{section.2}{Presentaci\363n del problema}{}% 3
+\BOOKMARK [1][-]{section.3}{Soluci\363n propuesta}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{Dise\361o del Procesador de Lenguajes}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.2}{\277C\363mo se va a construir el procesador del lenguaje dise\361ado?}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.3}{Lenguaje definido}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.4}{Tabla Token-Acci\363n}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.5}{Ejemplo aut\363mata completo}{section.3}% 9
+\BOOKMARK [1][-]{section.4}{EBNF}{}% 10
+\BOOKMARK [1][-]{section.5}{Tablas de Tokens}{}% 11
+\BOOKMARK [1][-]{section.6}{Analizador l\351xico}{}% 12
+\BOOKMARK [2][-]{subsection.6.1}{Jflex}{section.6}% 13
+\BOOKMARK [2][-]{subsection.6.2}{Antlr}{section.6}% 14
+\BOOKMARK [1][-]{section.7}{Analizador sint\341ctico}{}% 15
+\BOOKMARK [2][-]{subsection.7.1}{Cup}{section.7}% 16
+\BOOKMARK [2][-]{subsection.7.2}{Antlr}{section.7}% 17
+\BOOKMARK [1][-]{section.8}{Analizador sem\341ntico}{}% 18
+\BOOKMARK [2][-]{subsection.8.1}{Generaci\363n de c\363digo}{section.8}% 19
