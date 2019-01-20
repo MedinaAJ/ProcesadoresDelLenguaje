@@ -65,72 +65,167 @@ parser code {:
 :}
 
 action code {: 
-	MaquinaDeMoore machine;
-	int contador=0;
-        ArrayList<MaquinaDeMoore> maquinas = new ArrayList<MaquinaDeMoore>();;
+
+	MoldeAutomataMoore machine;
+	int contador = 0;
+        ArrayList<MoldeAutomataMoore> maquinas = new ArrayList<MoldeAutomataMoore>();;
 	Hashtable<String, String> comp_codigo = new Hashtable<String, String>();
         String fallos_ejecucion = "";
         boolean continuar = true;
 :}
+
 /* ------------Declaracion de la lista de simbolos de la gramatica-----------*/
 non terminal programa, dec_comp, dec_automata, cuerpo_automata, estados, dec_estados, estado_ini, alf_in, dec_alf_in, alf_out, dec_alf_out, transicion, dec_transicion, comportamientos, dec_comportamientos;
-non terminal MaquinaDeMoore automata;
-non terminal String codigo;
-non terminal String comp_def;
-non terminal String transicion_def;
+non terminal MoldeAutomataMoore automata;
+non terminal String codigo, comp_def, transicion_def;
+
 
 terminal String CMP, CODIGO, MOORE, ID, LLCORCH_OP, LLCORCH_CL, ESTADOS, ESTADO_INI, ALF_IN, ALF_OUT, TRANS, COMPORTAMIENTO, COMA, PUNTO_COMA, LLPARENT_OP, LLPARENT_CL, ALM_OP, ALM_CL;
-/* -------------Declaracion de precedencias -----------*/
 
 
 /* --------------Declaracion de la gramatica -----------*/
 
 programa ::= dec_comp dec_automata {: 
-                                                        System.out.println("Analisis finalizado" + contador); 
-                                                        if(continuar){
-                                                           System.out.println("Generando fichero...");
-                                                           Sintesis sintesis = new Sintesis(maquinas);
-                                                        }else{
-                                                           System.out.println("Hubo fallos durante la ejecucion"); 
-                                                           System.out.println(fallos_ejecucion);
-                                                        }
-                                  :} ;
+
+        System.out.println("¡Analisis finalizado!"); 
+        if(continuar){
+           System.out.println("Generando fichero...");
+           GeneracionCodigo generar = new GeneracionCodigo(maquinas);
+           
+        }else{
+           System.out.println("Hubo fallos durante la ejecucion"); 
+           System.out.println(fallos_ejecucion);
+        }
+
+                                    :} ;
+
 dec_comp ::= CMP:com codigo:code {: comp_codigo.put(com, code); :} dec_comp
 		| CMP:com codigo:code {: comp_codigo.put(com, code); :} ;
-dec_automata ::= automata:machin {: System.out.println("Maquina identificada! n_maquinas: " + ++contador); maquinas.add(machin); :} dec_automata
-		| automata:machin {: System.out.println("Maquina identificada! n_maquinas: " + ++contador); maquinas.add(machin); :};
-codigo ::= ALM_OP CODIGO:code ALM_CL {: RESULT=code; :};
-automata ::= MOORE ID:id {: machine = new MaquinaDeMoore(id); :} cuerpo_automata {: RESULT = machine; :} ;
-cuerpo_automata ::= LLCORCH_OP estados estado_ini alf_in alf_out comportamientos transicion LLCORCH_CL ;
-estados ::=  ESTADOS dec_estados PUNTO_COMA ;
-dec_estados ::= ID:id {: if(!machine.addEstado(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} :} COMA dec_estados
-		| ID:id {: if(!machine.addEstado(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} :} ;
-estado_ini ::= ESTADO_INI ID:id {: machine.setEstado_inicial(id); :} PUNTO_COMA ;
-alf_in ::= ALF_IN dec_alf_in PUNTO_COMA ;
-dec_alf_in ::= ID:id {: if(!machine.addEvento(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El evento "+id+" ya esta declarado \n"; continuar = false;} :} COMA dec_alf_in
-		| ID:id {: if(!machine.addEvento(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El evento "+id+" ya esta declarado \n"; continuar = false;} :} ;
-alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA ;
-dec_alf_out ::= CMP:id {: if(!machine.addComp(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n"; continuar = false;} :} COMA dec_alf_out
-		| CMP:id {: if(!machine.addComp(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n"; continuar = false;} :} ;
-comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA LLCORCH_CL ;
+
+dec_automata ::= automata:machin {: 
+                                    System.out.println("Maquina identificada! n_maquinas: "+ ++contador); maquinas.add(machin); 
+                                  :} dec_automata
+
+		| automata:machin {: 
+                                    System.out.println("Maquina identificada! n_maquinas: "+ ++contador); maquinas.add(machin); 
+                                   :};
+
+codigo ::= ALM_OP CODIGO:code ALM_CL {: RESULT=code; :} 
+		   | error {:
+				fallos_ejecucion += " Error declarando codigo de usuario\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+
+automata ::= MOORE ID:id {: machine = new MoldeAutomataMoore(id); :} cuerpo_automata {: RESULT = machine; :}
+		   | error {:
+				fallos_ejecucion += " Error declarando maquina de Moore\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+
+cuerpo_automata ::= LLCORCH_OP estados estado_ini alf_in alf_out comportamientos transicion LLCORCH_CL 
+		   | error {:
+				fallos_ejecucion += " Error declarando maquina de Moore\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+estados ::=  ESTADOS dec_estados PUNTO_COMA 
+		   | error {:
+				fallos_ejecucion += " Error declarando estados\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :}; 
+
+dec_estados ::= ID:id {: 
+                            if(!machine.addEstado(id)){
+fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} 
+
+                       :} COMA dec_estados
+
+	        | ID:id {: 
+                            if(!machine.addEstado(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} 
+                         :} ;
+
+             
+
+estado_ini ::= ESTADO_INI ID:id {: machine.setEstado_inicial(id); :} PUNTO_COMA 
+		   | error {:
+				fallos_ejecucion += " Error declarando estado inicial\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+         
+
+alf_in ::= ALF_IN dec_alf_in PUNTO_COMA 
+		   | error {:
+				fallos_ejecucion += " Error declarando alfabeto de entrada\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+dec_alf_in ::= ID:id {: if(!machine.addEvento(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El evento "+id+" ya esta declarado \n"; continuar = false;} 
+
+                      :} COMA dec_alf_in
+
+		| ID:id {: if(!machine.addEvento(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El evento "+id+" ya esta declarado \n"; continuar = false;} 
+                         :} ;
+
+alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA 
+		   | error {:
+				fallos_ejecucion += " Error declarando alfabeto de salida\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+dec_alf_out ::= CMP:id {: if(!machine.addComp(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n"; continuar = false;} 
+
+                        :} COMA dec_alf_out
+
+		| CMP:id {: if(!machine.addComp(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n"; continuar = false;} 
+                          :} ;
+
+comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA LLCORCH_CL 
+		   | error {:
+				fallos_ejecucion += " Error declarando alfabeto de comportamientos\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
 dec_comportamientos ::= comp_def:tupla {: boolean error = machine.addComportamiento(tupla);
-                                          if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
+
+                    if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
+
                                         :} COMA dec_comportamientos 
-		| comp_def:tupla {: boolean error = machine.addComportamiento(tupla);
-                                    if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
-                                 :} ;
-comp_def ::= LLPARENT_OP ID:id COMA CMP:comp LLPARENT_CL 
-	{: 
-			RESULT=id+"-"+comp+"-"+comp_codigo.get(comp);
-	:};
-transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL ;
-dec_transicion ::= transicion_def:tupla {: if(!machine.addTransicion(tupla)){
-                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false;
-                                           }
+
+                    | comp_def:tupla {: boolean error = machine.addComportamiento(tupla);
+                       if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
+                                      :} ;
+
+comp_def ::= LLPARENT_OP ID:id COMA CMP:comp LLPARENT_CL {: RESULT=id+"-"+comp+"-"+comp_codigo.get(comp); :}
+		   | error {:
+				fallos_ejecucion += " Error declarando alfabeto comportamientos\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL 
+		   | error {:
+				fallos_ejecucion += " Error declarando alfabeto de transiciones\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   :};
+
+dec_transicion ::= transicion_def:tupla {:  if(!machine.addTransicion(tupla)){
+                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; 
+                                              continuar = false; }
                                         :} COMA dec_transicion 
-		| transicion_def:tupla {: if(!machine.addTransicion(tupla)){
-                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false;
-                                           }
+
+		| transicion_def:tupla {:  if(!machine.addTransicion(tupla)){
+                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
                                         :} ;
 
 transicion_def ::= LLPARENT_OP ID:estado_in COMA ID:evento COMA ID:estado_out LLPARENT_CL {: RESULT=estado_in+"-"+evento+"-"+estado_out; :} ;

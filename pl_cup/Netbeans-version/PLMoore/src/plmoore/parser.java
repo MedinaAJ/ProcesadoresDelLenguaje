@@ -34,18 +34,21 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\044\000\002\002\004\000\002\002\004\000\002\025" +
+    "\000\056\000\002\002\004\000\002\002\004\000\002\025" +
     "\002\000\002\003\006\000\002\003\004\000\002\026\002" +
     "\000\002\004\005\000\002\004\003\000\002\022\005\000" +
-    "\002\027\002\000\002\021\006\000\002\005\012\000\002" +
-    "\006\005\000\002\030\002\000\002\007\006\000\002\007" +
-    "\003\000\002\031\002\000\002\010\006\000\002\011\005" +
-    "\000\002\032\002\000\002\012\006\000\002\012\003\000" +
-    "\002\013\005\000\002\033\002\000\002\014\006\000\002" +
-    "\014\003\000\002\017\007\000\002\034\002\000\002\020" +
-    "\006\000\002\020\003\000\002\023\007\000\002\015\007" +
-    "\000\002\035\002\000\002\016\006\000\002\016\003\000" +
-    "\002\024\011" });
+    "\002\022\003\000\002\027\002\000\002\021\006\000\002" +
+    "\021\003\000\002\005\012\000\002\005\003\000\002\006" +
+    "\005\000\002\006\003\000\002\030\002\000\002\007\006" +
+    "\000\002\007\003\000\002\031\002\000\002\010\006\000" +
+    "\002\010\003\000\002\011\005\000\002\011\003\000\002" +
+    "\032\002\000\002\012\006\000\002\012\003\000\002\013" +
+    "\005\000\002\013\003\000\002\033\002\000\002\014\006" +
+    "\000\002\014\003\000\002\017\007\000\002\017\003\000" +
+    "\002\034\002\000\002\020\006\000\002\020\003\000\002" +
+    "\023\007\000\002\023\003\000\002\015\007\000\002\015" +
+    "\003\000\002\035\002\000\002\016\006\000\002\016\003" +
+    "\000\002\024\011" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -53,46 +56,57 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\122\000\004\004\005\001\002\000\004\002\124\001" +
-    "\002\000\004\024\116\001\002\000\004\006\010\001\002" +
-    "\000\006\002\ufffa\006\ufffc\001\002\000\004\007\012\001" +
-    "\002\000\004\002\001\001\002\000\004\010\ufff8\001\002" +
-    "\000\004\010\014\001\002\000\004\012\016\001\002\000" +
-    "\006\002\ufff7\006\ufff7\001\002\000\004\007\106\001\002" +
-    "\000\004\013\021\001\002\000\004\014\025\001\002\000" +
-    "\004\007\022\001\002\000\004\021\ufff1\001\002\000\004" +
-    "\021\024\001\002\000\004\014\ufff0\001\002\000\004\007" +
-    "\101\001\002\000\004\015\027\001\002\000\004\004\072" +
-    "\001\002\000\004\017\032\001\002\000\004\016\050\001" +
-    "\002\000\004\010\033\001\002\000\004\022\035\001\002" +
-    "\000\006\020\uffe6\021\uffe4\001\002\000\004\007\041\001" +
-    "\002\000\004\021\037\001\002\000\004\011\040\001\002" +
-    "\000\004\016\uffe7\001\002\000\004\020\042\001\002\000" +
-    "\004\004\043\001\002\000\004\023\044\001\002\000\006" +
-    "\020\uffe3\021\uffe3\001\002\000\004\020\046\001\002\000" +
-    "\004\022\035\001\002\000\004\021\uffe5\001\002\000\004" +
-    "\010\053\001\002\000\004\011\052\001\002\000\006\002" +
-    "\ufff6\006\ufff6\001\002\000\004\022\054\001\002\000\004" +
-    "\007\064\001\002\000\004\021\062\001\002\000\006\020" +
-    "\uffe1\021\uffdf\001\002\000\004\020\060\001\002\000\004" +
-    "\022\054\001\002\000\004\021\uffe0\001\002\000\004\011" +
-    "\063\001\002\000\004\011\uffe2\001\002\000\004\020\065" +
-    "\001\002\000\004\007\066\001\002\000\004\020\067\001" +
-    "\002\000\004\007\070\001\002\000\004\023\071\001\002" +
-    "\000\006\020\uffde\021\uffde\001\002\000\006\020\uffea\021" +
-    "\uffe8\001\002\000\004\021\074\001\002\000\004\017\uffeb" +
-    "\001\002\000\004\020\076\001\002\000\004\004\072\001" +
-    "\002\000\004\021\uffe9\001\002\000\004\021\105\001\002" +
-    "\000\006\020\uffee\021\uffec\001\002\000\004\020\103\001" +
-    "\002\000\004\007\101\001\002\000\004\021\uffed\001\002" +
-    "\000\004\015\uffef\001\002\000\006\020\ufff4\021\ufff2\001" +
-    "\002\000\004\021\110\001\002\000\004\013\ufff5\001\002" +
-    "\000\004\020\112\001\002\000\004\007\106\001\002\000" +
-    "\004\021\ufff3\001\002\000\004\006\010\001\002\000\004" +
-    "\002\ufffb\001\002\000\004\005\122\001\002\000\006\004" +
-    "\uffff\006\ufffd\001\002\000\004\004\005\001\002\000\004" +
-    "\006\ufffe\001\002\000\004\025\123\001\002\000\006\004" +
-    "\ufff9\006\ufff9\001\002\000\004\002\000\001\002" });
+    "\000\134\000\004\004\005\001\002\000\004\002\136\001" +
+    "\002\000\006\003\130\024\127\001\002\000\006\003\011" +
+    "\006\010\001\002\000\010\002\ufffa\003\ufffc\006\ufffc\001" +
+    "\002\000\004\007\013\001\002\000\010\002\ufff5\003\ufff5" +
+    "\006\ufff5\001\002\000\004\002\001\001\002\000\006\003" +
+    "\ufff7\010\ufff7\001\002\000\006\003\016\010\015\001\002" +
+    "\000\006\003\020\012\021\001\002\000\010\002\ufff3\003" +
+    "\ufff3\006\ufff3\001\002\000\010\002\ufff6\003\ufff6\006\ufff6" +
+    "\001\002\000\006\003\ufff1\013\ufff1\001\002\000\004\007" +
+    "\117\001\002\000\006\003\024\013\025\001\002\000\006" +
+    "\003\032\014\031\001\002\000\006\003\uffeb\014\uffeb\001" +
+    "\002\000\004\007\026\001\002\000\004\021\uffed\001\002" +
+    "\000\004\021\030\001\002\000\006\003\uffec\014\uffec\001" +
+    "\002\000\004\007\112\001\002\000\006\003\uffe9\015\uffe9" +
+    "\001\002\000\006\003\036\015\034\001\002\000\004\004" +
+    "\103\001\002\000\006\003\040\017\041\001\002\000\006" +
+    "\003\uffe4\017\uffe4\001\002\000\006\003\060\016\061\001" +
+    "\002\000\006\003\uffdf\016\uffdf\001\002\000\004\010\042" +
+    "\001\002\000\006\003\044\022\045\001\002\000\006\020" +
+    "\uffde\021\uffdc\001\002\000\006\020\uffda\021\uffda\001\002" +
+    "\000\004\007\051\001\002\000\004\021\047\001\002\000" +
+    "\004\011\050\001\002\000\006\003\uffe0\016\uffe0\001\002" +
+    "\000\004\020\052\001\002\000\004\004\053\001\002\000" +
+    "\004\023\054\001\002\000\006\020\uffdb\021\uffdb\001\002" +
+    "\000\004\020\056\001\002\000\006\003\044\022\045\001" +
+    "\002\000\004\021\uffdd\001\002\000\004\011\uffd8\001\002" +
+    "\000\004\010\064\001\002\000\004\011\063\001\002\000" +
+    "\010\002\ufff4\003\ufff4\006\ufff4\001\002\000\004\022\065" +
+    "\001\002\000\004\007\075\001\002\000\004\021\073\001" +
+    "\002\000\006\020\uffd7\021\uffd5\001\002\000\004\020\071" +
+    "\001\002\000\004\022\065\001\002\000\004\021\uffd6\001" +
+    "\002\000\004\011\074\001\002\000\004\011\uffd9\001\002" +
+    "\000\004\020\076\001\002\000\004\007\077\001\002\000" +
+    "\004\020\100\001\002\000\004\007\101\001\002\000\004" +
+    "\023\102\001\002\000\006\020\uffd4\021\uffd4\001\002\000" +
+    "\006\020\uffe3\021\uffe1\001\002\000\004\021\105\001\002" +
+    "\000\006\003\uffe5\017\uffe5\001\002\000\004\020\107\001" +
+    "\002\000\004\004\103\001\002\000\004\021\uffe2\001\002" +
+    "\000\004\021\116\001\002\000\006\020\uffe8\021\uffe6\001" +
+    "\002\000\004\020\114\001\002\000\004\007\112\001\002" +
+    "\000\004\021\uffe7\001\002\000\006\003\uffea\015\uffea\001" +
+    "\002\000\006\020\ufff0\021\uffee\001\002\000\004\021\121" +
+    "\001\002\000\006\003\ufff2\013\ufff2\001\002\000\004\020" +
+    "\123\001\002\000\004\007\117\001\002\000\004\021\uffef" +
+    "\001\002\000\006\003\011\006\010\001\002\000\004\002" +
+    "\ufffb\001\002\000\004\005\134\001\002\000\010\003\ufff8" +
+    "\004\ufff8\006\ufff8\001\002\000\010\003\ufffd\004\uffff\006" +
+    "\ufffd\001\002\000\004\004\005\001\002\000\006\003\ufffe" +
+    "\006\ufffe\001\002\000\004\025\135\001\002\000\010\003" +
+    "\ufff9\004\ufff9\006\ufff9\001\002\000\004\002\000\001\002" +
+    "" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -100,38 +114,41 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\122\000\006\002\003\003\005\001\001\000\002\001" +
-    "\001\000\004\022\116\001\001\000\006\004\010\021\006" +
-    "\001\001\000\004\026\113\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\027\012\001\001\000\004\005\014" +
-    "\001\001\000\004\006\016\001\001\000\002\001\001\000" +
-    "\004\007\106\001\001\000\004\010\017\001\001\000\004" +
-    "\011\025\001\001\000\002\001\001\000\004\031\022\001" +
-    "\001\000\002\001\001\000\002\001\001\000\004\012\077" +
-    "\001\001\000\004\013\027\001\001\000\004\014\072\001" +
-    "\001\000\004\017\030\001\001\000\004\015\050\001\001" +
-    "\000\002\001\001\000\006\020\035\023\033\001\001\000" +
-    "\004\034\044\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\006\020\046\023\033\001\001\000\002\001" +
+    "\000\134\000\006\002\003\003\005\001\001\000\002\001" +
+    "\001\000\004\022\130\001\001\000\006\004\011\021\006" +
+    "\001\001\000\004\026\124\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\027\013\001\001" +
+    "\000\004\005\016\001\001\000\004\006\021\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\007\117\001\001\000\004\010\022\001\001\000\004\011" +
+    "\032\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\031\026\001\001\000\002\001\001\000\002\001\001\000" +
+    "\004\012\110\001\001\000\002\001\001\000\004\013\034" +
+    "\001\001\000\004\014\103\001\001\000\004\017\036\001" +
+    "\001\000\002\001\001\000\004\015\061\001\001\000\002" +
+    "\001\001\000\002\001\001\000\006\020\045\023\042\001" +
+    "\001\000\004\034\054\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\006\016\054\024\055\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\035\056\001\001\000\002\001\001" +
-    "\000\006\016\060\024\055\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\033\074\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\014" +
-    "\076\001\001\000\002\001\001\000\002\001\001\000\004" +
-    "\032\101\001\001\000\002\001\001\000\004\012\103\001" +
-    "\001\000\002\001\001\000\002\001\001\000\004\030\110" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\007\112\001\001\000\002\001\001\000\006" +
-    "\004\114\021\006\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\025\117\001\001\000\004\003\120\001\001" +
+    "\000\002\001\001\000\002\001\001\000\006\020\056\023" +
+    "\042\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\006\016" +
+    "\065\024\066\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\035\067\001\001\000\002\001\001\000\006\016" +
+    "\071\024\066\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001" });
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\033\105\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\014\107\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\032\112\001" +
+    "\001\000\002\001\001\000\004\012\114\001\001\000\002" +
+    "\001\001\000\002\001\001\000\004\030\121\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
+    "\007\123\001\001\000\002\001\001\000\006\004\125\021" +
+    "\006\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\025\131\001\001\000\004\003\132\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -231,9 +248,10 @@ public class parser extends java_cup.runtime.lr_parser {
 class CUP$parser$actions {
 
  
-	MaquinaDeMoore machine;
-	int contador=0;
-        ArrayList<MaquinaDeMoore> maquinas = new ArrayList<MaquinaDeMoore>();;
+
+	MoldeAutomataMoore machine;
+	int contador = 0;
+        ArrayList<MoldeAutomataMoore> maquinas = new ArrayList<MoldeAutomataMoore>();;
 	Hashtable<String, String> comp_codigo = new Hashtable<String, String>();
         String fallos_ejecucion = "";
         boolean continuar = true;
@@ -264,15 +282,18 @@ class CUP$parser$actions {
             {
               Object RESULT =null;
 		 
-                                                        System.out.println("Analisis finalizado" + contador); 
-                                                        if(continuar){
-                                                           System.out.println("Generando fichero...");
-                                                           Sintesis sintesis = new Sintesis(maquinas);
-                                                        }else{
-                                                           System.out.println("Hubo fallos durante la ejecucion"); 
-                                                           System.out.println(fallos_ejecucion);
-                                                        }
-                                  
+
+        System.out.println("¡Analisis finalizado!"); 
+        if(continuar){
+           System.out.println("Generando fichero...");
+           GeneracionCodigo generar = new GeneracionCodigo(maquinas);
+           
+        }else{
+           System.out.println("Hubo fallos durante la ejecucion"); 
+           System.out.println(fallos_ejecucion);
+        }
+
+                                    
               CUP$parser$result = parser.getSymbolFactory().newSymbol("programa",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -344,8 +365,10 @@ class CUP$parser$actions {
               Object RESULT =null;
 		int machinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int machinright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		MaquinaDeMoore machin = (MaquinaDeMoore)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
- System.out.println("Maquina identificada! n_maquinas: " + ++contador); maquinas.add(machin); 
+		MoldeAutomataMoore machin = (MoldeAutomataMoore)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+ 
+                                    System.out.println("Maquina identificada! n_maquinas: "+ ++contador); maquinas.add(machin); 
+                                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$1",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -358,7 +381,7 @@ class CUP$parser$actions {
                 RESULT = (Object) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int machinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int machinright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		MaquinaDeMoore machin = (MaquinaDeMoore)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		MoldeAutomataMoore machin = (MoldeAutomataMoore)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_automata",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -370,8 +393,10 @@ class CUP$parser$actions {
               Object RESULT =null;
 		int machinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int machinright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		MaquinaDeMoore machin = (MaquinaDeMoore)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 System.out.println("Maquina identificada! n_maquinas: " + ++contador); maquinas.add(machin); 
+		MoldeAutomataMoore machin = (MoldeAutomataMoore)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 
+                                    System.out.println("Maquina identificada! n_maquinas: "+ ++contador); maquinas.add(machin); 
+                                   
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_automata",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -389,23 +414,36 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // NT$2 ::= 
+          case 9: // codigo ::= error 
             {
-              MaquinaDeMoore RESULT =null;
+              String RESULT =null;
+		
+				fallos_ejecucion += " Error declarando codigo de usuario\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("codigo",16, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // NT$2 ::= 
+            {
+              MoldeAutomataMoore RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
- machine = new MaquinaDeMoore(id); 
+ machine = new MoldeAutomataMoore(id); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$2",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // automata ::= MOORE ID NT$2 cuerpo_automata 
+          case 11: // automata ::= MOORE ID NT$2 cuerpo_automata 
             {
-              MaquinaDeMoore RESULT =null;
+              MoldeAutomataMoore RESULT =null;
               // propagate RESULT from NT$2
-                RESULT = (MaquinaDeMoore) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+                RESULT = (MoldeAutomataMoore) ((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
@@ -415,7 +453,20 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // cuerpo_automata ::= LLCORCH_OP estados estado_ini alf_in alf_out comportamientos transicion LLCORCH_CL 
+          case 12: // automata ::= error 
+            {
+              MoldeAutomataMoore RESULT =null;
+		
+				fallos_ejecucion += " Error declarando maquina de Moore\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("automata",15, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // cuerpo_automata ::= LLCORCH_OP estados estado_ini alf_in alf_out comportamientos transicion LLCORCH_CL 
             {
               Object RESULT =null;
 
@@ -424,7 +475,20 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // estados ::= ESTADOS dec_estados PUNTO_COMA 
+          case 14: // cuerpo_automata ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando maquina de Moore\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("cuerpo_automata",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // estados ::= ESTADOS dec_estados PUNTO_COMA 
             {
               Object RESULT =null;
 
@@ -433,19 +497,36 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // NT$3 ::= 
+          case 16: // estados ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando estados\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("estados",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 17: // NT$3 ::= 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
- if(!machine.addEstado(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} 
+ 
+                            if(!machine.addEstado(id)){
+fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} 
+
+                       
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$3",22, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // dec_estados ::= ID NT$3 COMA dec_estados 
+          case 18: // dec_estados ::= ID NT$3 COMA dec_estados 
             {
               Object RESULT =null;
               // propagate RESULT from NT$3
@@ -459,19 +540,21 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // dec_estados ::= ID 
+          case 19: // dec_estados ::= ID 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!machine.addEstado(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} 
+		 
+                            if(!machine.addEstado(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El estado "+id+" ya esta declarado \n"; continuar = false;} 
+                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_estados",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // NT$4 ::= 
+          case 20: // NT$4 ::= 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
@@ -483,7 +566,7 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // estado_ini ::= ESTADO_INI ID NT$4 PUNTO_COMA 
+          case 21: // estado_ini ::= ESTADO_INI ID NT$4 PUNTO_COMA 
             {
               Object RESULT =null;
               // propagate RESULT from NT$4
@@ -497,7 +580,20 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // alf_in ::= ALF_IN dec_alf_in PUNTO_COMA 
+          case 22: // estado_ini ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando estado inicial\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("estado_ini",6, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 23: // alf_in ::= ALF_IN dec_alf_in PUNTO_COMA 
             {
               Object RESULT =null;
 
@@ -506,19 +602,34 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // NT$5 ::= 
+          case 24: // alf_in ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando alfabeto de entrada\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("alf_in",7, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 25: // NT$5 ::= 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
  if(!machine.addEvento(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El evento "+id+" ya esta declarado \n"; continuar = false;} 
+
+                      
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$5",24, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // dec_alf_in ::= ID NT$5 COMA dec_alf_in 
+          case 26: // dec_alf_in ::= ID NT$5 COMA dec_alf_in 
             {
               Object RESULT =null;
               // propagate RESULT from NT$5
@@ -532,19 +643,20 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // dec_alf_in ::= ID 
+          case 27: // dec_alf_in ::= ID 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!machine.addEvento(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El evento "+id+" ya esta declarado \n"; continuar = false;} 
+                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_alf_in",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA 
+          case 28: // alf_out ::= ALF_OUT dec_alf_out PUNTO_COMA 
             {
               Object RESULT =null;
 
@@ -553,19 +665,34 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // NT$6 ::= 
+          case 29: // alf_out ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando alfabeto de salida\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("alf_out",9, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 30: // NT$6 ::= 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
  if(!machine.addComp(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n"; continuar = false;} 
+
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$6",25, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // dec_alf_out ::= CMP NT$6 COMA dec_alf_out 
+          case 31: // dec_alf_out ::= CMP NT$6 COMA dec_alf_out 
             {
               Object RESULT =null;
               // propagate RESULT from NT$6
@@ -579,19 +706,20 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // dec_alf_out ::= CMP 
+          case 32: // dec_alf_out ::= CMP 
             {
               Object RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if(!machine.addComp(id)){fallos_ejecucion += "In line: "+((idleft)+1)+" El comportamiento "+id+" ya esta declarado \n"; continuar = false;} 
+                          
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_alf_out",10, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA LLCORCH_CL 
+          case 33: // comportamientos ::= COMPORTAMIENTO LLCORCH_OP dec_comportamientos PUNTO_COMA LLCORCH_CL 
             {
               Object RESULT =null;
 
@@ -600,21 +728,36 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // NT$7 ::= 
+          case 34: // comportamientos ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando alfabeto de comportamientos\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("comportamientos",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 35: // NT$7 ::= 
             {
               Object RESULT =null;
 		int tuplaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int tuplaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String tupla = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
  boolean error = machine.addComportamiento(tupla);
-                                          if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
+
+                    if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
+
                                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$7",26, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 28: // dec_comportamientos ::= comp_def NT$7 COMA dec_comportamientos 
+          case 36: // dec_comportamientos ::= comp_def NT$7 COMA dec_comportamientos 
             {
               Object RESULT =null;
               // propagate RESULT from NT$7
@@ -628,21 +771,21 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 29: // dec_comportamientos ::= comp_def 
+          case 37: // dec_comportamientos ::= comp_def 
             {
               Object RESULT =null;
 		int tuplaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int tuplaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String tupla = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 boolean error = machine.addComportamiento(tupla);
-                                    if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
-                                 
+                       if(!error){ fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
+                                      
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_comportamientos",14, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 30: // comp_def ::= LLPARENT_OP ID COMA CMP LLPARENT_CL 
+          case 38: // comp_def ::= LLPARENT_OP ID COMA CMP LLPARENT_CL 
             {
               String RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
@@ -651,15 +794,26 @@ class CUP$parser$actions {
 		int compleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int compright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String comp = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 
-			RESULT=id+"-"+comp+"-"+comp_codigo.get(comp);
-	
+		 RESULT=id+"-"+comp+"-"+comp_codigo.get(comp); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("comp_def",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 31: // transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL 
+          case 39: // comp_def ::= error 
+            {
+              String RESULT =null;
+		
+				fallos_ejecucion += " Error declarando alfabeto comportamientos\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("comp_def",17, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 40: // transicion ::= TRANS LLCORCH_OP dec_transicion PUNTO_COMA LLCORCH_CL 
             {
               Object RESULT =null;
 
@@ -668,22 +822,35 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 32: // NT$8 ::= 
+          case 41: // transicion ::= error 
+            {
+              Object RESULT =null;
+		
+				fallos_ejecucion += " Error declarando alfabeto de transiciones\n";
+				parser.report_error(fallos_ejecucion,null);
+				continuar = false;
+		   
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("transicion",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 42: // NT$8 ::= 
             {
               Object RESULT =null;
 		int tuplaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int tuplaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String tupla = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
- if(!machine.addTransicion(tupla)){
-                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false;
-                                           }
+  if(!machine.addTransicion(tupla)){
+                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; 
+                                              continuar = false; }
                                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NT$8",27, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 33: // dec_transicion ::= transicion_def NT$8 COMA dec_transicion 
+          case 43: // dec_transicion ::= transicion_def NT$8 COMA dec_transicion 
             {
               Object RESULT =null;
               // propagate RESULT from NT$8
@@ -697,22 +864,21 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 34: // dec_transicion ::= transicion_def 
+          case 44: // dec_transicion ::= transicion_def 
             {
               Object RESULT =null;
 		int tuplaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int tuplaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String tupla = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if(!machine.addTransicion(tupla)){
-                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false;
-                                           }
+		  if(!machine.addTransicion(tupla)){
+                                              fallos_ejecucion += "In line: "+((tuplaleft)+1)+" El comportamiento "+tupla+" ya esta declarado \n"; continuar = false; }
                                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("dec_transicion",12, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 35: // transicion_def ::= LLPARENT_OP ID COMA ID COMA ID LLPARENT_CL 
+          case 45: // transicion_def ::= LLPARENT_OP ID COMA ID COMA ID LLPARENT_CL 
             {
               String RESULT =null;
 		int estado_inleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;

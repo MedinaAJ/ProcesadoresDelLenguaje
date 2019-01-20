@@ -41,8 +41,9 @@
 	\tableofcontents
 	\newpage
 	
-	\section{¿Qué es un autómata de Moore?}
-	En Teoría de la computación una \textbf{Máquina de Moore} es un autómata de estados finitos para el cual la salida en un momento dado sólo depende de su estado en ese momento, mientras que la transición al siguiente estado dependerá del estado en el que se encuentre y de la entrada introducida.
+	\section{Introducción. ¿Qué es una máquina de Moore?}
+	
+En Teoría de la computación una \textbf{Máquina de Moore} es un autómata de estados finitos para el cual la salida en un momento dado sólo depende de su estado en ese momento, mientras que la transición al siguiente estado dependerá del estado en el que se encuentre y de la entrada introducida.
 	\newline
 	El diagrama de estados para una máquina de Moore incluirá una señal de salida para cada estado. \cite{Moore1}
 	
@@ -112,10 +113,18 @@ El alfabeto de salida $\Lambda$: { ($a_{1},a_{2},a_{3},a_{4}$ donde $a_{i}\epsil
 
 \newpage
 \section{Presentación del problema}
-La práctica consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente, en nuestro caso Java.
+El objetivo de este trabajo es el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente, en nuestro caso Java.
 \newline
 \newline
-Los conocimientos de la materia \textit{Procesadores de Lenguajes} serán útiles en las distintas etapas del proceso, en primer lugar, se necesitará definir el léxico del lenguaje de entrada, la construcción del procesador de lenguajes asociado empleando los diagramas \textbf{tipo T}, el análisis léxico, el análisis sintáctico y por último el análisis semántico.
+Para diseñar este procesador de lenguajes, utilizaremos los conocimientos de la materia \textit{Procesadores de Lenguajes}durante las distintas etapas del proceso. El proceso consta de 3 etapas:
+\newline
+\begin{itemize}
+	\item Análisis Léxico
+	\item Análisis Sintáctico
+	\item Análisis Semántico
+\end{itemize}
+\newline
+en primer lugar, se necesitará definir el léxico del lenguaje de entrada, la construcción del procesador de lenguajes asociado empleando los diagramas \textbf{tipo T}, el análisis léxico, el análisis sintáctico y por último el análisis semántico.
 \newline
 \newline
 También se desarrollará una tabla de tokens, lexemas y patrones del lenguaje y el EBNF perteneciente al mismo.

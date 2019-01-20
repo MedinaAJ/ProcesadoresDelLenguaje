@@ -29,17 +29,7 @@ import java_cup.runtime.Symbol;
 
 %}
 
-%init{
-	System.out.println("Iniciando Analizador Lexico ... ");
 
-%init}
-
-
-%eof{
-
-	System.out.println("Fin del Analizador Lexico ... ");
-
-%eof}
 
 TERLINEA = \r|\n|\r\n
 CARACTERIN = [^\r\n]
