@@ -2,11 +2,11 @@
 
 ## Descripción del proyecto
 
-La práctica de la asignatura consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en un lenguaje de alto nivel que lo represente.
+La práctica de la asignatura consiste en el diseño de un procesador de lenguajes cuya entrada estará formada por una o varias máquinas de Moore y su salida será código en lenguaje de alto nivel Java que las represente.
 
 
 <p align="center">
-  <img width="300" height="300" src="https://github.com/MedinaAJ/ProcesadoresDelLenguaje/blob/development/docs/resources/modelo-moore.jpg">
+  <img width="300" height="300" src="https://github.com/MedinaAJ/ProcesadoresDelLenguaje/blob/development/docs/modelo-moore.jpg">
 </p>
 
 ## Problema y tecnología empleada
