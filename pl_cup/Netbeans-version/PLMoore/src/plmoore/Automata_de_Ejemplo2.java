@@ -1,31 +1,23 @@
-//Archivo generado por equipo RUBY - Sun Jan 20 20:00:15 CET 2019 
+//Archivo generado por equipo RUBY - Sun Jan 20 21:21:58 CET 2019 
 package plmoore;
 import java.util.*;
 
 public class Automata_de_Ejemplo2 {
 
     private String entrada;
-	private ArrayList <String> eventos;
+    private ArrayList <String> eventos;
 
     public Automata_de_Ejemplo2 (String entrada) {
         this.entrada = entrada;
-	eventos = new ArrayList<String>();
-	eventos.add("e1");
-	eventos.add("e2");
-	eventos.add("e3");
-	boolean fallo = false;
-        String[] aux = entrada.split(",");
-        List<String> al = new ArrayList<String>();
-        al = Arrays.asList(aux);
-        for (String s : al) {
-            if (!eventos.contains(s)) {
-                fallo = true;
-            }
-        }
-        if (fallo) {
+	this.eventos = new ArrayList<String>();
+	this.eventos.add("e1");
+	this.eventos.add("e2");
+	this.eventos.add("e3");
+
+        if (checkFallo()) {
             System.out.println("La cadena contiene elementos que no pertenecen al alfabeto de entrada\n");
         } else {
-	entrada = entrada.replace(",","");
+            entrada = entrada.replace(",","");
             q0(entrada);
         }
     }
@@ -88,6 +80,18 @@ public class Automata_de_Ejemplo2 {
             System.exit(0);
         }
 
+    }
+    public boolean checkFallo() {
+        boolean fallo = false;
+        String[] aux = this.entrada.split(",");
+        List<String> al = new ArrayList<>();
+        al = Arrays.asList(aux);
+        for (String s : al) {
+            if (!this.eventos.contains(s)) {
+                fallo = true;
+            }
+        }
+        return fallo;
     }
 
 }

@@ -4,21 +4,15 @@
  * and open the template in the editor.
  */
 package plmoore;
-
-/**
- *
- * @author lajotadeladerrota
- */
-
-//Esto es lo que llevo diciendo durante todo el curso, 
-//La funciones que se escriben en el txt y se ejecutan en los autómatas
-//prefiero hacer la clase estática para no liarlo mas
+// Esta es la clase que incorporará funcionalidad al autómata es decir a los comportamientos asociados al estado
 public class FuncionalidadAutomata {
-    public static void activarSensor(String R, String X){
-       System.out.println("Activado sensor "+R+X); 
+
+    public static void activarSensor(String R, String X) {
+        System.out.println("Activado sensor " + R + X);
     }
-    public static void desactivarSensor(int sensor){
-        System.out.println("Desactivado sensor " +sensor);
+
+    public static void desactivarSensor(int sensor) {
+        System.out.println("Desactivado sensor " + sensor);
     }
-    
+
 }

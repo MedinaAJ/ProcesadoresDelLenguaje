@@ -12,18 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
 
-
-/**
- *
- * @author lajotadeladerrota
- */
-public class EjecutarAutomata {
+public class CompilarAutomatas {
 
     private String rutaFichero = "src/test/automata_de_prueba.txt";
     private String rutaCompilar = "src/plmoore/";
     private static boolean do_debug_parse = false;
 
-    public EjecutarAutomata() {
+    public CompilarAutomatas() {
         try {
             compilar(rutaCompilar);
             correrParser(rutaFichero);
@@ -36,8 +31,8 @@ public class EjecutarAutomata {
     public void compilar(String ruta) throws java.io.IOException {
         try {
 
-            String opcFlex[] = {ruta + "Moore.flex", "-d", ruta};
-            String opcCUP[] = {"-destdir", ruta, "-parser", "parser", ruta + "Moore.cup"};
+            String opcFlex[] = {ruta + "moore.flex", "-d", ruta};
+            String opcCUP[] = {"-destdir", ruta, "-parser", "parser", ruta + "moore.cup"};
             jflex.Main.generate(opcFlex);
             java_cup.Main.main(opcCUP);
         } catch (Exception e) {
@@ -58,8 +53,6 @@ public class EjecutarAutomata {
                 parse_tree = parser_obj.parse();
             }
         } catch (Exception e) {
-
-        } finally {
 
         }
     }

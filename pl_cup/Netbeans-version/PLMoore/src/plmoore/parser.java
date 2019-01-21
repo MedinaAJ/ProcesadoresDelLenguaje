@@ -251,7 +251,7 @@ class CUP$parser$actions {
 
 	MoldeAutomataMoore machine;
 	int contador = 0;
-        ArrayList<MoldeAutomataMoore> maquinas = new ArrayList<MoldeAutomataMoore>();;
+        ArrayList<MoldeAutomataMoore> maquinas = new ArrayList<>();;
 	Hashtable<String, String> comp_codigo = new Hashtable<String, String>();
         String fallos_ejecucion = "";
         boolean continuar = true;

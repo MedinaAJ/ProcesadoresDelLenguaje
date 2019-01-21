@@ -50,34 +50,26 @@ public class GeneracionCodigo {
     public void generarFichero(MoldeAutomataMoore autActual) {
 
         String contenido_fichero = "";
-        ArrayList <String> event = autActual.getEventos();
         String aux = "";
         java.util.Date fecha = new Date();
-        String marca_agua = "//Archivo generado por equipo RUBY - "+fecha+" \n";
-        for(int k=0;k<event.size();k++){
-            aux += "\teventos.add("+'"'+event.get(k)+'"'+");\n";
+        String marca_agua = "//Archivo generado por equipo RUBY - " + fecha + " \n";
+        for (int k = 0; k < autActual.getEventos().size(); k++) {
+            aux += "\tthis.eventos.add(" + '"' + autActual.getEventos().get(k) + '"' + ");\n";
         }
         contenido_fichero += marca_agua+"package plmoore;\nimport java.util.*;\n"
                 + "\n"
                 + "public class " + autActual.getNombre() + " {\n"
                 + "\n"
-                + "    private String entrada;\n\tprivate ArrayList <String> eventos;\n"
+                + "    private String entrada;\n"
+                + "    private ArrayList <String> eventos;\n"
                 + "\n"
                 + "    public " + autActual.getNombre() + " (String entrada) {\n"
-                + "        this.entrada = entrada;\n\teventos = new ArrayList<String>();\n"+aux+"\tboolean fallo = false;\n" +
-"        String[] aux = entrada.split(\",\");\n" +
-"        List<String> al = new ArrayList<String>();\n" +
-"        al = Arrays.asList(aux);\n" +
-"        for (String s : al) {\n" +
-"            if (!eventos.contains(s)) {\n" +
-"                fallo = true;\n" +
-"            }\n" +
-"        }\n" +
-"        if (fallo) {\n" +
-"            System.out.println(\"La cadena contiene elementos que no pertenecen al alfabeto de entrada\\n\");\n" +
-"        } else {\n\tentrada = entrada.replace(\",\",\"\");\n" +
-"            " + autActual.getEstado_inicial() + "(entrada);\n" +
-"        }"
+                + "        this.entrada = entrada;\n\tthis.eventos = new ArrayList<String>();\n"+aux+"\n"
+                + "        if (checkFallo()) {\n"
+                + "            System.out.println(\"La cadena contiene elementos que no pertenecen al alfabeto de entrada\\n\");\n"
+                + "        } else {\n            entrada = entrada.replace(\",\",\"\");\n"
+                + "            " + autActual.getEstado_inicial() + "(entrada);\n"
+                + "        }"
                 
                 + "\n"
                 + "    }\n";
@@ -115,6 +107,20 @@ public class GeneracionCodigo {
             contenido_fichero += "    }\n";
 
         }
+        
+        contenido_fichero += "    public boolean checkFallo() {\n"
+                + "        boolean fallo = false;\n"
+                + "        String[] aux = this.entrada.split(\",\");\n"
+                + "        List<String> al = new ArrayList<>();\n"
+                + "        al = Arrays.asList(aux);\n"
+                + "        for (String s : al) {\n"
+                + "            if (!this.eventos.contains(s)) {\n"
+                + "                fallo = true;\n"
+                + "            }\n"
+                + "        }\n"
+                + "        return fallo;\n"
+                + "    }\n"
+                + "";
 
         contenido_fichero += "\n}\n";
 

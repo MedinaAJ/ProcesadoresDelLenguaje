@@ -1,0 +1,19 @@
+######## INSTRUCCIONES PARA EJECUTAR ########
+
+
+Para poder ejecutar la práctica no será necesaria ninguna instalación previa ya que se incluyen todas las librerías necesarias gracias al IDE Netbeans.
+
+Existen dos ejemplos:
+	->automata_de_prueba.txt
+	->automata_de_prueba2.txt
+
+En el primero se encuentran dos máquinas de moore definidas, y en el primero solo una.
+
+La ruta de los ficheros para compilar se encuentra en la clase CompilarAutomatas, en concreto en el String rutaFichero, por si se quisiese cambiar el fichero. Se generará una clase por aútomata encontrado en el fichero, utilizando el molde del Autómata de Moore.
+
+
+CLASE MAIN:
+Cuando se ejecute el main pedirá al usuario la sucesión de eventos del autómata que se quieran testear separados por coma. 
+Si se quisiera ejecutar otro autómata se debería de crear el nombre del objeto de esa clase.
+	
+		NombreAutomata aut = new Automata(cadena); 
