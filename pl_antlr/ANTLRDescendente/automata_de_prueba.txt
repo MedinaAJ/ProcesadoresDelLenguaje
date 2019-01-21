@@ -3,11 +3,13 @@
 	
 
 
-	c1 	# print("Activado sensor 1"); #
+	c1 	# System.out.print("Activado sensor 1"); #
 		
-	c2 	# print("Activado sensor 2"); #
+	c2 	# System.out.print("Activado sensor 2"); #
 		
-	c3 	# print("Activado sensor 3"); #
+	c3 	# System.out.print("Activado sensor 3"); #
+
+	c4 	# System.out.print("Activado sensor 4"); #
 	
 	/*	
 	Comentario
@@ -16,20 +18,22 @@
 
 	moore AutomatadeEjemplo{
 
-		estados q0,q1,q2;
+		estados q0,q1,q2,q3;
 		estado_in q0 ;
-		alf_in e1,e2,e3;
-		alf_out c1,c2,c3;
+		alf_in e1,e2,e3,e4;
+		alf_out c1,c2,c3,c4;
 
 		comportamiento {
 			(q0,c1),
 			(q1,c2),
+			(q3,c4),
 			(q2,c3);
 		 
 		}
 		transicion {
 			(q0,e1,q1),
 			(q1,e2,q1),
+			(q2,e4,q3),
 			(q1,e3,q2);
 		}
 

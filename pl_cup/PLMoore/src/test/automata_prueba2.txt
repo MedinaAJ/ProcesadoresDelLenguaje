@@ -1,0 +1,37 @@
+	c1 	# FuncionalidadAutomata.activarSensor("R","V"); #
+		
+	c2 	# FuncionalidadAutomata.activarSensor("V","R"); #
+		
+	c3 	# FuncionalidadAutomata.desactivarSensor(1); #
+	
+	c4      # FuncionalidadAutomata.desactivarSensor(2); #
+	
+	/*	
+	Comentario
+	*/
+        
+	moore Automata_de_Ejemplo3{
+		estados q0,q1,q2,q3 ;
+		estado_in q0 ;
+		alf_in a, b,c ;
+		alf_out c1,c2,c3,c4;
+
+		comportamiento {
+			(q1,c1),
+			(q0,c2),
+			(q2,c3),
+			(q3,c4);
+		}
+		transicion {
+			(q0,a,q1),
+			(q0,b,q0),
+			(q1,a,q3),
+			(q2,c,q2),
+			(q1,b,q2),
+			(q2,c,q3);
+		}
+	}
+
+
+
+
