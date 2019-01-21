@@ -1,0 +1,14 @@
+INSTRUCCIONES PARA ANTLR
+
+1) Generar los ficheros con nuestro Procesador del Lenguaje
+
+2) Coger los ficheros de salida e introducirlos en el proyecto de Jade, dentro de la carpeta src
+
+3) En librerías añadir jar. Seleccionar la libreria que hay dentro de jade/lib (jade.jar)
+
+4) Para ejecutarlo, 
+	4.1) Click derecho sobre librerias, properties, seleccionar la opción Run y escribir las siguientes lineas: 
+		-Para Main Class : jade.Boot
+		-Para Arguments -agents"Agent1: examples.NombreFichero" 
+
+En este caso, está integrado un "automatadeejemplo" que se ha generado.

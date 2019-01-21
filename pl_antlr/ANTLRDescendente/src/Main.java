@@ -26,14 +26,12 @@ public class Main{
 
     public static void main(String[] args) throws IOException{
         String content = readFile("automata_de_prueba.txt", StandardCharsets.UTF_8);
-        String content3="/* sdfsdfsdf*/ "
-                + "a2";
         System.out.println(""+content);
 
-        ejemploLexer lexer = new ejemploLexer(CharStreams.fromString(content));
+        practicaAntlrLexer lexer = new practicaAntlrLexer(CharStreams.fromString(content));
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ejemploParser parser = new ejemploParser(tokens);
+        practicaAntlrParser parser = new practicaAntlrParser(tokens);
 
         ParseTree tree = parser.programa();
 

@@ -18,35 +18,32 @@ import javax.script.ScriptException;
 import org.antlr.v4.runtime.RecognitionException;
 
 
-public class MyListener implements ejemploListener{
+public class MyListener implements practicaAntlrListener{
 MaquinaMoore a;
+MaquinaMoore.Transicion t;
 ScriptEngineManager script = new ScriptEngineManager();
 ScriptEngine js;
-private String nombreAutomata;
 Hashtable<String, String> comp_codigo = new Hashtable<String, String>();
-private List<String> listaEventos = new ArrayList<String>();
-private List<String> listaEstados = new ArrayList<String>();
-private List<String> listaComportamientos = new ArrayList<String>();
-private String EstadoInicial;
+private String nombreAutomata;
 boolean z=true;
     @Override
-    public void enterPrograma(ejemploParser.ProgramaContext ctx) {
+    public void enterPrograma(practicaAntlrParser.ProgramaContext ctx) {
         System.out.println("************************Bienvenido al Analizador de Automatas************************");
     }
 
     @Override
-    public void exitPrograma(ejemploParser.ProgramaContext ctx) {
+    public void exitPrograma(practicaAntlrParser.ProgramaContext ctx) {
         System.out.println("************************Gracias por el uso de nuestro programa************************");
     }
 
     @Override
-    public void enterDec_comp(ejemploParser.Dec_compContext ctx) {
+    public void enterDec_comp(practicaAntlrParser.Dec_compContext ctx) {
 
 
     }
 
     @Override
-    public void exitDec_comp(ejemploParser.Dec_compContext ctx) {
+    public void exitDec_comp(practicaAntlrParser.Dec_compContext ctx) {
         for(int i=0;i<ctx.Cmp().size();i++){
             String cortar=ctx.COD(i).getText().substring(0, 1);
             comp_codigo.put(ctx.Cmp(i).getText(),ctx.COD(i).getText().replace(cortar, ""));
@@ -54,218 +51,159 @@ boolean z=true;
     }
 
     @Override
-    public void enterAutomata(ejemploParser.AutomataContext ctx) {
+    public void enterAutomata(practicaAntlrParser.AutomataContext ctx) {
         String cortar=ctx.ID().getText();
         a=new MaquinaMoore(cortar);
+        a.compCod=comp_codigo;
         System.out.println("Para el automata "+a.getName()+":");
-        //System.out.println("\n");
+        System.out.println("Realizando Analisis semántico...");
         z=true;
     }
 
     @Override
-    public void exitAutomata(ejemploParser.AutomataContext ctx) {
+    public void exitAutomata(practicaAntlrParser.AutomataContext ctx) {
         if(z){
-            for(int i=0; i < listaEventos.size(); i++){
-                a.addEvent(listaEventos.get(i));
-
+            try {
+                System.out.println("Analisis Semántido Correcto para: "+a.getName());
+                System.out.println("Generando Fichero de Salida");
+                a.escribir();
+            } catch (IOException ex) {
+                Logger.getLogger(MyListener.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            a.ejecutar();
-            System.out.println("\n");
         }else{
             System.out.println("No se ha podido realizar el analisis para el automata: "+a.getName()+"\n"
                     + "Alguno de los parametros que ha introducido en el fichero son incorrectos"
                     + " o carecen de sentido para nuestro analisis.");
-            System.out.println("\n");
         }
     }
 
     @Override
-    public void enterCuerpo_automata(ejemploParser.Cuerpo_automataContext ctx) {
+    public void enterCuerpo_automata(practicaAntlrParser.Cuerpo_automataContext ctx) {
 
         
     }
 
     @Override
-    public void exitCuerpo_automata(ejemploParser.Cuerpo_automataContext ctx) {
+    public void exitCuerpo_automata(practicaAntlrParser.Cuerpo_automataContext ctx) {
 
     } 
 
     @Override
-    public void enterEstados(ejemploParser.EstadosContext ctx) {
-        System.out.println("Se han definido los siguientes estados: ");
+    public void enterEstados(practicaAntlrParser.EstadosContext ctx) {
         for(int i=0;i<ctx.ID().size();i++){
-            System.out.print(""+ctx.ID(i)+" ");
-            listaEstados.add(ctx.ID(i).getText());
+            a.estados.add(ctx.ID(i).getText());
         }
-//        System.out.println("¿Son Correctos? Responda con Si o No");
-//        respuesta=sc.next();
-//        if(respuesta.equals("si")){
-//            continuar=true;
-//        }else if(respuesta.equals("no")){
-//            continuar=false;
-//            
-//        }
-        System.out.println("\n");
         
     }
 
     @Override
-    public void exitEstados(ejemploParser.EstadosContext ctx) {
+    public void exitEstados(practicaAntlrParser.EstadosContext ctx) {
 
     }
 
     @Override
-    public void enterEstado_ini(ejemploParser.Estado_iniContext ctx) {
-        System.out.print("Se ha definido como estado inicial "+ctx.ID());
-        System.out.println("\n");
-        EstadoInicial=ctx.ID().getText();
+    public void enterEstado_ini(practicaAntlrParser.Estado_iniContext ctx) {
+        a.estadoInicial=ctx.ID().getText();
     }
 
     @Override
-    public void exitEstado_ini(ejemploParser.Estado_iniContext ctx) {
+    public void exitEstado_ini(practicaAntlrParser.Estado_iniContext ctx) {
 
     }
 
     @Override
-    public void enterAlf_in(ejemploParser.Alf_inContext ctx) {
+    public void enterAlf_in(practicaAntlrParser.Alf_inContext ctx) {
         
     }
 
     @Override
-    public void exitAlf_in(ejemploParser.Alf_inContext ctx) {
-        System.out.println("Se han definido los siguientes Eventos: ");
+    public void exitAlf_in(practicaAntlrParser.Alf_inContext ctx) {
         for(int i=0;i<ctx.Eventos().size();i++){
-            System.out.print(""+ctx.Eventos(i)+" ");
-            listaEventos.add(ctx.Eventos(i).getText());
+            a.eventos.add(ctx.Eventos(i).getText());
         }
-        System.out.println("\n");
         
     }
 
     @Override
-    public void enterAlf_out(ejemploParser.Alf_outContext ctx) {
+    public void enterAlf_out(practicaAntlrParser.Alf_outContext ctx) {
         
     }
 
     @Override
-    public void exitAlf_out(ejemploParser.Alf_outContext ctx) {
-        System.out.println("Se han definido los siguientes Comportamientos: ");
+    public void exitAlf_out(practicaAntlrParser.Alf_outContext ctx) {
         for(int i=0;i<ctx.Cmp().size();i++){
-            listaComportamientos.add(ctx.Cmp(i).getText());
-            System.out.print(""+ctx.Cmp(i)+" ");
-        if(comp_codigo.contains(listaComportamientos.get(i))){
-            System.out.println("Hay comportamientos que no se han definido correctamente, en este caso: "+ctx.Cmp(i));
+            a.comportamientos.add(ctx.Cmp(i).getText());
+            if( comp_codigo.contains(a.comportamientos.get(i))){
+                System.out.println("Hay comportamientos que no se han definido correctamente, en este caso: "+ctx.Cmp(i));
+            }
         }
-        }
-
-        System.out.println("\n");
-    }
-
-    @Override
-    public void enterTransicion(ejemploParser.TransicionContext ctx) {
 
     }
 
     @Override
-    public void exitTransicion(ejemploParser.TransicionContext ctx) {
+    public void enterTransicion(practicaAntlrParser.TransicionContext ctx) {
 
     }
 
     @Override
-    public void enterTransicion_def(ejemploParser.Transicion_defContext ctx) {
+    public void exitTransicion(practicaAntlrParser.TransicionContext ctx) {
 
     }
 
     @Override
-    public void exitTransicion_def(ejemploParser.Transicion_defContext ctx) {
+    public void enterTransicion_def(practicaAntlrParser.Transicion_defContext ctx) {
+
+    }
+
+    @Override
+    public void exitTransicion_def(practicaAntlrParser.Transicion_defContext ctx) {
         if(z){
-                try{
-                    if(listaEstados.contains(ctx.ID().getText())||listaEstados.contains(ctx.val_trans().ID().getText()) || listaEventos.contains(ctx.val_trans().ID().getText())){
-                        z=true;
-                    }else{
-                        z=false;
-                    }
-                    a.addTransition(ctx.Eventos().getText(), ctx.ID().getText(), ctx.val_trans().ID().getText());
-                }catch(Exception e){
-                    System.out.println("No se pueden añadir transiciones con estados o eventos no definidos");
-                    z=false;
-                }
+            if(a.estados.contains(ctx.ID().getText())&&a.estados.contains(ctx.val_trans().ID().getText()) && a.eventos.contains(ctx.Eventos().getText())){
+               t=a.new Transicion(""+ctx.ID().getText(),""+ctx.val_trans().ID().getText(),""+ctx.Eventos().getText());
+                a.transiciones.add(t);
+                z=true;
+            }else{
+                System.out.println("Se ha definido un estado o evento erroneo.");
+                z=false;
+            }
+
         }else{
                  z=false;
-        }
-               
+        }        
     }
 
     @Override
-    public void enterVal_trans(ejemploParser.Val_transContext ctx) {
+    public void enterVal_trans(practicaAntlrParser.Val_transContext ctx) {
        
     }
 
     @Override
-    public void exitVal_trans(ejemploParser.Val_transContext ctx) {
+    public void exitVal_trans(practicaAntlrParser.Val_transContext ctx) {
 
     }
 
     @Override
-    public void enterComportamientos(ejemploParser.ComportamientosContext ctx) {
+    public void enterComportamientos(practicaAntlrParser.ComportamientosContext ctx) {
 
     }
 
     @Override
-    public void exitComportamientos(ejemploParser.ComportamientosContext ctx) {
-        a.addEstadosToMachine();
+    public void exitComportamientos(practicaAntlrParser.ComportamientosContext ctx) {
+     //   a.escribirEstados();
     }
 
     @Override
-    public void enterComp_def(ejemploParser.Comp_defContext ctx) {
+    public void enterComp_def(practicaAntlrParser.Comp_defContext ctx) {
 
     }
 
     @Override
-    public void exitComp_def(ejemploParser.Comp_defContext ctx) {
+    public void exitComp_def(practicaAntlrParser.Comp_defContext ctx) {
         if(z){
-            if(listaEstados.contains(ctx.ID().getText()) || listaComportamientos.contains(ctx.val_comp().Cmp().getText())){
-                try{
-                    js=script.getEngineByName("JavaScript");
-                    Runnable s2 = () -> {
-                        System.out.println("Estoy en el estado: "+ctx.ID().getText());
-                        try {
-                            js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
-                        } catch (ScriptException ex) {
-                            z=false;
-                        }
-                    };
-                    Runnable s3 = () -> {
-                        System.out.println("Estoy en el ultimo estado : "+ctx.ID().getText());
-                        try {
-                            js.eval(comp_codigo.get(ctx.val_comp().Cmp().getText()));
-                        } catch (ScriptException ex) {
-                            z=false;
-                            System.out.println(""+ex);
-                            
-                        }
-                    };
-                    if(ctx.ID().getText().equals(EstadoInicial)){
-                        System.out.println("");
-                    Runnable s1 = () -> {
-                        System.out.println("");
-
-                    };
-                        a.addState(ctx.ID().getText(),s1,s2,s3);
-                    }else{
-                    Runnable s1 = () -> {
-                        System.out.println("Entro al estado : "+ctx.ID().getText());
-
-                    };
-                        a.cargarEstados(s1,s2,s3, ctx.ID().getText());
-                    }
-                    
-                }catch(Exception e){
-                    System.out.println("ERROR: Hay estados o comportamientos que no se pueden añadir al automata, pues no existen ");
-                    z=false;
-                }
+            if(a.estados.contains(ctx.ID().getText()) && a.comportamientos.contains(ctx.val_comp().Cmp().getText())){
+                a.EstComp.put(ctx.ID().getText(), ctx.val_comp().Cmp().getText());
             }else{
+                System.out.println("Se ha definido un estado o comportamiento incorrecto");
                 z=false;
             }
         }
@@ -273,12 +211,12 @@ boolean z=true;
     }
 
     @Override
-    public void enterVal_comp(ejemploParser.Val_compContext ctx) {
+    public void enterVal_comp(practicaAntlrParser.Val_compContext ctx) {
 
     }
 
     @Override
-    public void exitVal_comp(ejemploParser.Val_compContext ctx) {
+    public void exitVal_comp(practicaAntlrParser.Val_compContext ctx) {
 
     }
 
